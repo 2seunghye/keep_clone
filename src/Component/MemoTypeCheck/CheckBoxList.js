@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { change_checkbox_status, delete_checkbox, update_checkbox } from "../../Redux/Actions/checkbox";
+import AddLabelForm from "../LabelBox/AddLabelForm";
 
 const StyledCheckBoxList = styled.div`
 	padding: 20px 0;

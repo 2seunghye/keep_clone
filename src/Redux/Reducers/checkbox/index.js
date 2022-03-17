@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { create_label } from "../../Actions/label";
 import * as types from "../../types";
 
 export const initial_state = [
@@ -25,6 +27,12 @@ export const initial_state = [
 				isChecked: false,
 			},
 		],
+		listLabels: [
+			{
+				id: "1",
+				text: "Label1",
+			},
+		],
 	},
 	{
 		listType: "text",
@@ -34,11 +42,13 @@ export const initial_state = [
 				text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 			},
 		],
+		listLabels: [],
 	},
 ];
 
 export const checkboxFetch = (state = initial_state, action) => {
 	const { type, payload } = action;
+
 	switch (type) {
 		case types.CREATE_CHECK_CARD:
 			console.log("create_card");
@@ -47,6 +57,7 @@ export const checkboxFetch = (state = initial_state, action) => {
 				{
 					listType: "checkbox",
 					listItems: [],
+					listLabels: [],
 				},
 			];
 
@@ -57,6 +68,7 @@ export const checkboxFetch = (state = initial_state, action) => {
 				{
 					listType: "text",
 					listItems: [],
+					listLabels: [],
 				},
 			];
 
@@ -67,6 +79,7 @@ export const checkboxFetch = (state = initial_state, action) => {
 					return {
 						listType: arr.listType,
 						listItems: [...arr.listItems, payload],
+						listLabels: arr.listLabels,
 					};
 				}
 				return arr;
@@ -76,7 +89,7 @@ export const checkboxFetch = (state = initial_state, action) => {
 			return state.map((arr, index) => {
 				console.log(arr);
 				if (index === action.index) {
-					return { listType: arr.listType, listItems: arr.listItems.filter((obj) => obj.id !== payload.id) };
+					return { listType: arr.listType, listItems: arr.listItems.filter((obj) => obj.id !== payload.id), listLabels: arr.listLabels };
 				}
 				return arr;
 			});
@@ -89,6 +102,7 @@ export const checkboxFetch = (state = initial_state, action) => {
 					return {
 						listType: arr.listType,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? payload : obj)),
+						listLabels: arr.listLabels,
 					};
 				}
 				return arr;
@@ -100,6 +114,47 @@ export const checkboxFetch = (state = initial_state, action) => {
 					return {
 						listType: arr.listType,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? { ...obj, isChecked: !obj.isChecked } : obj)),
+						listLabels: arr.listLabels,
+					};
+				}
+				return arr;
+			});
+
+		case types.CREATE_LABEL_IN_CARD:
+			console.log("create_label_in_card");
+			console.log(payload);
+			return state.map((arr, index) => {
+				if (index === action.index) {
+					return {
+						listType: arr.listType,
+						listItems: arr.listItems,
+						listLabels: [...arr.listLabels, payload],
+					};
+				}
+				return arr;
+			});
+
+		case types.UPDATE_LABEL_IN_CARD:
+			console.log("update_label_in_card");
+			return state.map((arr, index) => {
+				if (index === action.index) {
+					return {
+						listType: arr.listType,
+						listItems: arr.listItems,
+						listLabels: arr.listLabels.map((obj) => (obj.id === payload.id ? payload : obj)),
+					};
+				}
+				return arr;
+			});
+
+		case types.DELETE_LABEL_IN_CARD:
+			console.log("delete_label_in_card");
+			return state.map((arr, index) => {
+				if (index === action.index) {
+					return {
+						listType: arr.listType,
+						listItems: arr.listItems,
+						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
 					};
 				}
 				return arr;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { change_checkbox_status, delete_checkbox, delete_item, update_checkbox, update_item } from "../../Redux/Actions/checkbox";
+import LabelBox from "./LabelBox/LabelBox";
 
 const StyledCheckBoxList = styled.div`
 	padding: 20px 0;
@@ -218,6 +219,7 @@ const List = ({ index, type }) => {
 	return (
 		<StyledCheckBoxList>
 			<List />
+			<LabelBox index={index} />
 		</StyledCheckBoxList>
 	);
 };

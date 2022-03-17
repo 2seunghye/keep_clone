@@ -1,9 +1,9 @@
 import * as types from "../../types";
 
-export const create_label = (text) => ({
+export const create_label = (text, id) => ({
 	type: types.CREATE_LABEL,
 	payload: {
-		id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
+		id,
 		text,
 	},
 });

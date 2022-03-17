@@ -5,18 +5,6 @@ export const initial_state = [
 		id: 1,
 		text: "Label1",
 	},
-	{
-		id: 2,
-		text: "Label2",
-	},
-	{
-		id: 3,
-		text: "Label3",
-	},
-	{
-		id: 4,
-		text: "Label4",
-	},
 ];
 
 export const labelFetch = (state = initial_state, action) => {

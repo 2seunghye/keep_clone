@@ -24,6 +24,29 @@ export const delete_item = (index, id) => ({
 	},
 });
 
+export const create_label_in_card = (index, id, text) => ({
+	type: types.CREATE_LABEL_IN_CARD,
+	index: index,
+	payload: {
+		id,
+		text,
+	},
+});
+
+export const update_label_in_card = (index, payload) => ({
+	type: types.UPDATE_LABEL_IN_CARD,
+	index: index,
+	payload,
+});
+
+export const delete_label_in_card = (index, id) => ({
+	type: types.DELETE_LABEL_IN_CARD,
+	index: index,
+	payload: {
+		id,
+	},
+});
+
 export const change_checkbox_status = (index, id) => ({
 	type: types.CHANGE_CHECKBOX_STATUS,
 	index: index,
