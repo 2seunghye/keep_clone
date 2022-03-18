@@ -52,7 +52,7 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 				<StyledListItem isChecked={isChecked}>
 					<>
 						{isEditing ? (
-							<UpdateBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} />
+							<UpdateBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						) : (
 							<ReadBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						)}
@@ -62,7 +62,13 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 		case "text":
 			return (
 				<StyledListItem>
-					<>{isEditing ? <UpdateBox type={"text"} id={id} index={index} text={text} /> : <ReadBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />}</>
+					<>
+						{isEditing ? (
+							<UpdateBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />
+						) : (
+							<ReadBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />
+						)}
+					</>
 				</StyledListItem>
 			);
 	}

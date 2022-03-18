@@ -27,12 +27,7 @@ export const initial_state = [
 				isChecked: false,
 			},
 		],
-		listLabels: [
-			{
-				id: "1",
-				text: "Label1",
-			},
-		],
+		listLabels: [],
 	},
 	{
 		listType: "text",

@@ -23,18 +23,14 @@ const StyledUpdateBox = styled.div`
 		min-height: 100px;
 	}
 `;
-const UpdateBox = ({ type, index, id, text, isChecked }) => {
+const UpdateBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 	const dispatch = useDispatch();
 
 	const [input, setInput] = useState(text);
 
-	const onUpdate = (input) => {
-		switch (type) {
-			case "checkbox":
-				return dispatch(update_item(index, { id: id, text: input, isChecked: isChecked }));
-			case "text":
-				return dispatch(update_item(index, { id: id, text: input }));
-		}
+	const onUpdate = (payload) => {
+		dispatch(update_item(index, payload));
+		setIsEditing(false);
 	};
 
 	const editForm = () => {
@@ -43,14 +39,14 @@ const UpdateBox = ({ type, index, id, text, isChecked }) => {
 				return (
 					<>
 						<input type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate(input)}>수정</button>
+						<button onClick={() => onUpdate({ id: id, text: input, isChecked: isChecked })}>수정</button>
 					</>
 				);
 			case "text":
 				return (
 					<>
 						<textarea type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate(input)}>수정</button>
+						<button onClick={() => onUpdate({ id: id, text: input })}>수정</button>
 					</>
 				);
 		}

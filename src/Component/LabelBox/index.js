@@ -9,6 +9,8 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
+// Todo :: 라벨 자동 search 기능 추가
+
 const LabelBox = ({ index, type }) => {
 	return (
 		<StyledDiv>
