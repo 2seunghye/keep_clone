@@ -15,7 +15,7 @@ const StyledInput = styled.input`
 	padding: 12px 16px;
 	box-sizing: border-box;
 	border: 1px solid #e0e0e0;
-	border-radius: 7px;
+	border-radius: 8px;
 `;
 
 const StyledButton = styled.button`
