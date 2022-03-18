@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { create_label_in_card } from "../../Redux/Actions/checkbox";
 import { create_label } from "../../Redux/Actions/label";
 
 const StyledAddLabelForm = styled.div`
@@ -27,26 +28,84 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const AddLabelForm = () => {
+const AddLabelForm = ({ index }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
+	const labelState = useSelector((state) => state.labelFetch);
+	const CardState = useSelector((state) => state.memoFetch);
 
-	const onClick = () => {
-		dispatch(create_label(input));
-		setInput("");
+	const hasLabelInLabelList = (_text) => {
+		let result = null;
+		for (let i = 0; i < labelState.length; ++i) {
+			if (labelState[i].text == _text) {
+				result = true;
+				break;
+			}
+			result = false;
+		}
+		return result;
+	};
+
+	const hasLabelInCard = (_index, _text) => {
+		let result = null;
+		const listLabels = CardState[index].listLabels;
+
+		for (let i = 0; i < listLabels.length; ++i) {
+			if (listLabels[i].text == _text) {
+				result = true;
+				break;
+			}
+			result = false;
+		}
+		return result;
+	};
+
+	const addLabelInCard = (_index, _text, _labelId) => {
+		if (hasLabelInCard(_index, _text)) {
+			// 메모 카드에 이미 등록된 라벨
+			alert("해당 메모에 이미 등록된 라벨입니다!");
+		} else {
+			// 메모 카드에 라벨을 등록
+			dispatch(create_label_in_card(_index, _text, _labelId));
+			setInput("");
+		}
+	};
+
+	const addLabel = (_index, _text) => {
+		if (!hasLabelInLabelList(_text)) {
+			// 라벨 리스트에 존재하지 않음
+			let labelId = parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join(""));
+			dispatch(create_label(_text, labelId));
+			dispatch(create_label_in_card(_index, _text, labelId));
+			setInput("");
+		} else {
+			// 라벨 리스트에 존재 함
+			let labelId = null;
+			labelState.forEach((item) => {
+				if (item.text == _text) {
+					labelId = item.id;
+				}
+			});
+			addLabelInCard(_index, _text, labelId);
+		}
 	};
 
 	const onEnterKeyPress = (e) => {
 		if (e.key === "Enter") {
-			dispatch(create_label(input));
-			setInput("");
+			addLabel(index, input);
 		}
 	};
 
 	return (
 		<StyledAddLabelForm>
 			<StyledInput value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={onEnterKeyPress} placeholder={"라벨 작성..."} />
-			<StyledButton onClick={onClick}>추가</StyledButton>
+			<StyledButton
+				onClick={() => {
+					addLabel(index, input);
+				}}
+			>
+				추가
+			</StyledButton>
 		</StyledAddLabelForm>
 	);
 };

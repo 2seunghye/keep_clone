@@ -1,13 +1,12 @@
 import "./App.css";
-import LabelBox from "./Component/LabelBox/LabelBox";
-import LabelMenu from "./Component/MemoTypeCheck/LabelMenu";
-import MemoTypeCheck from "./Component/MemoTypeCheck/MemoTypeCheck";
+import LabelMenu from "./Component/LabelMenu";
+import MemoList from "./Component/MemoList";
 
 function App() {
 	return (
 		<div className="App">
 			<LabelMenu />
-			<MemoTypeCheck />
+			<MemoList />
 		</div>
 	);
 }

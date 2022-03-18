@@ -46,7 +46,7 @@ export const initial_state = [
 	},
 ];
 
-export const checkboxFetch = (state = initial_state, action) => {
+export const memoFetch = (state = initial_state, action) => {
 	const { type, payload } = action;
 
 	switch (type) {

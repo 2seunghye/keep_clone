@@ -24,7 +24,7 @@ export const delete_item = (index, id) => ({
 	},
 });
 
-export const create_label_in_card = (index, id, text) => ({
+export const create_label_in_card = (index, text, id) => ({
 	type: types.CREATE_LABEL_IN_CARD,
 	index: index,
 	payload: {

@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
+import { delete_label_in_card, update_label_in_card } from "../../Redux/Actions/checkbox";
 import { delete_label, update_label } from "../../Redux/Actions/label";
+import ReadBox from "./ReadBox";
+import UpdateBox from "./UpdateBox";
 
 const StyledListBox = styled.ul`
 	list-style: none;
@@ -10,14 +13,12 @@ const StyledListBox = styled.ul`
 	flex-wrap: wrap;
 	gap: 10px;
 `;
-
 const StyledListItem = styled.li`
 	background: #e0e0e0;
 	padding: 5px 4px 5px 10px;
 	border-radius: 15px;
 	font-size: 14px;
 `;
-
 const StyledRemoveButton = styled.button`
 	display: inline-block;
 	opacity: 0.54;
@@ -55,57 +56,22 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const StyledUpdateBox = styled.div`
-	width: 100%;
-	display: block;
-	input {
-		width: 80px;
-	}
-	button {
-		cursor: pointer;
-		border: none;
-		background: inherit;
-		font-weight: 600;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-`;
-const StyledSpan = styled.span`
-	display: inline-block;
-`;
-
-const ListItems = ({ id, text }) => {
+const ListItems = ({ id, text, index }) => {
 	const dispatch = useDispatch();
-	const initial_text = text;
-	const [input, setInput] = useState(initial_text);
 	const [isActive, setIsActive] = useState(false);
-
-	const onUpdate = (_id, _text) => {
-		setIsActive(false);
-		dispatch(update_label({ id: _id, text: _text }));
-	};
 
 	return (
 		<StyledListItem>
-			{isActive ? (
-				<StyledUpdateBox>
-					<input type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-					<button onClick={() => onUpdate(id, input)}>수정</button>
-				</StyledUpdateBox>
-			) : (
-				<StyledSpan onDoubleClick={() => setIsActive(true)}>{text}</StyledSpan>
-			)}
-
-			<StyledRemoveButton onClick={() => dispatch(delete_label(id))} aria-label="Remove"></StyledRemoveButton>
+			{isActive ? <UpdateBox id={id} text={text} index={index} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />}
+			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(index, id))} aria-label="Remove"></StyledRemoveButton>
 		</StyledListItem>
 	);
 };
 
-const LabelList = () => {
-	const state = useSelector((state) => state.labelFetch);
+const LabelList = ({ index }) => {
+	const state = useSelector((state) => state.memoFetch);
 
-	const labelList = state.map((item) => <ListItems key={item.id} id={item.id} text={item.text} />);
+	const labelList = state[index].listLabels.map((item, index) => <ListItems index={index} key={index} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

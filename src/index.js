@@ -12,7 +12,6 @@ import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개
 
 const store = createStore(reducers, composeWithDevTools());
 
-console.log(store.getState());
 store.subscribe(() => {
 	localStorage.setItem("reduxState", JSON.stringify(store.getState()));
 });

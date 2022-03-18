@@ -28,7 +28,7 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const Input = ({ index }) => {
+const MemoInput = ({ index }) => {
 	const [input, setInput] = useState("");
 	const dispatch = useDispatch();
 
@@ -48,4 +48,4 @@ const Input = ({ index }) => {
 	);
 };
 
-export default Input;
+export default MemoInput;

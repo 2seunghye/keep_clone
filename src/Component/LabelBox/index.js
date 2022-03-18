@@ -1,7 +1,5 @@
-import React, { useReducer } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import styled from "styled-components";
-import { create_label, delete_label, update_label } from "../../Redux/Actions/label";
 import AddLabelForm from "./AddLabelForm";
 import LabelList from "./LabelList";
 
@@ -11,11 +9,12 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-const LabelBox = () => {
+const LabelBox = ({ index, type }) => {
 	return (
 		<StyledDiv>
-			<AddLabelForm />
-			<LabelList />
+			<h5>Label Box</h5>
+			<AddLabelForm index={index} />
+			<LabelList index={index} type={type} />
 		</StyledDiv>
 	);
 };
