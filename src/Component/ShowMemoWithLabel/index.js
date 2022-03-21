@@ -5,8 +5,8 @@ import Card from "../Card";
 
 const ShowMemoWithLabel = () => {
 	const labelText = useParams().labelText;
-
 	const labelState = useSelector((state) => state.labelFetch);
+	const MemoState = useSelector((state) => state.memoFetch);
 
 	let labelId = null;
 	labelState.forEach((item) => {
@@ -14,10 +14,6 @@ const ShowMemoWithLabel = () => {
 			labelId = item.id;
 		}
 	});
-
-	console.log(labelId);
-
-	const MemoState = useSelector((state) => state.memoFetch);
 
 	const filteredList = MemoState.filter((item) => {
 		const listLabels = item.listLabels;
@@ -31,10 +27,8 @@ const ShowMemoWithLabel = () => {
 		}
 	});
 
-	console.log(filteredList);
-
 	let cardList = filteredList.map((item, index) => {
-		return <Card key={index} item={item} listId={item.listId} />;
+		return <Card key={index} item={item} />;
 	});
 
 	return <div>{cardList}</div>;

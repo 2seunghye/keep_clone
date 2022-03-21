@@ -33,8 +33,8 @@ export const create_label_in_card = (listId, text, id) => ({
 	},
 });
 
-export const update_label_in_card = (payload) => ({
-	type: types.UPDATE_LABEL_IN_CARD,
+export const UPDATE_LABEL_IN_ALL_CARD = (payload) => ({
+	type: types.UPDATE_LABEL_IN_ALL_CARD,
 	payload,
 });
 

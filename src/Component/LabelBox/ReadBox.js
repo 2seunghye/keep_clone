@@ -1,13 +1,13 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StyledSpan = styled.span`
 	display: inline-block;
 `;
-const ReadBox = ({ text, setIsActive }) => {
+const ReadBox = ({ text }) => {
 	return (
 		<div>
-			<StyledSpan onDoubleClick={() => setIsActive(true)}>{text}</StyledSpan>
+			<StyledSpan>{text}</StyledSpan>
 		</div>
 	);
 };

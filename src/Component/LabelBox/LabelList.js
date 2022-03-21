@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { delete_label_in_card } from "../../Redux/Actions/memo";
 import ReadBox from "./ReadBox";
-import UpdateBox from "./UpdateBox";
 
 const StyledListBox = styled.ul`
 	list-style: none;
@@ -57,12 +56,10 @@ const StyledRemoveButton = styled.button`
 
 const ListItems = ({ id, text, listId }) => {
 	const dispatch = useDispatch();
-	const [isActive, setIsActive] = useState(false);
 
 	return (
 		<StyledListItem>
-			{/* {isActive ? <UpdateBox id={id} text={text} listId={listId} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />} */}
-			<ReadBox text={text} setIsActive={setIsActive} />
+			<ReadBox text={text} />
 			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(listId, id))} aria-label="Remove"></StyledRemoveButton>
 		</StyledListItem>
 	);
@@ -71,15 +68,15 @@ const ListItems = ({ id, text, listId }) => {
 const LabelList = ({ listId }) => {
 	const memoState = useSelector((state) => state.memoFetch);
 
-	let memo;
+	let targetMemo;
 
 	memoState.forEach((item) => {
 		if (item.listId == listId) {
-			memo = item.listLabels;
+			targetMemo = item.listLabels;
 		}
 	});
 
-	const labelList = memo.map((item) => <ListItems listId={listId} key={item.id} id={item.id} text={item.text} />);
+	const labelList = targetMemo.map((item) => <ListItems listId={listId} key={item.id} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

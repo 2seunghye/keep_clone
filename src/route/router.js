@@ -1,11 +1,9 @@
 import React from "react";
-import { Route, Router, Routes } from "react-router-dom";
-import LabelMenu from "../Component/LabelMenu";
-import ShowMemoWithLabel from "../Component/LabelMenu/ShowMemoWithLabel";
+import { Route, Routes } from "react-router-dom";
+import ShowMemoWithLabel from "../Component/ShowMemoWithLabel";
 import EditLabelView from "../View/EditLabelView";
 import HomeView from "../View/HomeView";
 import LabelView from "../View/LabelView";
-import NavBar from "./NavBar";
 
 const RoutesComponent = () => {
 	return (

@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
-import LabelMenu from "../Component/LabelMenu";
+import { Outlet } from "react-router-dom";
 
 const LabelView = () => {
 	return (
 		<>
 			<>labelView</>
+			{/* ShowMemoWithLabel */}
 			<Outlet />
 		</>
 	);

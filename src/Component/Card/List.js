@@ -76,20 +76,16 @@ const ListItems = ({ id, isChecked, text, listId, type }) => {
 
 const List = ({ listId, type }) => {
 	let memoState = useSelector((state) => state.memoFetch);
-
-	let memo = [];
+	let targetMemo = [];
 
 	memoState.forEach((item) => {
-		console.log(item.listId == listId, item.listId, listId);
 		if (item.listId == listId) {
-			memo = item;
+			targetMemo = item;
 		}
 	});
 
-	console.log("type: ", type);
-
-	const listItems = memo.listItems.map((item, index) => {
-		return <ListItems type={type} listId={listId} key={index} text={item.text} isChecked={item.isChecked} id={item.id} />;
+	const listItems = targetMemo.listItems.map((item, index) => {
+		return <ListItems key={index} listId={listId} type={type} text={item.text} isChecked={item.isChecked} id={item.id} />;
 	});
 
 	return (
