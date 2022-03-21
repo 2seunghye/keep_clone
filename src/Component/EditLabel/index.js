@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import CreateBox from "./CreateBox";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+	border: 1px solid #000;
+	max-width: 500px;
+	margin: 20px;
+`;
 
 const LabelItem = ({ text }) => {
 	const [isActive, setIsActive] = useState(false);
@@ -15,7 +23,13 @@ const EditLabel = () => {
 		return <LabelItem text={item.text} />;
 	});
 
-	return <div>{labelList}</div>;
+	return (
+		<StyledDiv>
+			<h5>Edit Label</h5>
+			<CreateBox />
+			{labelList}
+		</StyledDiv>
+	);
 };
 
 export default EditLabel;

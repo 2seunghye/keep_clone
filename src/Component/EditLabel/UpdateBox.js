@@ -46,6 +46,7 @@ const UpdateBox = ({ text, setIsActive }) => {
 		<StyledUpdateBox>
 			<input onChange={(e) => setInput(e.target.value)} value={input} />
 			<button onClick={() => onUpdate(initial_text, input)}>수정</button>
+			<button onClick={() => setIsActive(false)}>취소</button>
 		</StyledUpdateBox>
 	);
 };
