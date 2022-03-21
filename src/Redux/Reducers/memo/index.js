@@ -20,11 +20,6 @@ export const initial_state = [
 				text: "mi vehicula tortor",
 				isChecked: false,
 			},
-			{
-				id: 4,
-				text: "test",
-				isChecked: false,
-			},
 		],
 		listLabels: [],
 	},
@@ -46,7 +41,6 @@ export const memoFetch = (state = initial_state, action) => {
 
 	switch (type) {
 		case types.CREATE_CHECK_CARD:
-			console.log("create_card");
 			return [
 				...state,
 				{
@@ -58,7 +52,6 @@ export const memoFetch = (state = initial_state, action) => {
 			];
 
 		case types.CREATE_TEXT_CARD:
-			console.log("create_card");
 			return [
 				...state,
 				{
@@ -71,13 +64,10 @@ export const memoFetch = (state = initial_state, action) => {
 
 		case types.CREATE_ITEM:
 			return state.map((arr) => {
-				console.log(arr);
 				if (arr.listId === action.listId) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
+						...arr,
 						listItems: [...arr.listItems, payload],
-						listLabels: arr.listLabels,
 					};
 				}
 				return arr;
@@ -85,23 +75,18 @@ export const memoFetch = (state = initial_state, action) => {
 
 		case types.DELETE_ITEM:
 			return state.map((arr) => {
-				console.log(arr);
 				if (arr.listId === action.listId) {
-					return { listId: arr.listId, listType: arr.listType, listItems: arr.listItems.filter((obj) => obj.id !== payload.id), listLabels: arr.listLabels };
+					return { ...arr, listItems: arr.listItems.filter((obj) => obj.id !== payload.id), listLabels: arr.listLabels };
 				}
 				return arr;
 			});
 
 		case types.UPDATE_ITEM:
-			console.log("change_");
-
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
+						...arr,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? payload : obj)),
-						listLabels: arr.listLabels,
 					};
 				}
 				return arr;
@@ -110,24 +95,18 @@ export const memoFetch = (state = initial_state, action) => {
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
+						...arr,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? { ...obj, isChecked: !obj.isChecked } : obj)),
-						listLabels: arr.listLabels,
 					};
 				}
 				return arr;
 			});
 
 		case types.CREATE_LABEL_IN_CARD:
-			console.log("create_label_in_card");
-			console.log(payload);
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
-						listItems: arr.listItems,
+						...arr,
 						listLabels: [...arr.listLabels, payload],
 					};
 				}
@@ -135,13 +114,10 @@ export const memoFetch = (state = initial_state, action) => {
 			});
 
 		case types.DELETE_LABEL_IN_CARD:
-			console.log("delete_label_in_card");
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
-						listItems: arr.listItems,
+						...arr,
 						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
 					};
 				}
@@ -149,7 +125,6 @@ export const memoFetch = (state = initial_state, action) => {
 			});
 
 		case types.UPDATE_LABEL_IN_ALL_CARD:
-			console.log("UPDATE_LABEL_IN_ALL_CARD");
 			return state.map((arr) => {
 				let flag = false;
 
@@ -161,9 +136,7 @@ export const memoFetch = (state = initial_state, action) => {
 
 				if (flag) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
-						listItems: arr.listItems,
+						...arr,
 						listLabels: arr.listLabels.map((obj) => (obj.id === payload.id ? payload : obj)),
 					};
 				}
@@ -171,7 +144,6 @@ export const memoFetch = (state = initial_state, action) => {
 			});
 
 		case types.DELETE_LABEL_IN_ALL_CARD:
-			console.log("delete_label_in_card");
 			return state.map((arr) => {
 				let flag = false;
 
@@ -183,9 +155,7 @@ export const memoFetch = (state = initial_state, action) => {
 
 				if (flag) {
 					return {
-						listId: arr.listId,
-						listType: arr.listType,
-						listItems: arr.listItems,
+						...arr,
 						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
 					};
 				}
