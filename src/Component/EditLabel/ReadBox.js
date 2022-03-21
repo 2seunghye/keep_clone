@@ -8,21 +8,21 @@ const StyledSpan = styled.span`
 	display: inline-block;
 `;
 
+const useConfirm = (message, onConfirm, onCancel) => {
+	const confirmAction = () => {
+		if (window.confirm(message)) {
+			onConfirm();
+		} else {
+			onCancel();
+		}
+	};
+
+	return confirmAction;
+};
+
 const ReadBox = ({ text, setIsActive }) => {
 	const labelState = useSelector((state) => state.labelFetch);
 	const dispatch = useDispatch();
-
-	const useConfirm = (message, onConfirm, onCancel) => {
-		const confirmAction = () => {
-			if (window.confirm(message)) {
-				onConfirm();
-			} else {
-				onCancel();
-			}
-		};
-
-		return confirmAction;
-	};
 
 	const deleteConfirm = () => {
 		let searchId;
