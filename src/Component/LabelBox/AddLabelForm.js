@@ -28,7 +28,7 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const AddLabelForm = ({ index }) => {
+const AddLabelForm = ({ listId }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
 	const labelState = useSelector((state) => state.labelFetch);
@@ -46,38 +46,51 @@ const AddLabelForm = ({ index }) => {
 		return result;
 	};
 
-	const hasLabelInCard = (_index, _text) => {
+	const hasLabelInCard = (_text) => {
 		let result = null;
-		const listLabels = CardState[index].listLabels;
+		let listLabels;
 
-		for (let i = 0; i < listLabels.length; ++i) {
-			if (listLabels[i].text === _text) {
-				result = true;
-				break;
+		CardState.forEach((item) => {
+			console.log(item.listId == listId, item.listId, listId);
+			if (item.listId == listId) {
+				listLabels = item.listLabels;
 			}
+		});
+
+		if (listLabels.length !== undefined) {
+			for (let i = 0; i < listLabels.length; ++i) {
+				if (listLabels[i].text === _text) {
+					result = true;
+					break;
+				}
+				result = false;
+			}
+		} else {
 			result = false;
 		}
+
 		return result;
 	};
 
-	const addLabelInCard = (_index, _text, _labelId) => {
-		if (hasLabelInCard(_index, _text)) {
+	const addLabelInCard = (listId, _text, _labelId) => {
+		if (hasLabelInCard(_text)) {
 			// 메모 카드에 이미 등록된 라벨
 			alert("해당 메모에 이미 등록된 라벨입니다!");
 		} else {
 			// 메모 카드에 라벨을 등록
-			dispatch(create_label_in_card(_index, _text, _labelId));
+			dispatch(create_label_in_card(listId, _text, _labelId));
 			setInput("");
 		}
 	};
 
-	const addLabel = (_index, _text) => {
+	const addLabel = (listId, _text) => {
+		console.log(!hasLabelInLabelList(_text));
 		if (!hasLabelInLabelList(_text)) {
 			// 라벨 리스트에 존재하지 않음
 			let labelId = parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join(""));
 			// Todo :: 순차적으로 바꾸기
 			dispatch(create_label(_text, labelId));
-			dispatch(create_label_in_card(_index, _text, labelId));
+			dispatch(create_label_in_card(listId, _text, labelId));
 			setInput("");
 		} else {
 			// 라벨 리스트에 존재 함
@@ -87,13 +100,13 @@ const AddLabelForm = ({ index }) => {
 					labelId = item.id;
 				}
 			});
-			addLabelInCard(_index, _text, labelId);
+			addLabelInCard(listId, _text, labelId);
 		}
 	};
 
 	const onEnterKeyPress = (e) => {
 		if (e.key === "Enter") {
-			addLabel(index, input);
+			addLabel(listId, input);
 		}
 	};
 
@@ -102,7 +115,7 @@ const AddLabelForm = ({ index }) => {
 			<StyledInput value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={onEnterKeyPress} placeholder={"라벨 작성..."} />
 			<StyledButton
 				onClick={() => {
-					addLabel(index, input);
+					addLabel(listId, input);
 				}}
 			>
 				추가

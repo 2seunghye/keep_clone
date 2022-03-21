@@ -10,13 +10,11 @@ const StyledDiv = styled.div`
 `;
 
 const LabelMenu = () => {
-	const [activeId, setId] = useState(null);
-
 	return (
 		<StyledDiv>
 			<h5>Label Menu</h5>
-			<LabelList setId={setId} />
-			<ShowMemoWithLabel activeId={activeId} />
+			{/* <LabelList setId={setId} />
+			<ShowMemoWithLabel activeId={activeId} /> */}
 		</StyledDiv>
 	);
 };

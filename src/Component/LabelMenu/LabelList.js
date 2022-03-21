@@ -1,10 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const ListItem = ({ text, id, setId }) => {
 	return (
 		<li>
-			<button onClick={() => setId(id)}>{text}</button>
+			<NavLink to={`/label/${text}`} onClick={() => setId(id)}>
+				{text}
+			</NavLink>
 		</li>
 	);
 };

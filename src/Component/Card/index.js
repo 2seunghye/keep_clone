@@ -9,12 +9,13 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-const Card = ({ item, index }) => {
+const Card = ({ item }) => {
+	console.log(item);
 	return (
-		<StyledDiv key={index} id={index}>
+		<StyledDiv>
 			<h5>Card</h5>
-			<MemoInput index={index} />
-			<List index={index} type={item.listType} />
+			<MemoInput listId={item.listId} />
+			<List listId={item.listId} type={item.listType} />
 		</StyledDiv>
 	);
 };

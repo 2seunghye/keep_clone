@@ -23,13 +23,13 @@ const StyledUpdateBox = styled.div`
 		min-height: 100px;
 	}
 `;
-const UpdateBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
+const UpdateBox = ({ type, listId, id, text, isChecked, setIsEditing }) => {
 	const dispatch = useDispatch();
 
 	const [input, setInput] = useState(text);
 
 	const onUpdate = (payload) => {
-		dispatch(update_item(index, payload));
+		dispatch(update_item(listId, payload));
 		setIsEditing(false);
 	};
 

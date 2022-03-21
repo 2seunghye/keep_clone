@@ -41,7 +41,7 @@ const StyledListItem = styled.li`
 	}
 `;
 
-const ListItems = ({ id, isChecked, text, index, type }) => {
+const ListItems = ({ id, isChecked, text, listId, type }) => {
 	const [isEditing, setIsEditing] = useState(false);
 
 	switch (type) {
@@ -50,9 +50,9 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 				<StyledListItem isChecked={isChecked}>
 					<>
 						{isEditing ? (
-							<UpdateBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+							<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						) : (
-							<ReadBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+							<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						)}
 					</>
 				</StyledListItem>
@@ -62,9 +62,9 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 				<StyledListItem>
 					<>
 						{isEditing ? (
-							<UpdateBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />
+							<UpdateBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
 						) : (
-							<ReadBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />
+							<ReadBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
 						)}
 					</>
 				</StyledListItem>
@@ -74,17 +74,28 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 	}
 };
 
-const List = ({ index, type }) => {
-	const state = useSelector((state) => state.memoFetch);
+const List = ({ listId, type }) => {
+	let memoState = useSelector((state) => state.memoFetch);
 
-	const listItems = state[index].listItems.map((item, index) => {
-		return <ListItems type={type} index={index} key={item.id} text={item.text} isChecked={item.isChecked} id={item.id} />;
+	let memo = [];
+
+	memoState.forEach((item) => {
+		console.log(item.listId == listId, item.listId, listId);
+		if (item.listId == listId) {
+			memo = item;
+		}
+	});
+
+	console.log("type: ", type);
+
+	const listItems = memo.listItems.map((item, index) => {
+		return <ListItems type={type} listId={listId} key={index} text={item.text} isChecked={item.isChecked} id={item.id} />;
 	});
 
 	return (
 		<StyledCheckBoxList>
 			<StyledUnorderedList>{listItems}</StyledUnorderedList>
-			<LabelBox index={index} />
+			<LabelBox listId={listId} />
 		</StyledCheckBoxList>
 	);
 };

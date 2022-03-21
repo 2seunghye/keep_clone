@@ -18,14 +18,14 @@ const StyledInput = styled.input`
 	border-radius: 5px;
 `;
 
-const MemoInput = ({ index }) => {
+const MemoInput = ({ listId }) => {
 	const [input, setInput] = useState("");
 	const dispatch = useDispatch();
 
 	const onEnterKeyPress = (e) => {
 		if (e.key === "Enter") {
 			if (input !== "") {
-				dispatch(create_item(index, input));
+				dispatch(create_item(listId, input));
 				setInput("");
 			}
 		}

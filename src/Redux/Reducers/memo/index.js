@@ -2,6 +2,7 @@ import * as types from "../../types";
 
 export const initial_state = [
 	{
+		listId: 1,
 		listType: "checkbox",
 		listItems: [
 			{
@@ -28,6 +29,7 @@ export const initial_state = [
 		listLabels: [],
 	},
 	{
+		listId: 2,
 		listType: "text",
 		listItems: [
 			{
@@ -48,6 +50,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					listId: action.id,
 					listType: "checkbox",
 					listItems: [],
 					listLabels: [],
@@ -59,6 +62,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					listId: action.id,
 					listType: "text",
 					listItems: [],
 					listLabels: [],
@@ -66,10 +70,11 @@ export const memoFetch = (state = initial_state, action) => {
 			];
 
 		case types.CREATE_ITEM:
-			return state.map((arr, index) => {
+			return state.map((arr) => {
 				console.log(arr);
-				if (index === action.index) {
+				if (arr.listId === action.listId) {
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: [...arr.listItems, payload],
 						listLabels: arr.listLabels,
@@ -79,10 +84,10 @@ export const memoFetch = (state = initial_state, action) => {
 			});
 
 		case types.DELETE_ITEM:
-			return state.map((arr, index) => {
+			return state.map((arr) => {
 				console.log(arr);
-				if (index === action.index) {
-					return { listType: arr.listType, listItems: arr.listItems.filter((obj) => obj.id !== payload.id), listLabels: arr.listLabels };
+				if (arr.listId === action.listId) {
+					return { listId: arr.listId, listType: arr.listType, listItems: arr.listItems.filter((obj) => obj.id !== payload.id), listLabels: arr.listLabels };
 				}
 				return arr;
 			});
@@ -90,9 +95,10 @@ export const memoFetch = (state = initial_state, action) => {
 		case types.UPDATE_ITEM:
 			console.log("change_");
 
-			return state.map((arr, index) => {
-				if (index === action.index) {
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? payload : obj)),
 						listLabels: arr.listLabels,
@@ -101,10 +107,10 @@ export const memoFetch = (state = initial_state, action) => {
 				return arr;
 			});
 		case types.CHANGE_CHECKBOX_STATUS:
-			console.log(action.index, action.payload.id);
-			return state.map((arr, index) => {
-				if (index === action.index) {
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? { ...obj, isChecked: !obj.isChecked } : obj)),
 						listLabels: arr.listLabels,
@@ -116,9 +122,10 @@ export const memoFetch = (state = initial_state, action) => {
 		case types.CREATE_LABEL_IN_CARD:
 			console.log("create_label_in_card");
 			console.log(payload);
-			return state.map((arr, index) => {
-				if (index === action.index) {
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: arr.listItems,
 						listLabels: [...arr.listLabels, payload],
@@ -129,10 +136,11 @@ export const memoFetch = (state = initial_state, action) => {
 
 		case types.UPDATE_LABEL_IN_CARD:
 			console.log("update_label_in_card");
-			return state.map((arr, index) => {
-				if (index === action.index) {
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
 					console.log(payload.id);
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: arr.listItems,
 						listLabels: arr.listLabels.map((obj) => (obj.id === payload.id ? payload : obj)),
@@ -143,9 +151,10 @@ export const memoFetch = (state = initial_state, action) => {
 
 		case types.DELETE_LABEL_IN_CARD:
 			console.log("delete_label_in_card");
-			return state.map((arr, index) => {
-				if (index === action.index) {
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
 					return {
+						listId: arr.listId,
 						listType: arr.listType,
 						listItems: arr.listItems,
 						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),

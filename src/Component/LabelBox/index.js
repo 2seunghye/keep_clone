@@ -11,12 +11,12 @@ const StyledDiv = styled.div`
 
 // Todo :: 라벨 자동 search 기능 추가
 
-const LabelBox = ({ index, type }) => {
+const LabelBox = ({ listId, type }) => {
 	return (
 		<StyledDiv>
 			<h5>Label Box</h5>
-			<AddLabelForm index={index} />
-			<LabelList index={index} type={type} />
+			<AddLabelForm listId={listId} />
+			<LabelList listId={listId} type={type} />
 		</StyledDiv>
 	);
 };

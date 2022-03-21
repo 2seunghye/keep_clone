@@ -55,22 +55,31 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const ListItems = ({ id, text, index }) => {
+const ListItems = ({ id, text, listId }) => {
 	const dispatch = useDispatch();
 	const [isActive, setIsActive] = useState(false);
 
 	return (
 		<StyledListItem>
-			{isActive ? <UpdateBox id={id} text={text} index={index} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />}
-			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(index, id))} aria-label="Remove"></StyledRemoveButton>
+			{/* {isActive ? <UpdateBox id={id} text={text} listId={listId} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />} */}
+			<ReadBox text={text} setIsActive={setIsActive} />
+			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(listId, id))} aria-label="Remove"></StyledRemoveButton>
 		</StyledListItem>
 	);
 };
 
-const LabelList = ({ index }) => {
-	const state = useSelector((state) => state.memoFetch);
+const LabelList = ({ listId }) => {
+	const memoState = useSelector((state) => state.memoFetch);
 
-	const labelList = state[index].listLabels.map((item) => <ListItems index={index} key={item.id} id={item.id} text={item.text} />);
+	let memo;
+
+	memoState.forEach((item) => {
+		if (item.listId == listId) {
+			memo = item.listLabels;
+		}
+	});
+
+	const labelList = memo.map((item) => <ListItems listId={listId} key={item.id} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };
