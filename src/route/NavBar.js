@@ -21,6 +21,7 @@ const NavBar = () => {
 	return (
 		<div>
 			<NavLink to="/">홈</NavLink>
+			<NavLink to="/editLabel">라벨 수정</NavLink>
 			{LabelList}
 		</div>
 	);

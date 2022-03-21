@@ -1,12 +1,6 @@
 import * as types from "../../types";
 
-export const initial_state = [
-	// Todo :: id 없애기
-	{
-		id: 1,
-		text: "Label1",
-	},
-];
+export const initial_state = [];
 
 export const labelFetch = (state = initial_state, action) => {
 	const { type, payload } = action;
@@ -15,7 +9,9 @@ export const labelFetch = (state = initial_state, action) => {
 			return [...state, payload];
 		case types.UPDATE_LABEL:
 			return state.map((obj) => {
-				if (obj.id === payload.id) return payload;
+				console.log(payload);
+
+				if (obj.id == payload.id) return payload;
 				return obj;
 			});
 		case types.DELETE_LABEL:

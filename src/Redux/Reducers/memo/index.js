@@ -137,8 +137,15 @@ export const memoFetch = (state = initial_state, action) => {
 		case types.UPDATE_LABEL_IN_CARD:
 			console.log("update_label_in_card");
 			return state.map((arr) => {
-				if (arr.listId === action.listId) {
-					console.log(payload.id);
+				let flag = false;
+
+				arr.listLabels.forEach((item) => {
+					if (item.id == payload.id) {
+						flag = true;
+					}
+				});
+
+				if (flag) {
 					return {
 						listId: arr.listId,
 						listType: arr.listType,
@@ -152,7 +159,15 @@ export const memoFetch = (state = initial_state, action) => {
 		case types.DELETE_LABEL_IN_CARD:
 			console.log("delete_label_in_card");
 			return state.map((arr) => {
-				if (arr.listId === action.listId) {
+				let flag = false;
+
+				arr.listLabels.forEach((item) => {
+					if (item.id == payload.id) {
+						flag = true;
+					}
+				});
+
+				if (flag) {
 					return {
 						listId: arr.listId,
 						listType: arr.listType,

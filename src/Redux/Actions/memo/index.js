@@ -33,15 +33,13 @@ export const create_label_in_card = (listId, text, id) => ({
 	},
 });
 
-export const update_label_in_card = (listId, payload) => ({
+export const update_label_in_card = (payload) => ({
 	type: types.UPDATE_LABEL_IN_CARD,
-	listId: listId,
 	payload,
 });
 
-export const delete_label_in_card = (listId, id) => ({
+export const delete_label_in_card = (id) => ({
 	type: types.DELETE_LABEL_IN_CARD,
-	listId: listId,
 	payload: {
 		id,
 	},
