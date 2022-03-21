@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { delete_label } from "../../Redux/Actions/label";
-import { delete_label_in_card } from "../../Redux/Actions/memo";
+import { delete_label_in_all_card, delete_label_in_card } from "../../Redux/Actions/memo";
 
 const StyledSpan = styled.span`
 	display: inline-block;
@@ -21,7 +21,7 @@ const ReadBox = ({ text, setIsActive }) => {
 		setIsActive(false);
 
 		dispatch(delete_label(searchId));
-		dispatch(delete_label_in_card(searchId));
+		dispatch(delete_label_in_all_card(searchId));
 
 		console.log(searchId);
 	};

@@ -38,8 +38,16 @@ export const update_label_in_card = (payload) => ({
 	payload,
 });
 
-export const delete_label_in_card = (id) => ({
+export const delete_label_in_card = (listId, id) => ({
 	type: types.DELETE_LABEL_IN_CARD,
+	listId: listId,
+	payload: {
+		id,
+	},
+});
+
+export const delete_label_in_all_card = (id) => ({
+	type: types.DELETE_LABEL_IN_ALL_CARD,
 	payload: {
 		id,
 	},

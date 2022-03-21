@@ -159,6 +159,20 @@ export const memoFetch = (state = initial_state, action) => {
 		case types.DELETE_LABEL_IN_CARD:
 			console.log("delete_label_in_card");
 			return state.map((arr) => {
+				if (arr.listId === action.listId) {
+					return {
+						listId: arr.listId,
+						listType: arr.listType,
+						listItems: arr.listItems,
+						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
+					};
+				}
+				return arr;
+			});
+
+		case types.DELETE_LABEL_IN_ALL_CARD:
+			console.log("delete_label_in_card");
+			return state.map((arr) => {
 				let flag = false;
 
 				arr.listLabels.forEach((item) => {
