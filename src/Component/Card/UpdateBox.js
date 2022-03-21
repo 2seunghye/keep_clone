@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
-import { update_item } from "../../Redux/Actions/checkbox";
+import styled from "styled-components";
+import { update_item } from "../../Redux/Actions/memo";
 
 const StyledUpdateBox = styled.div`
 	width: 100%;
@@ -49,6 +49,8 @@ const UpdateBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 						<button onClick={() => onUpdate({ id: id, text: input })}>수정</button>
 					</>
 				);
+			default:
+				console.log("default");
 		}
 	};
 

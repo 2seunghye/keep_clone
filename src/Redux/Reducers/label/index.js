@@ -1,6 +1,7 @@
 import * as types from "../../types";
 
 export const initial_state = [
+	// Todo :: id 없애기
 	{
 		id: 1,
 		text: "Label1",

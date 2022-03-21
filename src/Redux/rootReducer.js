@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { memoFetch } from "./Reducers/checkbox";
+import { memoFetch } from "./Reducers/memo";
 import { labelFetch } from "./Reducers/label";
 
 const reducers = combineReducers({

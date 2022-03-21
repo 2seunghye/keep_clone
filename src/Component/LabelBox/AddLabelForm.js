@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { create_label_in_card } from "../../Redux/Actions/checkbox";
+import { create_label_in_card } from "../../Redux/Actions/memo";
 import { create_label } from "../../Redux/Actions/label";
 
 const StyledAddLabelForm = styled.div`
@@ -37,7 +37,7 @@ const AddLabelForm = ({ index }) => {
 	const hasLabelInLabelList = (_text) => {
 		let result = null;
 		for (let i = 0; i < labelState.length; ++i) {
-			if (labelState[i].text == _text) {
+			if (labelState[i].text === _text) {
 				result = true;
 				break;
 			}
@@ -51,7 +51,7 @@ const AddLabelForm = ({ index }) => {
 		const listLabels = CardState[index].listLabels;
 
 		for (let i = 0; i < listLabels.length; ++i) {
-			if (listLabels[i].text == _text) {
+			if (listLabels[i].text === _text) {
 				result = true;
 				break;
 			}
@@ -75,6 +75,7 @@ const AddLabelForm = ({ index }) => {
 		if (!hasLabelInLabelList(_text)) {
 			// 라벨 리스트에 존재하지 않음
 			let labelId = parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join(""));
+			// Todo :: 순차적으로 바꾸기
 			dispatch(create_label(_text, labelId));
 			dispatch(create_label_in_card(_index, _text, labelId));
 			setInput("");
@@ -82,7 +83,7 @@ const AddLabelForm = ({ index }) => {
 			// 라벨 리스트에 존재 함
 			let labelId = null;
 			labelState.forEach((item) => {
-				if (item.text == _text) {
+				if (item.text === _text) {
 					labelId = item.id;
 				}
 			});

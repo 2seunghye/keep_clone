@@ -1,5 +1,3 @@
-import { useDispatch } from "react-redux";
-import { create_label } from "../../Actions/label";
 import * as types from "../../types";
 
 export const initial_state = [
@@ -133,6 +131,7 @@ export const memoFetch = (state = initial_state, action) => {
 			console.log("update_label_in_card");
 			return state.map((arr, index) => {
 				if (index === action.index) {
+					console.log(payload.id);
 					return {
 						listType: arr.listType,
 						listItems: arr.listItems,

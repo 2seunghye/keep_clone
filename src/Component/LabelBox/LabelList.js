@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { css } from "styled-components";
-import { delete_label_in_card, update_label_in_card } from "../../Redux/Actions/checkbox";
-import { delete_label, update_label } from "../../Redux/Actions/label";
+import styled from "styled-components";
+import { delete_label_in_card } from "../../Redux/Actions/memo";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
 
@@ -71,7 +70,7 @@ const ListItems = ({ id, text, index }) => {
 const LabelList = ({ index }) => {
 	const state = useSelector((state) => state.memoFetch);
 
-	const labelList = state[index].listLabels.map((item, index) => <ListItems index={index} key={index} id={item.id} text={item.text} />);
+	const labelList = state[index].listLabels.map((item) => <ListItems index={index} key={item.id} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

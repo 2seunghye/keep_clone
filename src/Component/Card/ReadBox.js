@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
-import { change_checkbox_status, delete_item } from "../../Redux/Actions/checkbox";
+import styled from "styled-components";
+import { change_checkbox_status, delete_item } from "../../Redux/Actions/memo";
 const StyledLabel = styled.label`
 	display: inline-block;
 	position: relative;
@@ -93,8 +93,6 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const StyledEditButton = styled.button``;
-
 const ReadBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 	const dispatch = useDispatch();
 
@@ -129,6 +127,8 @@ const ReadBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 						<ButtonBox />
 					</>
 				);
+			default:
+				console.log("default");
 		}
 	};
 

@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
-import { change_checkbox_status, delete_checkbox, delete_item, update_checkbox, update_item } from "../../Redux/Actions/checkbox";
 import LabelBox from "../LabelBox";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
@@ -43,7 +42,6 @@ const StyledListItem = styled.li`
 `;
 
 const ListItems = ({ id, isChecked, text, index, type }) => {
-	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
 
 	switch (type) {
@@ -71,13 +69,15 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 					</>
 				</StyledListItem>
 			);
+		default:
+			console.log("default");
 	}
 };
 
 const List = ({ index, type }) => {
 	const state = useSelector((state) => state.memoFetch);
 
-	const listItems = state[index].listItems.map((item) => {
+	const listItems = state[index].listItems.map((item, index) => {
 		return <ListItems type={type} index={index} key={item.id} text={item.text} isChecked={item.isChecked} id={item.id} />;
 	});
 
