@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Card from "../Card";
 import styled from "styled-components";
+import CardList from "../MemoList/CardList";
 
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
@@ -34,29 +35,10 @@ const ShowMemoWithLabel = () => {
 		}
 	});
 
-	let otherCardList = filteredList.map((item, index) => {
-		if (!item.isFixed) {
-			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
-		}
-	});
-
-	let fixedCardList = filteredList.map((item, index) => {
-		if (item.isFixed) {
-			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
-		}
-	});
-
 	return (
 		<StyledDiv>
 			<h5>ShowMemoWithLabel</h5>
-			<div>
-				<h5>고정됨</h5>
-				{fixedCardList}
-			</div>
-			<div>
-				<h5>기타</h5>
-				{otherCardList}
-			</div>
+			<CardList state={filteredList} />
 		</StyledDiv>
 	);
 };

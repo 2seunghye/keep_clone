@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CreateMemoForm from "./CreateMemoForm";
 import CardList from "./CardList";
+import { useSelector } from "react-redux";
 
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
@@ -10,11 +11,13 @@ const StyledDiv = styled.div`
 `;
 
 const MemoList = () => {
+	const state = useSelector((state) => state.memoFetch);
+
 	return (
 		<StyledDiv>
 			<h5>Memo List</h5>
 			<CreateMemoForm />
-			<CardList />
+			<CardList state={state} />
 		</StyledDiv>
 	);
 };
