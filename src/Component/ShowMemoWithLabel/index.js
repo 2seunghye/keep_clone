@@ -34,7 +34,7 @@ const ShowMemoWithLabel = () => {
 		}
 	});
 
-	let cardList = filteredList.map((item, index) => {
+	let otherCardList = filteredList.map((item, index) => {
 		if (!item.isFixed) {
 			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
 		}
@@ -55,7 +55,7 @@ const ShowMemoWithLabel = () => {
 			</div>
 			<div>
 				<h5>기타</h5>
-				{cardList}
+				{otherCardList}
 			</div>
 		</StyledDiv>
 	);

@@ -16,7 +16,6 @@ const FixedButton = ({ listId, isFixed }) => {
 			<button onClick={onToggle}>{status ? "고정해제" : "고정"}</button>
 		</div>
 	);
-	// return <div>FixedButton</div>;
 };
 
 export default FixedButton;

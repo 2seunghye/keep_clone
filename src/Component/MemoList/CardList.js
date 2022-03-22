@@ -5,7 +5,7 @@ import Card from "../Card";
 const CardList = () => {
 	const state = useSelector((state) => state.memoFetch);
 
-	let cardList = state.map((item, index) => {
+	let otherCardList = state.map((item, index) => {
 		console.log(item.isFixed);
 		if (!item.isFixed && item.isFixed !== undefined) {
 			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
@@ -28,7 +28,7 @@ const CardList = () => {
 			</div>
 			<div>
 				<h5>기타</h5>
-				{cardList}
+				{otherCardList}
 			</div>
 		</>
 	);
