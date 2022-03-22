@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
-import { change_checkbox_status, delete_item } from "../../Redux/Actions/checkbox";
+import styled from "styled-components";
+import { change_checkbox_status, delete_item } from "../../Redux/Actions/memo";
 const StyledLabel = styled.label`
 	display: inline-block;
 	position: relative;
@@ -93,12 +93,10 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const StyledEditButton = styled.button``;
-
-const ReadBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
+const ReadBox = ({ type, listId, id, text, isChecked, setIsEditing }) => {
 	const dispatch = useDispatch();
 
-	const removeBtn = <StyledRemoveButton onClick={() => dispatch(delete_item(index, parseInt(id)))} aria-label="Remove"></StyledRemoveButton>;
+	const removeBtn = <StyledRemoveButton onClick={() => dispatch(delete_item(listId, parseInt(id)))} aria-label="Remove"></StyledRemoveButton>;
 	const editBtn = <button onClick={() => setIsEditing(true)}>수정</button>;
 
 	const ButtonBox = () => {
@@ -118,7 +116,7 @@ const ReadBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 						<StyledLabel className={isChecked ? "active" : ""} htmlFor={id}>
 							{text}
 						</StyledLabel>
-						<StyledInput type="checkbox" value={text} checked={isChecked} id={id} onChange={() => dispatch(change_checkbox_status(index, id))} />
+						<StyledInput type="checkbox" value={text} checked={isChecked} id={id} onChange={() => dispatch(change_checkbox_status(listId, id))} />
 						<ButtonBox />
 					</>
 				);
@@ -129,6 +127,8 @@ const ReadBox = ({ type, index, id, text, isChecked, setIsEditing }) => {
 						<ButtonBox />
 					</>
 				);
+			default:
+				console.log("default");
 		}
 	};
 

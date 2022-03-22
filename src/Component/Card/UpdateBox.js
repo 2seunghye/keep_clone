@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
-import { update_item } from "../../Redux/Actions/checkbox";
+import styled from "styled-components";
+import { update_item } from "../../Redux/Actions/memo";
 
 const StyledUpdateBox = styled.div`
 	width: 100%;
@@ -23,18 +23,14 @@ const StyledUpdateBox = styled.div`
 		min-height: 100px;
 	}
 `;
-const UpdateBox = ({ type, index, id, text, isChecked }) => {
+const UpdateBox = ({ type, listId, id, text, isChecked, setIsEditing }) => {
 	const dispatch = useDispatch();
 
 	const [input, setInput] = useState(text);
 
-	const onUpdate = (input) => {
-		switch (type) {
-			case "checkbox":
-				return dispatch(update_item(index, { id: id, text: input, isChecked: isChecked }));
-			case "text":
-				return dispatch(update_item(index, { id: id, text: input }));
-		}
+	const onUpdate = (payload) => {
+		dispatch(update_item(listId, payload));
+		setIsEditing(false);
 	};
 
 	const editForm = () => {
@@ -43,16 +39,18 @@ const UpdateBox = ({ type, index, id, text, isChecked }) => {
 				return (
 					<>
 						<input type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate(input)}>수정</button>
+						<button onClick={() => onUpdate({ id: id, text: input, isChecked: isChecked })}>수정</button>
 					</>
 				);
 			case "text":
 				return (
 					<>
 						<textarea type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate(input)}>수정</button>
+						<button onClick={() => onUpdate({ id: id, text: input })}>수정</button>
 					</>
 				);
+			default:
+				console.log("default");
 		}
 	};
 

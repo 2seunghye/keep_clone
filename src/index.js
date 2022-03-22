@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "./Redux/rootReducer";
 import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
+import { BrowserRouter } from "react-router-dom";
+import NavBar from "./route/NavBar";
 
 // const persistedState = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem("reduxState")) : {};
 
@@ -18,9 +20,12 @@ store.subscribe(() => {
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<App />
-		</Provider>
+		<BrowserRouter>
+			<Provider store={store}>
+				<NavBar />
+				<App />
+			</Provider>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

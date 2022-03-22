@@ -6,7 +6,7 @@ const CardList = () => {
 	const state = useSelector((state) => state.memoFetch);
 
 	let cardList = state.map((item, index) => {
-		return <Card key={index} item={item} index={index} />;
+		return <Card key={index} item={item} listId={item.listId} />;
 	});
 	return <>{cardList}</>;
 };

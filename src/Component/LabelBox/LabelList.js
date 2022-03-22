@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { css } from "styled-components";
-import { delete_label_in_card, update_label_in_card } from "../../Redux/Actions/checkbox";
-import { delete_label, update_label } from "../../Redux/Actions/label";
+import styled from "styled-components";
+import { delete_label_in_card } from "../../Redux/Actions/memo";
 import ReadBox from "./ReadBox";
-import UpdateBox from "./UpdateBox";
 
 const StyledListBox = styled.ul`
 	list-style: none;
@@ -56,22 +54,29 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const ListItems = ({ id, text, index }) => {
+const ListItems = ({ id, text, listId }) => {
 	const dispatch = useDispatch();
-	const [isActive, setIsActive] = useState(false);
 
 	return (
 		<StyledListItem>
-			{isActive ? <UpdateBox id={id} text={text} index={index} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />}
-			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(index, id))} aria-label="Remove"></StyledRemoveButton>
+			<ReadBox text={text} />
+			<StyledRemoveButton onClick={() => dispatch(delete_label_in_card(listId, id))} aria-label="Remove"></StyledRemoveButton>
 		</StyledListItem>
 	);
 };
 
-const LabelList = ({ index }) => {
-	const state = useSelector((state) => state.memoFetch);
+const LabelList = ({ listId }) => {
+	const memoState = useSelector((state) => state.memoFetch);
 
-	const labelList = state[index].listLabels.map((item, index) => <ListItems index={index} key={index} id={item.id} text={item.text} />);
+	let targetMemo;
+
+	memoState.forEach((item) => {
+		if (item.listId == listId) {
+			targetMemo = item.listLabels;
+		}
+	});
+
+	const labelList = targetMemo.map((item) => <ListItems listId={listId} key={item.id} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

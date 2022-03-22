@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { create_check_card, create_text_card } from "../../Redux/Actions/checkbox";
+import { create_check_card, create_text_card } from "../../Redux/Actions/memo";
 
 const CreateMemoForm = () => {
 	const dispatch = useDispatch();

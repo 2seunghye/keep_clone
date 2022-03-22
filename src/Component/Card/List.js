@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
-import { change_checkbox_status, delete_checkbox, delete_item, update_checkbox, update_item } from "../../Redux/Actions/checkbox";
 import LabelBox from "../LabelBox";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
@@ -42,8 +41,7 @@ const StyledListItem = styled.li`
 	}
 `;
 
-const ListItems = ({ id, isChecked, text, index, type }) => {
-	const dispatch = useDispatch();
+const ListItems = ({ id, isChecked, text, listId, type }) => {
 	const [isEditing, setIsEditing] = useState(false);
 
 	switch (type) {
@@ -52,9 +50,9 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 				<StyledListItem isChecked={isChecked}>
 					<>
 						{isEditing ? (
-							<UpdateBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} />
+							<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						) : (
-							<ReadBox type={"checkbox"} id={id} index={index} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+							<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
 						)}
 					</>
 				</StyledListItem>
@@ -62,23 +60,38 @@ const ListItems = ({ id, isChecked, text, index, type }) => {
 		case "text":
 			return (
 				<StyledListItem>
-					<>{isEditing ? <UpdateBox type={"text"} id={id} index={index} text={text} /> : <ReadBox type={"text"} id={id} index={index} text={text} setIsEditing={setIsEditing} />}</>
+					<>
+						{isEditing ? (
+							<UpdateBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
+						) : (
+							<ReadBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
+						)}
+					</>
 				</StyledListItem>
 			);
+		default:
+			console.log("default");
 	}
 };
 
-const List = ({ index, type }) => {
-	const state = useSelector((state) => state.memoFetch);
+const List = ({ listId, type }) => {
+	let memoState = useSelector((state) => state.memoFetch);
+	let targetMemo = [];
 
-	const listItems = state[index].listItems.map((item) => {
-		return <ListItems type={type} index={index} key={item.id} text={item.text} isChecked={item.isChecked} id={item.id} />;
+	memoState.forEach((item) => {
+		if (item.listId == listId) {
+			targetMemo = item;
+		}
+	});
+
+	const listItems = targetMemo.listItems.map((item, index) => {
+		return <ListItems key={index} listId={listId} type={type} text={item.text} isChecked={item.isChecked} id={item.id} />;
 	});
 
 	return (
 		<StyledCheckBoxList>
 			<StyledUnorderedList>{listItems}</StyledUnorderedList>
-			<LabelBox index={index} />
+			<LabelBox listId={listId} />
 		</StyledCheckBoxList>
 	);
 };
