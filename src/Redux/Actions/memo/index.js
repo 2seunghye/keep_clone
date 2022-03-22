@@ -70,3 +70,8 @@ export const create_text_card = () => ({
 	type: types.CREATE_TEXT_CARD,
 	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
 });
+
+export const toggle_fixed_status = (listId) => ({
+	type: types.TOGGLE_FIXED_STATUS,
+	listId: listId,
+});

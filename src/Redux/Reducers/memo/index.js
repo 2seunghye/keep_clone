@@ -2,6 +2,7 @@ import * as types from "../../types";
 
 export const initial_state = [
 	{
+		isFixed: true,
 		listId: 1,
 		listType: "checkbox",
 		listItems: [
@@ -24,6 +25,7 @@ export const initial_state = [
 		listLabels: [],
 	},
 	{
+		isFixed: false,
 		listId: 2,
 		listType: "text",
 		listItems: [
@@ -44,6 +46,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					isfixed: false,
 					listId: action.id,
 					listType: "checkbox",
 					listItems: [],
@@ -55,6 +58,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					isfixed: false,
 					listId: action.id,
 					listType: "text",
 					listItems: [],
@@ -157,6 +161,18 @@ export const memoFetch = (state = initial_state, action) => {
 					return {
 						...arr,
 						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
+					};
+				}
+				return arr;
+			});
+		case types.TOGGLE_FIXED_STATUS:
+			console.log("toggleFixedStatus");
+
+			return state.map((arr) => {
+				if (arr.listId == action.listId) {
+					return {
+						...arr,
+						isFixed: !arr.isFixed,
 					};
 				}
 				return arr;

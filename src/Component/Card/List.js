@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import LabelBox from "../LabelBox";
+import FixedButton from "./FixedButton";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
 
