@@ -28,18 +28,34 @@ const UpdateBox = ({ text, setIsActive }) => {
 	const initial_text = text;
 	const [input, setInput] = useState(initial_text);
 
-	const onUpdate = (prev, cur) => {
-		let searchId;
-		labelState.forEach((item) => {
-			console.log(item.text == prev, item.text, prev, item.id);
-			if (item.text == prev) {
-				searchId = item.id;
+	const hasLabelInLabelList = (_text) => {
+		let result = null;
+		for (let i = 0; i < labelState.length; ++i) {
+			if (labelState[i].text === _text) {
+				result = true;
+				break;
 			}
-		});
+			result = false;
+		}
+		return result;
+	};
 
-		setIsActive(false);
-		dispatch(update_label({ id: searchId, text: cur }));
-		dispatch(update_label_in_all_card({ id: searchId, text: cur }));
+	const onUpdate = (prev, cur) => {
+		if (!hasLabelInLabelList(cur)) {
+			let searchId;
+			labelState.forEach((item) => {
+				console.log(item.text == prev, item.text, prev, item.id);
+				if (item.text == prev) {
+					searchId = item.id;
+				}
+			});
+
+			setIsActive(false);
+			dispatch(update_label({ id: searchId, text: cur }));
+			dispatch(update_label_in_all_card({ id: searchId, text: cur }));
+		} else {
+			alert("이미 존재하는 라벨명입니다!");
+		}
 	};
 
 	return (
