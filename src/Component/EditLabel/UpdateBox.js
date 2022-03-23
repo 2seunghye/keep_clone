@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { update_label } from "../../Redux/Actions/label";
-import { UPDATE_LABEL_IN_ALL_CARD } from "../../Redux/Actions/memo";
+import { update_label_in_all_card, UPDATE_LABEL_IN_ALL_CARD } from "../../Redux/Actions/memo";
 
 const StyledUpdateBox = styled.div`
 	width: 100%;
@@ -39,7 +39,7 @@ const UpdateBox = ({ text, setIsActive }) => {
 
 		setIsActive(false);
 		dispatch(update_label({ id: searchId, text: cur }));
-		dispatch(UPDATE_LABEL_IN_ALL_CARD({ id: searchId, text: cur }));
+		dispatch(update_label_in_all_card({ id: searchId, text: cur }));
 	};
 
 	return (
