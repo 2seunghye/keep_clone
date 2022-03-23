@@ -82,6 +82,12 @@ export const delete_card = (listId) => ({
 	listId: listId,
 });
 
+export const copy_card = (payload) => ({
+	type: types.COPY_CARD,
+	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
+	payload,
+});
+
 export const toggle_fixed_status = (listId) => ({
 	type: types.TOGGLE_FIXED_STATUS,
 	listId: listId,
