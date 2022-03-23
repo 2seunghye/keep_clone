@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { change_background_color, update_item } from "../../Redux/Actions/memo";
 
 const StyleDiv = styled.div`
 	display: flex;
@@ -20,23 +22,29 @@ const StyledButton = styled.button`
 	}
 `;
 
-const BackgroundColorBox = ({ setColor }) => {
+const BackgroundColorBox = ({ listId }) => {
+	const dispatch = useDispatch();
+
+	const onClickColorBtn = (color) => {
+		dispatch(change_background_color(listId, { bgColor: color }));
+	};
+
 	return (
 		<>
 			<StyleDiv>
-				<StyledButton color={"#fff"} onClick={() => setColor("#fff")}></StyledButton>
-				<StyledButton color={"#f3e5f5"} onClick={() => setColor("#f3e5f5")}></StyledButton>
-				<StyledButton color={"#ede7f6"} onClick={() => setColor("#ede7f6")}></StyledButton>
-				<StyledButton color={"#e8eaf6"} onClick={() => setColor("#e8eaf6")}></StyledButton>
-				<StyledButton color={"#e3f2fd"} onClick={() => setColor("#e3f2fd")}></StyledButton>
-				<StyledButton color={"#e1f5fe"} onClick={() => setColor("#e1f5fe")}></StyledButton>
-				<StyledButton color={"#e0f7fa"} onClick={() => setColor("#e0f7fa")}></StyledButton>
-				<StyledButton color={"#e0f2f1"} onClick={() => setColor("#e0f2f1")}></StyledButton>
-				<StyledButton color={"#e8f5e9"} onClick={() => setColor("#e8f5e9")}></StyledButton>
-				<StyledButton color={"#f1f8e9"} onClick={() => setColor("#f1f8e9")}></StyledButton>
-				<StyledButton color={"#f9fbe7"} onClick={() => setColor("#f9fbe7")}></StyledButton>
-				<StyledButton color={"#efebe9"} onClick={() => setColor("#efebe9")}></StyledButton>
-				<StyledButton color={"#eceff1"} onClick={() => setColor("#eceff1")}></StyledButton>
+				<StyledButton color={"#ffffff"} onClick={() => onClickColorBtn("#ffffff")}></StyledButton>
+				<StyledButton color={"#f3e5f5"} onClick={() => onClickColorBtn("#f3e5f5")}></StyledButton>
+				<StyledButton color={"#ede7f6"} onClick={() => onClickColorBtn("#ede7f6")}></StyledButton>
+				<StyledButton color={"#e8eaf6"} onClick={() => onClickColorBtn("#e8eaf6")}></StyledButton>
+				<StyledButton color={"#e3f2fd"} onClick={() => onClickColorBtn("#e3f2fd")}></StyledButton>
+				<StyledButton color={"#e1f5fe"} onClick={() => onClickColorBtn("#e1f5fe")}></StyledButton>
+				<StyledButton color={"#e0f7fa"} onClick={() => onClickColorBtn("#e0f7fa")}></StyledButton>
+				<StyledButton color={"#e0f2f1"} onClick={() => onClickColorBtn("#e0f2f1")}></StyledButton>
+				<StyledButton color={"#e8f5e9"} onClick={() => onClickColorBtn("#e8f5e9")}></StyledButton>
+				<StyledButton color={"#f1f8e9"} onClick={() => onClickColorBtn("#f1f8e9")}></StyledButton>
+				<StyledButton color={"#f9fbe7"} onClick={() => onClickColorBtn("#f9fbe7")}></StyledButton>
+				<StyledButton color={"#efebe9"} onClick={() => onClickColorBtn("#efebe9")}></StyledButton>
+				<StyledButton color={"#eceff1"} onClick={() => onClickColorBtn("#eceff1")}></StyledButton>
 			</StyleDiv>
 		</>
 	);

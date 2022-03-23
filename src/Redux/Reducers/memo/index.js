@@ -2,6 +2,7 @@ import * as types from "../../types";
 
 export const initial_state = [
 	{
+		bgColor: "#fff",
 		isFixed: true,
 		listId: 1,
 		listType: "checkbox",
@@ -25,6 +26,7 @@ export const initial_state = [
 		listLabels: [],
 	},
 	{
+		bgColor: "#fff",
 		isFixed: false,
 		listId: 2,
 		listType: "text",
@@ -46,6 +48,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					bgColor: "#fff",
 					isfixed: false,
 					listId: action.id,
 					listType: "checkbox",
@@ -58,6 +61,7 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					bgColor: "#fff",
 					isfixed: false,
 					listId: action.id,
 					listType: "text",
@@ -101,6 +105,17 @@ export const memoFetch = (state = initial_state, action) => {
 					return {
 						...arr,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? { ...obj, isChecked: !obj.isChecked } : obj)),
+					};
+				}
+				return arr;
+			});
+
+		case types.CHANGE_BACKGROUND_COLOR:
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
+					return {
+						...arr,
+						bgColor: payload.bgColor,
 					};
 				}
 				return arr;

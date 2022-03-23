@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MemoInput from "./MemoInput";
 import List from "./List";
 import FixedButton from "./FixedButton";
-import { useSelector } from "react-redux";
 import BackgroundColorBox from "./BackgroundColorBox";
-import { css } from "styled-components";
 
 const StyledDiv = styled.div`
 	background: ${(props) => props.color || "#fff"};
@@ -14,14 +12,12 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-const Card = ({ item, isFixed }) => {
-	const [color, setColor] = useState("#fff");
-
+const Card = ({ item }) => {
 	return (
-		<StyledDiv color={color}>
+		<StyledDiv color={item.bgColor}>
 			<h5>Card</h5>
-			<BackgroundColorBox setColor={setColor} />
-			<FixedButton listId={item.listId} isFixed={isFixed} />
+			<BackgroundColorBox listId={item.listId} bgColor={item.bgColor} />
+			<FixedButton listId={item.listId} isFixed={item.isFixed} />
 			<MemoInput listId={item.listId} />
 			<List listId={item.listId} type={item.listType} />
 		</StyledDiv>

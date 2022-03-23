@@ -61,6 +61,12 @@ export const change_checkbox_status = (listId, id) => ({
 	},
 });
 
+export const change_background_color = (listId, payload) => ({
+	type: types.CHANGE_BACKGROUND_COLOR,
+	listId: listId,
+	payload,
+});
+
 export const create_check_card = () => ({
 	type: types.CREATE_CHECK_CARD,
 	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
