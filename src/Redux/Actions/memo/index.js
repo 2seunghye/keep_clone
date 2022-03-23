@@ -77,6 +77,11 @@ export const create_text_card = () => ({
 	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
 });
 
+export const delete_card = (listId) => ({
+	type: types.DELETE_CARD,
+	listId: listId,
+});
+
 export const toggle_fixed_status = (listId) => ({
 	type: types.TOGGLE_FIXED_STATUS,
 	listId: listId,

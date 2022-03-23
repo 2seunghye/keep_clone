@@ -69,6 +69,8 @@ export const memoFetch = (state = initial_state, action) => {
 					listLabels: [],
 				},
 			];
+		case types.DELETE_CARD:
+			return state.filter((arr) => arr.listId !== action.listId);
 
 		case types.CREATE_ITEM:
 			return state.map((arr) => {
