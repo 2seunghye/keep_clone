@@ -1,44 +1,45 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Card from "../Card";
 import styled from "styled-components";
-import CardList from "../MemoList/CardList";
+import CardListWarp from "../MemoList/CardListWrap";
 
+// styled component
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
 	max-width: 500px;
 	margin: 20px;
 `;
 
-const ShowMemoWithLabel = () => {
-	const labelText = useParams().labelText;
+function ShowMemoWithLabel(){
 	const labelState = useSelector((state) => state.labelFetch);
-	const MemoState = useSelector((state) => state.memoFetch);
+	const memoState = useSelector((state) => state.memoFetch);
+	const labelText = useParams().labelText;
+	// const filteredList = MemoState.filter((item) => {
+	// 	const labels = item.labels;
 
-	let labelId = null;
-	labelState.forEach((item) => {
-		if (item.text === labelText) {
-			labelId = item.id;
-		}
-	});
+	// 	if (labels.length) {
+	// 		for (let i = 0; i < labels.length; ++i) {
+	// 			if (labels[i].id === labelId) {
+	// 				return item;
+	// 			}
+	// 		}
+	// 	}
+	// });
+	const targetLabel = labelState.filter(
+		label => label.text === labelText
+	)[0];
 
-	const filteredList = MemoState.filter((item) => {
-		const listLabels = item.listLabels;
-
-		if (listLabels.length) {
-			for (let i = 0; i < listLabels.length; ++i) {
-				if (listLabels[i].id == labelId) {
-					return item;
-				}
-			}
-		}
-	});
+	console.log(targetLabel)
+	const filteredList = targetLabel.memoGroup.reduce((newList, memoId, index) => {
+		newList.push(memoState.filter( memo => memo.listId === memoId)[0])
+		return newList;
+	}, []);
 
 	return (
 		<StyledDiv>
-			<h5>ShowMemoWithLabel</h5>
-			<CardList state={filteredList} />
+			
+			<CardListWarp state={filteredList} />
 		</StyledDiv>
 	);
 };

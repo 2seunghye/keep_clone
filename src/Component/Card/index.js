@@ -14,17 +14,18 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-const Card = ({ item }) => {
+const Card = ({card_data}) => {
 	const dispatch = useDispatch();
+	const {contents, listId, bgColor, isFixed, useCheckbox} = card_data;
 	return (
-		<StyledDiv color={item.bgColor}>
+		<StyledDiv color={bgColor}>
 			<h5>Card</h5>
-			<button onClick={() => dispatch(delete_card(item.listId))}>카드 삭제</button>
-			<button onClick={() => dispatch(copy_card(item))}>사본 만들기</button>
-			<BackgroundColorBox listId={item.listId} bgColor={item.bgColor} />
-			<FixedButton listId={item.listId} isFixed={item.isFixed} />
-			<MemoInput listId={item.listId} />
-			<List listId={item.listId} type={item.listType} />
+			<button onClick={() => dispatch(delete_card(listId))}>카드 삭제</button>
+			<button onClick={() => dispatch(copy_card(card_data))}>사본 만들기</button>
+			<BackgroundColorBox listId={listId} bgColor={bgColor} />
+			<FixedButton listId={listId} isFixed={isFixed} />
+			<MemoInput listId={listId} />
+			<List listId={listId} contents={contents} useCheckbox={useCheckbox} />
 		</StyledDiv>
 	);
 };

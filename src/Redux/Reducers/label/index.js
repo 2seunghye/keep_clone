@@ -1,8 +1,6 @@
+import { labelState } from "../../../data/initialState";
 import * as types from "../../types";
-
-export const initial_state = [];
-
-export const labelFetch = (state = initial_state, action) => {
+export const labelFetch = (state = labelState, action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case types.CREATE_LABEL:

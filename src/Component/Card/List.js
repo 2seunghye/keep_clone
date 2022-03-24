@@ -42,11 +42,8 @@ const StyledListItem = styled.li`
 	}
 `;
 
-const ListItems = ({ id, isChecked, text, listId, type }) => {
+function ListItem({ id, isChecked, text, listId  }){
 	const [isEditing, setIsEditing] = useState(false);
-
-	switch (type) {
-		case "checkbox":
 			return (
 				<StyledListItem isChecked={isChecked}>
 					<>
@@ -58,35 +55,15 @@ const ListItems = ({ id, isChecked, text, listId, type }) => {
 					</>
 				</StyledListItem>
 			);
-		case "text":
-			return (
-				<StyledListItem>
-					<>
-						{isEditing ? (
-							<UpdateBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
-						) : (
-							<ReadBox type={"text"} id={id} listId={listId} text={text} setIsEditing={setIsEditing} />
-						)}
-					</>
-				</StyledListItem>
-			);
-		default:
-			console.log("default");
-	}
+	
+	
 };
 
-const List = ({ listId, type }) => {
-	let memoState = useSelector((state) => state.memoFetch);
-	let targetMemo = [];
+const List = ({ listId, contents, useCheckbox }) => {
 
-	memoState.forEach((item) => {
-		if (item.listId == listId) {
-			targetMemo = item;
-		}
-	});
-
-	const listItems = targetMemo.listItems.map((item, index) => {
-		return <ListItems key={index} listId={listId} type={type} text={item.text} isChecked={item.isChecked} id={item.id} />;
+	console.log(contents)
+	const listItems = contents.map((item, index) => {
+		return <ListItem key={index} listId={listId} useCheckbox={useCheckbox} text={item.text} isChecked={item.isChecked} id={item.id} />;
 	});
 
 	return (

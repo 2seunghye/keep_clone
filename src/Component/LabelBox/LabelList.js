@@ -54,7 +54,7 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const ListItems = ({ id, text, listId }) => {
+const ListItem = ({ id, text, listId }) => {
 	const dispatch = useDispatch();
 
 	return (
@@ -68,15 +68,15 @@ const ListItems = ({ id, text, listId }) => {
 const LabelList = ({ listId }) => {
 	const memoState = useSelector((state) => state.memoFetch);
 
-	let targetMemo;
+	let target;
 
 	memoState.forEach((item) => {
 		if (item.listId == listId) {
-			targetMemo = item.listLabels;
+			target = item.labels;
 		}
 	});
 
-	const labelList = targetMemo.map((item) => <ListItems listId={listId} key={item.id} id={item.id} text={item.text} />);
+	const labelList = target.map((item) => <ListItem listId={listId} key={item.id} id={item.id} text={item.text} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import CreateMemoForm from "./CreateMemoForm";
-import CardList from "./CardList";
+import CreateMemoForm from "../UI/CreateMemoForm";
+import CardListWrap from "./CardListWrap";
 import { useSelector } from "react-redux";
+import Heading from "../common/Heading";
 
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
@@ -15,9 +16,9 @@ const MemoList = () => {
 
 	return (
 		<StyledDiv>
-			<h5>Memo List</h5>
+			<Heading level={"h1"} headcopy="Memo List" />
 			<CreateMemoForm />
-			<CardList state={state} />
+			<CardListWrap state={state} />
 		</StyledDiv>
 	);
 };

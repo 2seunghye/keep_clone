@@ -5,7 +5,6 @@ const LabelView = () => {
 	return (
 		<>
 			<>labelView</>
-			{/* ShowMemoWithLabel */}
 			<Outlet />
 		</>
 	);
