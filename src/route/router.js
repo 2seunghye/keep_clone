@@ -8,6 +8,7 @@ import LabelView from "../View/LabelView";
 const RoutesComponent = () => {
 	return (
 		<Routes>
+			<Route index element={<HomeView />} />
 			<Route path="/" element={<HomeView />} />
 			<Route path="/editLabel" element={<EditLabelView />} />
 			<Route path="/label" element={<LabelView />}>
