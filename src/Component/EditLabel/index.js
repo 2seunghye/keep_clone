@@ -6,11 +6,10 @@ import UpdateBox from "./UpdateBox";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
-	border: 1px solid #000;
+	border: 2px dotted pink;
 	max-width: 500px;
 	margin: 20px;
 `;
-
 const LabelItem = ({ text }) => {
 	const [isActive, setIsActive] = useState(false);
 	return <div>{isActive ? <UpdateBox text={text} setIsActive={setIsActive} /> : <ReadBox text={text} setIsActive={setIsActive} />}</div>;
@@ -19,8 +18,8 @@ const LabelItem = ({ text }) => {
 const EditLabel = () => {
 	const labelState = useSelector((state) => state.labelFetch);
 
-	const labelList = labelState.map((item) => {
-		return <LabelItem text={item.text} />;
+	const labelList = labelState.map((item, index) => {
+		return <LabelItem key={index} text={item.text} />;
 	});
 
 	return (

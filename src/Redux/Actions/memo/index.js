@@ -33,7 +33,7 @@ export const create_label_in_card = (listId, text, id) => ({
 	},
 });
 
-export const UPDATE_LABEL_IN_ALL_CARD = (payload) => ({
+export const update_label_in_all_card = (payload) => ({
 	type: types.UPDATE_LABEL_IN_ALL_CARD,
 	payload,
 });
@@ -61,6 +61,12 @@ export const change_checkbox_status = (listId, id) => ({
 	},
 });
 
+export const change_background_color = (listId, payload) => ({
+	type: types.CHANGE_BACKGROUND_COLOR,
+	listId: listId,
+	payload,
+});
+
 export const create_check_card = () => ({
 	type: types.CREATE_CHECK_CARD,
 	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
@@ -69,4 +75,20 @@ export const create_check_card = () => ({
 export const create_text_card = () => ({
 	type: types.CREATE_TEXT_CARD,
 	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
+});
+
+export const delete_card = (listId) => ({
+	type: types.DELETE_CARD,
+	listId: listId,
+});
+
+export const copy_card = (payload) => ({
+	type: types.COPY_CARD,
+	id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
+	payload,
+});
+
+export const toggle_fixed_status = (listId) => ({
+	type: types.TOGGLE_FIXED_STATUS,
+	listId: listId,
 });

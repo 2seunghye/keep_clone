@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Card from "../Card";
+import styled from "styled-components";
 
-const CardList = () => {
-	const state = useSelector((state) => state.memoFetch);
+const StyledTitle = styled.h5`
+	font-size: 20px;
+	color: red;
+`;
 
-	let cardList = state.map((item, index) => {
-		return <Card key={index} item={item} listId={item.listId} />;
+const OtherCardList = ({ state }) => {
+	return state.map((item, index) => {
+		if (!item.isFixed) {
+			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
+		}
 	});
-	return <>{cardList}</>;
+};
+
+const FixedCardList = ({ state }) => {
+	return state.map((item, index) => {
+		if (item.isFixed) {
+			return <Card key={index} item={item} listId={item.listId} isFixed={item.isFixed} />;
+		}
+	});
+};
+
+const CardList = ({ state }) => {
+	return (
+		<>
+			<div>
+				<StyledTitle>고정됨</StyledTitle>
+				<FixedCardList state={state} />
+			</div>
+			<div>
+				<StyledTitle>기타</StyledTitle>
+				<OtherCardList state={state} />
+			</div>
+		</>
+	);
 };
 
 export default CardList;

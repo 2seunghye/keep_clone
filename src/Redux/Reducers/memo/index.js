@@ -2,6 +2,8 @@ import * as types from "../../types";
 
 export const initial_state = [
 	{
+		bgColor: "#fff",
+		isFixed: true,
 		listId: 1,
 		listType: "checkbox",
 		listItems: [
@@ -24,6 +26,8 @@ export const initial_state = [
 		listLabels: [],
 	},
 	{
+		bgColor: "#fff",
+		isFixed: false,
 		listId: 2,
 		listType: "text",
 		listItems: [
@@ -44,6 +48,8 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					bgColor: "#fff",
+					isfixed: false,
 					listId: action.id,
 					listType: "checkbox",
 					listItems: [],
@@ -55,10 +61,24 @@ export const memoFetch = (state = initial_state, action) => {
 			return [
 				...state,
 				{
+					bgColor: "#fff",
+					isfixed: false,
 					listId: action.id,
 					listType: "text",
 					listItems: [],
 					listLabels: [],
+				},
+			];
+		case types.DELETE_CARD:
+			return state.filter((arr) => arr.listId !== action.listId);
+
+		case types.COPY_CARD:
+			return [
+				...state,
+				{
+					...payload,
+					isFixed: false,
+					listId: action.id,
 				},
 			];
 
@@ -97,6 +117,17 @@ export const memoFetch = (state = initial_state, action) => {
 					return {
 						...arr,
 						listItems: arr.listItems.map((obj) => (obj.id === payload.id ? { ...obj, isChecked: !obj.isChecked } : obj)),
+					};
+				}
+				return arr;
+			});
+
+		case types.CHANGE_BACKGROUND_COLOR:
+			return state.map((arr) => {
+				if (arr.listId === action.listId) {
+					return {
+						...arr,
+						bgColor: payload.bgColor,
 					};
 				}
 				return arr;
@@ -157,6 +188,18 @@ export const memoFetch = (state = initial_state, action) => {
 					return {
 						...arr,
 						listLabels: arr.listLabels.filter((obj) => obj.id !== payload.id),
+					};
+				}
+				return arr;
+			});
+		case types.TOGGLE_FIXED_STATUS:
+			console.log("toggleFixedStatus");
+
+			return state.map((arr) => {
+				if (arr.listId == action.listId) {
+					return {
+						...arr,
+						isFixed: !arr.isFixed,
 					};
 				}
 				return arr;
