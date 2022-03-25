@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import LabelBox from "../LabelBox";
-import FixedButton from "./FixedButton";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
 
@@ -44,19 +42,17 @@ const StyledListItem = styled.li`
 
 function ListItem({ id, isChecked, text, listId  }){
 	const [isEditing, setIsEditing] = useState(false);
-			return (
-				<StyledListItem isChecked={isChecked}>
-					<>
-						{isEditing ? (
-							<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
-						) : (
-							<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
-						)}
-					</>
-				</StyledListItem>
-			);
-	
-	
+	return (
+		<StyledListItem isChecked={isChecked}>
+			<>
+				{isEditing ? (
+					<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+				) : (
+					<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+				)}
+			</>
+		</StyledListItem>
+	);
 };
 
 const List = ({ listId, contents, useCheckbox }) => {
