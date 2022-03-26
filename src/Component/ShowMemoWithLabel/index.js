@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import CardListWarp from "../MemoList/CardListWrap";
+import MemoClassfier from "../MemoList/MemoClassfier";
 
 // styled component
 const StyledDiv = styled.div`
@@ -21,10 +21,9 @@ function ShowMemoWithLabel(){
 		newList.push(pick);
 		return newList;
 	}, []);
-
 	return (
 		<StyledDiv>
-			<CardListWarp state={filteredMemoState} />
+			<MemoClassfier state={filteredMemoState} />
 		</StyledDiv>
 	);
 };

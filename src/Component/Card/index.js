@@ -9,7 +9,7 @@ import {
 	create_item,
 	toggle_fixed_status
 } from "../../Redux/Actions/memo";
-// call component
+// called component
 import Heading from "../common/Heading";
 import MemoInput from "./MemoInput";
 import List from "./List";
@@ -26,7 +26,6 @@ const UIButton = styled.button`
 	color : ${props => props.isPrimary ? "white" : "black"}
 	background-color : ${props => props.isPrimary ? "steelblue" : "ivory"}
 `;
-
 // component
 function MemoUIGroup({memo}){
 	const {id} = memo;
@@ -40,23 +39,26 @@ function MemoUIGroup({memo}){
 		</>
 	)
 }
-
-function Card({card_data}){
-	const {contents, listId, bgColor, isFixed, useCheckbox} = card_data;
+function MemoCard({singleMemoData}){
+	const {contents, listId, bgColor, isFixed, useCheckbox} = singleMemoData;
 	const dispatch = useDispatch();
+	// state updator function
+	// update memo bg color
 	const onChoiceColor = (color) => {
 		const payload = { bgColor: color };
 		const action = change_background_color(listId, payload);
 		dispatch(action);
 	};
+	// update memo status:hang on top
 	const onToggleFixed = () => {
 		const payload = listId;
 		const action = toggle_fixed_status(payload);
 		dispatch(action);
 	};
-	const memoMaker = (_input, _setInput) => (_event) => {
+	// add new memo
+	const memoMaker = (_input, _setInput) => (event) => {
 		// escape
-		if (!_event.key === "Enter") return false;
+		if (!event.key === "Enter") return false;
 		if (_input === "") return false;
 		const payload = {
 			listId,
@@ -64,6 +66,7 @@ function Card({card_data}){
 		};
 		const action = create_item(payload);
 		dispatch(action);
+		// reset input value
 		_setInput("");
 	};
 	return (
@@ -82,9 +85,9 @@ function Card({card_data}){
 				listId={listId}
 				contents={contents}
 				useCheckbox={useCheckbox} />
-			<MemoUIGroup />
+			<MemoUIGroup memo={singleMemoData} />
 		</CardInner>
 	);
 };
 
-export default Card;
+export default MemoCard;
