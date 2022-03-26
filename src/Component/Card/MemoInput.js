@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import useInput from "../../customHooks/useInput";
 // styled component
 const StyledInputBox = styled.div`
 	width: 100%;
@@ -17,9 +18,8 @@ const StyledInput = styled.input`
 
 // component
 function MemoInput({memoMaker}){
-	const [input, setInput] = useState("");
+	const [input, setInput, onChange] = useInput("");
 	const onKeyPressEnter = memoMaker(input, setInput);
-	const onChange = (e) => setInput(e.target.value);
 	return (
 		<StyledInputBox>
 			<StyledInput
