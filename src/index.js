@@ -29,10 +29,10 @@ ReactDOM.render(
 				<Routes>
 					<Route path="/" element={<App />}>	{/* router.js를 app.js로 이관 */}
 						<Route index element={<HomeView />} />
-						<Route path="/editLabel" element={<EditLabelView />} />
-						<Route path="/label" element={<LabelView />}>
+						{/* <Route path="/editLabel" element={<EditLabelView />} /> */}
+						{/* <Route path="/label" element={<LabelView />}>
 							<Route path=":labelText" element={<ShowMemoWithLabel />} />
-						</Route>
+						</Route> */}
 					</Route>
 				</Routes>
 			</Provider>
