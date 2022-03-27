@@ -51,7 +51,7 @@ function ListItem({ id, isChecked, text, listId  }){
 			text
 		}
 		const action = update_item(payload);
-		dispatch();
+		dispatch(action);
 		setIsEditing(false);
 	};
 	return (

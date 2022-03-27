@@ -81,11 +81,10 @@ function MemoCard({singleMemoData}){
 				isFixed={isFixed} />
 			<MemoInput 
 				memoMaker={memoMaker} />
-			<ContentEditor dataAccessKey={listId} singleContentData={singleMemoData} />
-			{/* <Contents
+			<Contents
 				listId={listId}
 				contents={contents}
-				useCheckbox={useCheckbox} /> */}
+				useCheckbox={useCheckbox} />
 			<MemoUIGroup memo={singleMemoData} />
 		</CardInner>
 	);
