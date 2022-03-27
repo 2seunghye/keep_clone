@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { update_item } from "../../Redux/Actions/memo";
 import styled, { css } from "styled-components";
 import LabelBox from "../LabelBox";
 import ReadBox from "./ReadBox";
@@ -41,33 +43,45 @@ const StyledListItem = styled.li`
 `;
 
 function ListItem({ id, isChecked, text, listId  }){
+	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState(false);
+	const onUpdate = () => {
+		const payload = {
+			id,
+			text
+		}
+		const action = update_item(payload);
+		dispatch();
+		setIsEditing(false);
+	};
 	return (
 		<StyledListItem isChecked={isChecked}>
-			<>
-				{isEditing ? (
-					<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+			{isEditing ? (
+				<UpdateBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} onUpdate={onUpdate} />
 				) : (
-					<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
-				)}
-			</>
+				<ReadBox type={"checkbox"} id={id} listId={listId} text={text} isChecked={isChecked} setIsEditing={setIsEditing} />
+			)}
 		</StyledListItem>
 	);
 };
 
-const List = ({ listId, contents, useCheckbox }) => {
-
-	console.log(contents)
-	const listItems = contents.map((item, index) => {
-		return <ListItem key={index} listId={listId} useCheckbox={useCheckbox} text={item.text} isChecked={item.isChecked} id={item.id} />;
-	});
-
+const Contents = ({ listId, contents, useCheckbox }) => {
 	return (
 		<StyledCheckBoxList>
-			<StyledUnorderedList>{listItems}</StyledUnorderedList>
+			<StyledUnorderedList>
+				{contents.map((item, index) => 
+					<ListItem
+						key={index}
+						listId={listId}
+						useCheckbox={useCheckbox}
+						text={item.text}
+						id={item.id} 
+					/>
+				)}
+			</StyledUnorderedList>
 			<LabelBox listId={listId} />
 		</StyledCheckBoxList>
 	);
 };
 
-export default List;
+export default Contents;

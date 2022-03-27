@@ -1,10 +1,10 @@
 import React from "react";
 
-function Heading({level : Heading_level, headcopy}){
+function Heading({level : HeadingLevel, headcopy}){
 	return(
-		<Heading_level>
+		<HeadingLevel>
 			{headcopy}
-		</Heading_level>
+		</HeadingLevel>
 	);
 };
 
