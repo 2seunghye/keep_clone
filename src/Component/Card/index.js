@@ -12,7 +12,7 @@ import {
 // called component
 import Heading from "../common/Heading";
 import MemoInput from "./MemoInput";
-import List from "./List";
+import Contents from "./contents";
 import FixedButton from "./FixedButton";
 import BackgroundColorPicker from "./BackgroundColorPicker";
 // styled component
@@ -81,10 +81,11 @@ function MemoCard({singleMemoData}){
 				isFixed={isFixed} />
 			<MemoInput 
 				memoMaker={memoMaker} />
-			<List
+			<ContentEditor dataAccessKey={listId} singleContentData={singleMemoData} />
+			{/* <Contents
 				listId={listId}
 				contents={contents}
-				useCheckbox={useCheckbox} />
+				useCheckbox={useCheckbox} /> */}
 			<MemoUIGroup memo={singleMemoData} />
 		</CardInner>
 	);
