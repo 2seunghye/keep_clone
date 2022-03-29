@@ -82,7 +82,7 @@ function MemoCard({singleMemoData}){
 			<MemoInput 
 				memoMaker={memoMaker} />
 			<Contents
-				// listId={listId}
+				listId={listId}
 				contents={contents}
 				useCheckbox={useCheckbox} />
 			{/* <MemoUIGroup memo={singleMemoData} /> */}

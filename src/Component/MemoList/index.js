@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 `;
 // component
 function MemoList(){
-	const memoState = useSelector((state) => state.memoFetch);
+	const {memoState} = useSelector(state => state);
 	return (
 		<StyledDiv>
 			<Heading level={"h1"} headcopy="Memo List" />

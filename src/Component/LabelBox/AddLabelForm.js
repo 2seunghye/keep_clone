@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { create_label_in_card } from "../../Redux/Actions/memo";
-import { create_label } from "../../Redux/Actions/label";
+import { create_label_in_card } from "../../module/memo/action";
+import { create_label } from "../../module/label/action";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;

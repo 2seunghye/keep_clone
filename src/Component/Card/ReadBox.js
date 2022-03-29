@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { change_checkbox_status, delete_item } from "../../Redux/Actions/memo";
+import { change_checkbox_status, delete_item } from "../../module/memo/action";
 const StyledLabel = styled.label`
 	display: inline-block;
 	position: relative;

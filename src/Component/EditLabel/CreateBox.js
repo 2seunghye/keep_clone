@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { create_label } from "../../Redux/Actions/label";
+import { create_label } from "../../module/label/action";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
