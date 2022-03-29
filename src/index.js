@@ -3,19 +3,22 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 // redux
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import reducers from "./Redux/rootReducer";
-import { composeWithDevTools } from "redux-devtools-extension"; // 리덕스 개발자 도구
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from "./redux/rootReducer";
 // router
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import HomeView from "./View/HomeView";
 import EditLabelView from "./View/EditLabelView";
 import LabelView from "./View/LabelView";
 import ShowMemoWithLabel from "./Component/ShowMemoWithLabel";
-
-// setting
-const store = createStore(reducers, composeWithDevTools());
+import { memoState, labelState } from "./data/initialState";
+// setting store
+const envelopmentMode = process.env.NODE_ENV;
+const store = configureStore({
+	reducer : rootReducer,
+	devTools : envelopmentMode === 'development',
+});
 // const persistedState = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem("reduxState")) : {};
 store.subscribe(() => {
 	localStorage.setItem("reduxState", JSON.stringify(store.getState()));
