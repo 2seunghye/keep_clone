@@ -3,24 +3,17 @@ import { memoState } from "../../../data/initialState";
 export const memoFetch = (state = memoState, action) => {
 	const { type, payload } = action;
 	const initializeMemoData = {
-		bgColor : "white",
-		isFixed : false,
-		listId : action.id,
-		// useCheckbox : false,
-		contents : [],
-		labels : [],
-	}
+		bgColor: "white",
+		isFixed: false,
+		listId: action.id,
+		contents: [],
+		labels: [],
+	};
 	switch (type) {
 		case types.CREATE_CHECK_CARD:
-			return [
-				...state,
-				{...initializeMemoData, useCheckbox : true}
-			];			
+			return [...state, { ...initializeMemoData, useCheckbox: true }];
 		case types.CREATE_TEXT_CARD:
-			return [
-				...state,
-				{...initializeMemoData, useCheckbox : false}
-		];
+			return [...state, { ...initializeMemoData, useCheckbox: false }];
 		case types.DELETE_CARD:
 			return state.filter((arr) => arr.listId !== action.listId);
 
@@ -48,7 +41,7 @@ export const memoFetch = (state = memoState, action) => {
 		case types.DELETE_ITEM:
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
-					return { ...arr, contents: arr.contents.filter((obj) => obj.id !== payload.id), labels: arr.labels };
+					return { ...arr, contents: arr.contents.filter((obj) => obj.id !== payload.id) };
 				}
 				return arr;
 			});
@@ -145,8 +138,6 @@ export const memoFetch = (state = memoState, action) => {
 				return arr;
 			});
 		case types.TOGGLE_FIXED_STATUS:
-			console.log("toggleFixedStatus");
-
 			return state.map((arr) => {
 				if (arr.listId == action.listId) {
 					return {

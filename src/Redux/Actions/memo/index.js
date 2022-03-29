@@ -6,7 +6,7 @@ export const create_item = (listId, text) => ({
 	payload: {
 		id: parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join("")),
 		text,
-		done: false,
+		isChecked: false,
 	},
 });
 

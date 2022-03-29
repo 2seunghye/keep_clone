@@ -53,7 +53,7 @@ const AddLabelForm = ({ listId }) => {
 		CardState.forEach((item) => {
 			console.log(item.listId == listId, item.listId, listId);
 			if (item.listId == listId) {
-				listLabels = item.listLabels;
+				listLabels = item.labels;
 			}
 		});
 

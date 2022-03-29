@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-function ShowMemoWithLabel(){
+function ShowMemoWithLabel() {
 	const labelState = useSelector((state) => state.labelFetch);
 	const memoState = useSelector((state) => state.memoFetch);
 	const labelText = useParams().labelText;
@@ -26,22 +26,19 @@ function ShowMemoWithLabel(){
 	// 		}
 	// 	}
 	// });
-	const targetLabel = labelState.filter(
-		label => label.text === labelText
-	)[0];
+	const targetLabel = labelState.filter((label) => label.text === labelText)[0];
 
-	console.log(targetLabel)
+	console.log(targetLabel);
 	const filteredList = targetLabel.memoGroup.reduce((newList, memoId, index) => {
-		newList.push(memoState.filter( memo => memo.listId === memoId)[0])
+		newList.push(memoState.filter((memo) => memo.listId === memoId)[0]);
 		return newList;
 	}, []);
 
 	return (
 		<StyledDiv>
-			
 			<CardListWarp state={filteredList} />
 		</StyledDiv>
 	);
-};
+}
 
 export default ShowMemoWithLabel;
