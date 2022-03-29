@@ -2,21 +2,21 @@ export const memoState = [
 	{
 		bgColor: "#fff",
 		isFixed: true,
-		listId: 1,
+		listId: "memo-1",
 		useCheckbox : true,
-		contents: [
+		contents : [
 			{
-				id: 1,
+				id: "contents-1",
 				text: "Donec porta augue purus",
 				isChecked: true,
 			},
 			{
-				id: 2,
+				id: "contents-2",
 				text: "Lorem ipsum dolor sit amet",
 				isChecked: true,
 			},
 			{
-				id: 3, 
+				id: "contents-3", 
 				text: "mi vehicula tortor",
 				isChecked: false,
 			},
@@ -26,19 +26,42 @@ export const memoState = [
 	{
 		bgColor: "#fff",
 		isFixed: false,
-		listId: 2,
+		listId: "memo-2",
 		useCheckbox : false,
-		contents: [
+		contents : [
 			{
 				id: 5,
 				text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 			},
 		],
-		labels: [
-			
-		],
+		labels: [],
 	},
 ];
+export const contentsState = {
+	"memo-1" : [
+		{
+			id: "contents-1",
+			text: "Donec porta augue purus",
+			isChecked: true,
+		},
+		{
+			id: "contents-2",
+			text: "Lorem ipsum dolor sit amet",
+			isChecked: true,
+		},
+		{
+			id: "contents-3", 
+			text: "mi vehicula tortor",
+			isChecked: false,
+		},
+	],
+	"memo-2" : [
+		{
+			id: 5,
+			text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+		},
+	]
+};
 export const labelState = [
 	// data format
 	// {
