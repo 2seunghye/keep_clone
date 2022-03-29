@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import CardListWarp from "../MemoList/CardListWrap";
+import MemoClassfier from "../MemoList/MemoClassfier";
 
 // styled component
 const StyledDiv = styled.div`
@@ -15,28 +15,15 @@ function ShowMemoWithLabel() {
 	const labelState = useSelector((state) => state.labelFetch);
 	const memoState = useSelector((state) => state.memoFetch);
 	const labelText = useParams().labelText;
-	// const filteredList = MemoState.filter((item) => {
-	// 	const labels = item.labels;
-
-	// 	if (labels.length) {
-	// 		for (let i = 0; i < labels.length; ++i) {
-	// 			if (labels[i].id === labelId) {
-	// 				return item;
-	// 			}
-	// 		}
-	// 	}
-	// });
-	const targetLabel = labelState.filter((label) => label.text === labelText)[0];
-
-	console.log(targetLabel);
-	const filteredList = targetLabel.memoGroup.reduce((newList, memoId, index) => {
-		newList.push(memoState.filter((memo) => memo.listId === memoId)[0]);
+	const selectedLabel = labelState.filter((label) => label.text === labelText)[0];
+	const filteredMemoState = selectedLabel.memoGroup.reduce((newList, memoId) => {
+		const pick = memoState.filter((memo) => memo.listId === memoId)[0];
+		newList.push(pick);
 		return newList;
 	}, []);
-
 	return (
 		<StyledDiv>
-			<CardListWarp state={filteredList} />
+			<MemoClassfier state={filteredMemoState} />
 		</StyledDiv>
 	);
 }

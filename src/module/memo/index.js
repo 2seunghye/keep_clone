@@ -1,6 +1,6 @@
-import * as types from "../../types";
-import { memoState } from "../../../data/initialState";
-export const memoFetch = (state = memoState, action) => {
+import { memoState } from "../../data/initialState";
+import * as types from "./types";
+const memoReducer = (state = memoState, action) => {
 	const { type, payload } = action;
 	const initializeMemoData = {
 		bgColor: "white",
@@ -47,6 +47,7 @@ export const memoFetch = (state = memoState, action) => {
 			});
 
 		case types.UPDATE_ITEM:
+			console.log(231);
 			return state.map((arr) => {
 				if (arr.listId === action.listId) {
 					return {
@@ -152,3 +153,4 @@ export const memoFetch = (state = memoState, action) => {
 			return state;
 	}
 };
+export default memoReducer;

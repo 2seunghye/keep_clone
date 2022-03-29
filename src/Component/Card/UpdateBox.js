@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import styled from "styled-components";
-import { update_item } from "../../Redux/Actions/memo";
-
+import useInput from "../../customHooks/useInput";
+// styled component
 const StyledUpdateBox = styled.div`
 	width: 100%;
 	display: block;
@@ -23,38 +22,16 @@ const StyledUpdateBox = styled.div`
 		min-height: 100px;
 	}
 `;
-const UpdateBox = ({ type, listId, id, text, isChecked, setIsEditing }) => {
-	const dispatch = useDispatch();
-
-	const [input, setInput] = useState(text);
-
-	const onUpdate = (payload) => {
-		dispatch(update_item(listId, payload));
-		setIsEditing(false);
-	};
-
-	const editForm = () => {
-		switch (type) {
-			case "checkbox":
-				return (
-					<>
-						<input type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate({ id: id, text: input, isChecked: isChecked })}>수정</button>
-					</>
-				);
-			case "text":
-				return (
-					<>
-						<textarea type={"text"} onChange={(e) => setInput(e.target.value)} value={input} />
-						<button onClick={() => onUpdate({ id: id, text: input })}>수정</button>
-					</>
-				);
-			default:
-				console.log("default");
-		}
-	};
-
-	return <StyledUpdateBox>{editForm()}</StyledUpdateBox>;
+// component
+function UpdateBox({ text, onUpdate }){
+	const initialValue = text;
+	const [input, setInput, onChange] = useInput(initialValue);	
+	return (
+		<StyledUpdateBox>
+			<input type="text" onChange={onChange} value={input} />
+			<button onClick={onUpdate}>수정</button>
+		</StyledUpdateBox>
+	)
 };
 
 export default UpdateBox;

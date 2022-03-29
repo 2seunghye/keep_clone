@@ -1,6 +1,7 @@
-import { labelState } from "../../../data/initialState";
-import * as types from "../../types";
-export const labelFetch = (state = labelState, action) => {
+import { labelState } from "../../data/initialState";
+import * as types from "./types";
+
+const labelReducer = (state = labelState, action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case types.CREATE_LABEL:
@@ -18,3 +19,5 @@ export const labelFetch = (state = labelState, action) => {
 			return state;
 	}
 };
+
+export default labelReducer;

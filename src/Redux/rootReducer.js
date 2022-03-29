@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import { memoFetch } from "./Reducers/memo";
-import { labelFetch } from "./Reducers/label";
+import memoReducer from "../module/memo";
+import labelReducer from "../module/label";
 
-const reducers = combineReducers({
-	memoFetch,
-	labelFetch,
+const rootReducer = combineReducers({
+	memoState : memoReducer,
+	labelState : labelReducer,
 });
 
-export default reducers;
+export default rootReducer;

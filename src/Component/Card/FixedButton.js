@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { toggle_fixed_status } from "../../Redux/Actions/memo";
+import React from "react";
 
-const FixedButton = ({ listId, isFixed }) => {
-	const [status, setStatus] = useState(isFixed);
-	const dispatch = useDispatch();
-
-	const onToggle = () => {
-		dispatch(toggle_fixed_status(listId));
-		setStatus((status) => !status);
-	};
-
+const FixedButton = ({ isFixed, onToggleFixed }) => {
 	return (
 		<div>
-			<button onClick={onToggle}>{status ? "고정해제" : "고정"}</button>
+			<button 
+				onClick={onToggleFixed}
+			>{isFixed ? "고정 해제" : "고정"}</button>
 		</div>
 	);
 };

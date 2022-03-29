@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { delete_label_in_card } from "../../Redux/Actions/memo";
+import { delete_label_in_card } from "../../module/memo/action";
 import ReadBox from "./ReadBox";
 
 const StyledListBox = styled.ul`

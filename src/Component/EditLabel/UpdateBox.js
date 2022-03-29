@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { update_label } from "../../Redux/Actions/label";
-import { update_label_in_all_card, UPDATE_LABEL_IN_ALL_CARD } from "../../Redux/Actions/memo";
+import { update_label } from "../../module/label/action";
+import { update_label_in_all_card, UPDATE_LABEL_IN_ALL_CARD } from "../../module/memo/action";
 
 const StyledUpdateBox = styled.div`
 	width: 100%;

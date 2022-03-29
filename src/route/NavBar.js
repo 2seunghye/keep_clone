@@ -6,15 +6,14 @@ function ListItem({ text }){
 	return <NavLink to={`/label/${text}`}>{text}</NavLink>;
 };
 function NavBar(){
-	const LabelState = useSelector((state) => state.labelFetch);
+	const {labelState} = useSelector(state => state);
 	return (
 		<div>
 			<NavLink to="/">메모</NavLink>
-			{LabelState.map((item) => 
-				<ListItem key={item.id} text={item.text} />
+			{labelState.map((id, text) => 
+				<ListItem key={id} text={text} />
 			)}
 			<NavLink to="/editLabel">라벨 수정</NavLink>
-			
 		</div>
 	);
 };

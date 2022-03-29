@@ -1,4 +1,4 @@
-import * as types from "../../types";
+import * as types from "./types";
 
 export const create_item = (listId, text) => ({
 	type: types.CREATE_ITEM,

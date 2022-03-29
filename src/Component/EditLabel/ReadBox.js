@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { delete_label } from "../../Redux/Actions/label";
-import { delete_label_in_all_card } from "../../Redux/Actions/memo";
+import { delete_label } from "../../module/label/action";
+import { delete_label_in_all_card } from "../../module/memo/action";
 
 const StyledSpan = styled.span`
 	display: inline-block;
