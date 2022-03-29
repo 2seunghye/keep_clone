@@ -8,11 +8,11 @@ import {
 	change_background_color,
 	create_item,
 	toggle_fixed_status
-} from "../../Redux/Actions/memo";
+} from "../../module/memo/action";
 // called component
 import Heading from "../common/Heading";
 import MemoInput from "./MemoInput";
-import Contents from "./contents";
+import Contents from "./Contents";
 import FixedButton from "./FixedButton";
 import BackgroundColorPicker from "./BackgroundColorPicker";
 // styled component
@@ -73,7 +73,7 @@ function MemoCard({singleMemoData}){
 		<CardInner color={bgColor}>
 			<Heading 
 				level={"h2"} 
-				headcopy={"Heading"} />
+				headcopy={"Memo"} />
 			<BackgroundColorPicker 
 				dispatchColor={onChoiceColor} />
 			<FixedButton 
@@ -82,10 +82,10 @@ function MemoCard({singleMemoData}){
 			<MemoInput 
 				memoMaker={memoMaker} />
 			<Contents
-				listId={listId}
+				// listId={listId}
 				contents={contents}
 				useCheckbox={useCheckbox} />
-			<MemoUIGroup memo={singleMemoData} />
+			{/* <MemoUIGroup memo={singleMemoData} /> */}
 		</CardInner>
 	);
 };
