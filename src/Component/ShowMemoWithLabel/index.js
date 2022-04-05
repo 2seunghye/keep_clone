@@ -14,9 +14,9 @@ const StyledDiv = styled.div`
 function ShowMemoWithLabel(){
 	const {memoState, labelState} = useSelector((state) => state);
 	const labelText = useParams().labelText;
-	const selectedLabel = labelState.filter(label => label.text === labelText)[0];
+	const selectedLabel = labelState.filter((label) => label.text === labelText)[0];
 	const filteredMemoState = selectedLabel.memoGroup.reduce((newList, memoId) => {
-		const pick = memoState.filter( memo => memo.listId === memoId )[0];
+		const pick = memoState.filter((memo) => memo.listId === memoId)[0];
 		newList.push(pick);
 		return newList;
 	}, []);
@@ -25,6 +25,6 @@ function ShowMemoWithLabel(){
 			<MemoClassfier state={filteredMemoState} />
 		</StyledDiv>
 	);
-};
+}
 
 export default ShowMemoWithLabel;
