@@ -12,8 +12,7 @@ const StyledDiv = styled.div`
 `;
 
 function ShowMemoWithLabel(){
-	const labelState = useSelector((state) => state.labelFetch);
-	const memoState = useSelector((state) => state.memoFetch);
+	const {memoState, labelState} = useSelector((state) => state);
 	const labelText = useParams().labelText;
 	const selectedLabel = labelState.filter(label => label.text === labelText)[0];
 	const filteredMemoState = selectedLabel.memoGroup.reduce((newList, memoId) => {

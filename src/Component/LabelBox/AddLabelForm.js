@@ -31,8 +31,7 @@ const StyledButton = styled.button`
 const AddLabelForm = ({ listId }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
-	const labelState = useSelector((state) => state.labelFetch);
-	const CardState = useSelector((state) => state.memoFetch);
+	const {memoState, labelState} = useSelector((state) => state);
 
 	const hasLabelInLabelList = (_text) => {
 		let result = null;
@@ -50,7 +49,7 @@ const AddLabelForm = ({ listId }) => {
 		let result = null;
 		let listLabels;
 
-		CardState.forEach((item) => {
+		memoState.forEach((item) => {
 			console.log(item.listId == listId, item.listId, listId);
 			if (item.listId == listId) {
 				listLabels = item.listLabels;

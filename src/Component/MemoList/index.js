@@ -5,6 +5,7 @@ import styled from "styled-components";
 import CreateMemoForm from "../UI/CreateMemoForm";
 import MemoClassfier from "./MemoClassfier";
 import Heading from "../common/Heading";
+import { selectMemo } from "../../module/memo";
 // styled component
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
@@ -13,12 +14,13 @@ const StyledDiv = styled.div`
 `;
 // component
 function MemoList(){
-	const {memoState} = useSelector(state => state);
+	const memos = useSelector(selectMemo);
+	console.log(6906, memos);
 	return (
 		<StyledDiv>
 			<Heading level={"h1"} headcopy="Memo List" />
 			<CreateMemoForm />
-			<MemoClassfier memos={memoState} />
+			<MemoClassfier memos={memos} />
 		</StyledDiv>
 	);
 };

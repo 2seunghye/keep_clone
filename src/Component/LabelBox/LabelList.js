@@ -66,7 +66,7 @@ const ListItem = ({ id, text, listId }) => {
 };
 
 const LabelList = ({ listId }) => {
-	const memoState = useSelector((state) => state.memoFetch);
+	const {memoState} = useSelector((state) => state);
 
 	let target;
 

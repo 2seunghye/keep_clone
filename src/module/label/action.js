@@ -1,20 +1,23 @@
-import * as types from "./types";
+import * as action from "./types";
 
-export const create_label = (text, id) => ({
-	type: types.CREATE_LABEL,
+export const create_label = (text, id, memoId) => ({
+	type: action.CREATE_LABEL,
 	payload: {
 		id,
 		text,
-	},
+		callback : (_prev)=>{
+			return [..._prev.memoGroup, memoId];
+		}
+	}
 });
 
 export const update_label = (payload) => ({
-	type: types.UPDATE_LABEL,
+	type: action.UPDATE_LABEL,
 	payload,
 });
 
 export const delete_label = (id) => ({
-	type: types.DELETE_LABEL,
+	type: action.DELETE_LABEL,
 	payload: {
 		id,
 	},

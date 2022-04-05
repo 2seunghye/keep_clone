@@ -12,9 +12,9 @@ import {
 // called component
 import Heading from "../common/Heading";
 import MemoInput from "./MemoInput";
-import Contents from "./Contents";
 import FixedButton from "./FixedButton";
 import BackgroundColorPicker from "./BackgroundColorPicker";
+import ContentItem from "../CardContents";
 // styled component
 const CardInner = styled.div`
 	background: ${(props) => props.color || "#fff"};
@@ -27,14 +27,14 @@ const UIButton = styled.button`
 	background-color : ${props => props.isPrimary ? "steelblue" : "ivory"}
 `;
 // component
-function MemoUIGroup({memo}){
-	const {id} = memo;
+function MemoUI({memo}){
+	const {listId} = memo;
 	const dispatch = useDispatch();
 	const deleteMemo = (_id) => () => dispatch(delete_card(_id));
 	const copyMemo = (_data) => () => dispatch(copy_card(_data));
 	return(
 		<>
-			<UIButton type="button" isPrimary={false} onClick={deleteMemo(id)}>카드 삭제</UIButton>
+			<UIButton type="button" isPrimary={false} onClick={deleteMemo(listId)}>카드 삭제</UIButton>
 			<UIButton type="button" isPrimary={true} onClick={copyMemo(memo)}>사본 만들기</UIButton>
 		</>
 	)
@@ -42,7 +42,7 @@ function MemoUIGroup({memo}){
 function MemoCard({singleMemoData}){
 	const {contents, listId, bgColor, isFixed, useCheckbox} = singleMemoData;
 	const dispatch = useDispatch();
-	// state updator function
+	// state update function
 	// update memo bg color
 	const onChoiceColor = (color) => {
 		const payload = { bgColor: color };
@@ -81,11 +81,13 @@ function MemoCard({singleMemoData}){
 				isFixed={isFixed} />
 			<MemoInput 
 				memoMaker={memoMaker} />
-			<Contents
-				listId={listId}
-				contents={contents}
-				useCheckbox={useCheckbox} />
-			{/* <MemoUIGroup memo={singleMemoData} /> */}
+			{contents.map( content => (
+				<ContentItem 
+					key={content.id}
+					content={content} 
+					useCheckbox={useCheckbox} />
+			))}
+			<MemoUI memo={singleMemoData} />
 		</CardInner>
 	);
 };
