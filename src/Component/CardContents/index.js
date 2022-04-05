@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Styled from "styled-components";
 import { delete_item } from "../../module/memo/action";
-import { update_item } from "../../Redux/Actions/memo";
+import { update_item } from "../../module/memo/action";
 const Icon = Styled.i`
 	display:inline-block;
 	vertical-align:middle;
@@ -23,7 +23,7 @@ function CheckboxTypeItem({id, text, updateContentText, isChecked, toggleChecked
 				id={id}
 				type="checkbox" 
 				checked={isChecked}
-				onClick={toggleChecked}
+				onChange={toggleChecked}
 			/>
 			<label htmlFor={id}></label>
 			<div 
@@ -55,9 +55,8 @@ function DefaultTypeItem({id, text, updateContentText}){
 		</Item>
 	);
 }
-function ContentEditor({listId}){
-	const {contents, useCheckbox} = useSelector( state => state.memoState.filter(memo => memo.listId === listId) );
-	const {id, text, isChecked} = contents;
+function ContentItem({content, useCheckbox}){
+	const {id, text, isChecked} = content;
 	const dispatch = useDispatch();
 	const deleteContent = (_id) => {
 		const payload = {id};
@@ -70,21 +69,34 @@ function ContentEditor({listId}){
 		// 내용을 모두 지운 경우
 		if(0 >= event.target.innerText.length) return deleteContent(id);
 		
-		console.group("Which true valu on contenteditable element");
+		console.group("Which true value on contenteditable element");
 		console.log("value :", event.target.value);
 		console.log("innerText :", event.target.innerText);
-		console.groupEnd("Which true valu on contenteditable element");
+		console.groupEnd("Which true value on contenteditable element");
 
-		const payload = {
-			id,
-			text : event.target.innerText,
-			isChecked
-		};
+		const payload = ()=>{
+			if(useCheckbox){
+				return {
+					id,
+					text : event.target.innerText,
+					isChecked
+				};
+			}
+			return {
+				id,
+				text : event.target.innerText,
+			};
+		}
+		
+
+
 		const action = update_item(id, payload);
 		dispatch(action);
 	};
 	const toggleChecked = (event) => {
 		// ...
+		console.log(event);
+		console.log("checked : ", event.target.checked);
 	}
 	// case:checkbox
 	if(useCheckbox) 
@@ -103,4 +115,4 @@ function ContentEditor({listId}){
 	/>
 };
 
-export default ContentEditor;
+export default ContentItem;
