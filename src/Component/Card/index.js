@@ -1,21 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { nanoid } from '@reduxjs/toolkit'
 // module
-import { 
-	copy_card, 
-	delete_card, 
-	change_background_color,
-	create_item,
-	toggle_fixed_status
-} from "../../module/memo/action";
-// called component
+import { createMemo, updateMemo, deleteMemo, copyMemo } from "../../module/memo";
+// component:called
 import Heading from "../common/Heading";
 import MemoInput from "./MemoInput";
 import FixedButton from "./FixedButton";
 import BackgroundColorPicker from "./BackgroundColorPicker";
 import ContentItem from "../CardContents";
-// styled component
+// component:styled
 const CardInner = styled.div`
 	background: ${(props) => props.color || "#fff"};
 	border: 1px solid #000;
@@ -28,14 +23,27 @@ const UIButton = styled.button`
 `;
 // component
 function MemoUI({memo}){
-	const {listId} = memo;
 	const dispatch = useDispatch();
-	const deleteMemo = (_id) => () => dispatch(delete_card(_id));
-	const copyMemo = (_data) => () => dispatch(copy_card(_data));
+	const onClick = ()=>{
+		dispatch(createMemo({
+			...memo,
+			listId : nanoid()
+		}));
+	};
 	return(
 		<>
-			<UIButton type="button" isPrimary={false} onClick={deleteMemo(listId)}>카드 삭제</UIButton>
-			<UIButton type="button" isPrimary={true} onClick={copyMemo(memo)}>사본 만들기</UIButton>
+			<UIButton 
+				type="button" 
+				isPrimary={false}
+				onClick={onClick}
+			>카드 삭제
+			</UIButton>
+			<UIButton 
+				type="button" 
+				isPrimary={true}
+				onClick={onClick}
+			>사본 만들기
+			</UIButton>
 		</>
 	)
 }
@@ -45,14 +53,17 @@ function MemoCard({singleMemoData}){
 	// state update function
 	// update memo bg color
 	const onChoiceColor = (color) => {
-		const payload = { bgColor: color };
-		const action = change_background_color(listId, payload);
+		const payload = { 
+			listId,
+			bgColor: color 
+		};
+		const action = updateMemo(payload);
 		dispatch(action);
 	};
 	// update memo status:hang on top
 	const onToggleFixed = () => {
 		const payload = listId;
-		const action = toggle_fixed_status(payload);
+		const action = updateMemo(payload);
 		dispatch(action);
 	};
 	// add new memo
@@ -64,7 +75,7 @@ function MemoCard({singleMemoData}){
 			listId,
 			text : _input 
 		};
-		const action = create_item(payload);
+		const action = createMemo(payload);
 		dispatch(action);
 		// reset input value
 		_setInput("");

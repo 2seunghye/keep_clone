@@ -12,17 +12,17 @@ const StyledDiv = styled.div`
 `;
 
 function ShowMemoWithLabel(){
-	const {memoState, labelState} = useSelector((state) => state);
+	const {memos, labelState} = useSelector((state) => state);
 	const labelText = useParams().labelText;
 	const selectedLabel = labelState.filter((label) => label.text === labelText)[0];
-	const filteredMemoState = selectedLabel.memoGroup.reduce((newList, memoId) => {
-		const pick = memoState.filter((memo) => memo.listId === memoId)[0];
+	const filteredMemos = selectedLabel.memoGroup.reduce((newList, memoId) => {
+		const pick = memos.filter((memo) => memo.listId === memoId)[0];
 		newList.push(pick);
 		return newList;
 	}, []);
 	return (
 		<StyledDiv>
-			<MemoClassfier state={filteredMemoState} />
+			<MemoClassfier state={filteredMemos} />
 		</StyledDiv>
 	);
 }
