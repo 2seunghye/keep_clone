@@ -5,19 +5,10 @@ export const memoSlice = createSlice({
 	name : "memos",
 	initialState : memoState,
 	reducers : {
-		createMemo : (data, action)=>{
-			console.log(1231, data.memos);
-			return action.payload
-		},
-		updateMemo : (_prev, _action)=>{
-			updateData.byArrayType(_prev, _action.payload);
-		},
-		deleteMemo : (_prev, _action)=>{
-			removeData.byArrayType(_prev, _action.payload);
-		},
-		copyMemo : (_prev, _action)=>{
-			addData.byArrayType(_prev, _action.payload);
-		}
+		createMemo : addData.byArrayType,
+		copyMemo : addData.byArrayType,
+		updateMemo : updateData.byArrayType,
+		deleteMemo : removeData.byArrayType,
 	}
 }); 
 export const {createMemo, updateMemo, deleteMemo, copyMemo} = memoSlice.actions;

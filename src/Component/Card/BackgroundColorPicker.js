@@ -5,9 +5,11 @@ import {colorPalette} from "../../data/color";
 // styled component
 const ColorPickerContainer = styled.div`
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	gap: 10px;
-	flex-wrap: wrap;
+	padding:10px 0;
+	background-color: ${props => props.darkmode ? "#333" : "#fff"}
 `;
 const ColorPickerButton = styled.button`
 	cursor: pointer;
@@ -15,7 +17,7 @@ const ColorPickerButton = styled.button`
 	height: 25px;
 	border: 1px solid #dedede;
 	border-radius: 50%;
-	background: ${(props) => props.color || "#fff"};
+	background: ${(props) => props["data-color"] || "#fff"}};
 	&:hover {
 		border: 1px solid #333;
 	}
@@ -24,9 +26,12 @@ const ColorPickerButton = styled.button`
 // component
 function BackgroundColorPicker({ dispatchColor }){
 	return(
-		<ColorPickerContainer>
+		<ColorPickerContainer darkmode>
 			{colorPalette.map(color => 
-				<ColorPickerButton key={color} color={color} onClick={dispatchColor} />
+				<ColorPickerButton
+					key={color}
+					data-color={color}
+					onClick={dispatchColor} />
 			)}
 		</ColorPickerContainer>
 	);
