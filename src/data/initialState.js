@@ -1,8 +1,8 @@
 export const memoState = [
 	{
+		id: "memo-1",
 		bgColor: "#fff",
 		isFixed: true,
-		listId: "memo-1",
 		useCheckbox : true,
 		contents : [
 			{
@@ -26,9 +26,9 @@ export const memoState = [
 		],
 	},
 	{
+		id: "memo-2",
 		bgColor: "#fff",
 		isFixed: false,
-		listId: "memo-2",
 		useCheckbox : false,
 		contents : [
 			{

@@ -1,16 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+// toolkit
 import { nanoid } from "@reduxjs/toolkit";
 // module
-import { createMemo, updateMemo, deleteMemo, copyMemo } from "../../module/memo";
+import { createMemo, updateMemo, deleteMemo } from "../../module/memo";
 // component:called
 import Heading from "../common/Heading";
-import MemoInput from "./MemoInput";
 import FixedButton from "./FixedButton";
-import BackgroundColorPicker from "./BackgroundColorPicker";
 import ContentItem from "../CardContents";
-import AddLabelForm from "../LabelBox/AddLabelForm";
+import MemoUI from "./MemoUI";
 // component:styled
 const CardInner = styled.div`
 	background: ${(props) => props.color || "#fff"};
@@ -18,45 +17,11 @@ const CardInner = styled.div`
 	max-width: 500px;
 	margin: 20px;
 `;
-const UIButton = styled.button`
-	color : ${(props) => (props.isPrimary ? "white" : "black")}
-	background-color : ${(props) => (props.isPrimary ? "steelblue" : "ivory")}
-`;
 // component
-function MemoUI({ memo }) {
-	const dispatch = useDispatch();
-	const onClick = () => {
-		dispatch(
-			createMemo({
-				...memo,
-				listId: nanoid(),
-			})
-		);
-	};
-	return (
-		<>
-			<UIButton type="button" isPrimary={false} onClick={onClick}>
-				카드 삭제
-			</UIButton>
-			<UIButton type="button" isPrimary={true} onClick={onClick}>
-				사본 만들기
-			</UIButton>
-		</>
-	);
-}
 function MemoCard({ singleMemoData }) {
 	const { contents, listId, bgColor, isFixed, useCheckbox } = singleMemoData;
 	const dispatch = useDispatch();
 	// state update function
-	// update memo bg color
-	const onChoiceColor = (color) => {
-		const payload = {
-			listId,
-			bgColor: color,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
 	// update memo status:hang on top
 	const onToggleFixed = () => {
 		const payload = listId;
@@ -79,15 +44,20 @@ function MemoCard({ singleMemoData }) {
 	};
 	return (
 		<CardInner color={bgColor}>
-			<Heading level={"h2"} headcopy={"Memo"} />
-			<BackgroundColorPicker dispatchColor={onChoiceColor} />
-			<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
-			<MemoInput memoMaker={memoMaker} />
-			{contents.map((content) => (
-				<ContentItem key={content.id} content={content} useCheckbox={useCheckbox} />
-			))}
-			<MemoUI memo={singleMemoData} />
-			<AddLabelForm listId={listId} />
+			<div className="header">
+				<Heading level={"h2"} headcopy={"Memo"} />
+				<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
+			</div>
+			<div className="memo-contents">
+				{0 >= contents.length && <div>{"메모 작성..."}</div>}
+				{contents.map((content) => (
+					<ContentItem key={content.id} content={content} useCheckbox={useCheckbox} />
+				))}
+				<div className="latest-modified-time">{`수정된 시간: ${new Date().getMonth() + 1}월 ${new Date().getDate()}일`}</div>
+			</div>
+			<div className="bottom ui-group">
+				<MemoUI memo={singleMemoData} />
+			</div>
 		</CardInner>
 	);
 }
