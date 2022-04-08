@@ -1,14 +1,11 @@
 // utility function
 export const updateData = {
-	byArrayType : 
-	(data, action)=>{
+	byArrayType: (data, action) => {
 		console.log(123);
 		const { payload } = action;
-		const newData = data.map(dataset => {
-			if(dataset.id !== payload.id) 
-				return dataset;
-			if(payload?.sliceCallback) 
-				return payload.sliceCallback(dataset);
+		const newData = data.map((dataset) => {
+			if (dataset.id !== payload.id) return dataset;
+			if (payload?.sliceCallback) return payload.sliceCallback(dataset);
 			// default
 			return payload;
 		});
@@ -19,37 +16,30 @@ export const updateData = {
 		console.groupEnd("dsa");
 		return newData;
 	},
-	byObjectType :
-	(data, action)=>{
+	byObjectType: (data, action) => {
 		const { payload } = action;
 		const newData = Object.assign({}, data, payload);
 		return newData;
 	},
 };
 export const addData = {
-	byArrayType :
-	(data, action)=>{
+	byArrayType: (data, action) => {
 		const { payload } = action;
-		const newData = [
-			...data,
-			payload
-		]
+		const newData = [...data, payload];
 		return newData;
 	},
-	byObjectType : updateData.byObjectType
+	byObjectType: updateData.byObjectType,
 };
 export const removeData = {
-	byArrayType :
-	(data, action)=>{
+	byArrayType: (data, action) => {
 		const { payload } = action;
-		const newData = data.filter(dataset => dataset.id !== payload.id);
+		const newData = data.filter((dataset) => dataset.id !== payload.id);
 		return newData;
 	},
-	byObjectType :
-	(data, action)=>{
+	byObjectType: (data, action) => {
 		const { payload } = action;
-		const newData = {...data};
-		delete newData[payload.id]; 
+		const newData = { ...data };
+		delete newData[payload.id];
 		return newData;
-	}
+	},
 };

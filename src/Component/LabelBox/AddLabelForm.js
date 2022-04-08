@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { create_label_in_card } from "../../module/memo/action";
 import { create_label } from "../../module/label/action";
+import { createMemo } from "../../module/memo";
+import { createLabel } from "../../module/label";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
@@ -31,7 +33,7 @@ const StyledButton = styled.button`
 const AddLabelForm = ({ listId }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
-	const {memoState, labelState} = useSelector((state) => state);
+	const { memoState, labelState } = useSelector((state) => state);
 
 	const hasLabelInLabelList = (_text) => {
 		let result = null;
@@ -114,10 +116,12 @@ const AddLabelForm = ({ listId }) => {
 			<StyledInput value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={onEnterKeyPress} placeholder={"라벨 작성..."} />
 			<StyledButton
 				onClick={() => {
-					addLabel(listId, input);
+					console.log("추가!");
+					dispatch(createLabel({ listId: listId, text: input }));
+					// addLabel(listId, input);
 				}}
 			>
-				추가
+				추가2
 			</StyledButton>
 		</StyledAddLabelForm>
 	);

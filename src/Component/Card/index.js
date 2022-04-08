@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { nanoid } from '@reduxjs/toolkit'
+import { nanoid } from "@reduxjs/toolkit";
 // module
 import { createMemo, updateMemo, deleteMemo, copyMemo } from "../../module/memo";
 // component:called
@@ -10,6 +10,7 @@ import MemoInput from "./MemoInput";
 import FixedButton from "./FixedButton";
 import BackgroundColorPicker from "./BackgroundColorPicker";
 import ContentItem from "../CardContents";
+import AddLabelForm from "../LabelBox/AddLabelForm";
 // component:styled
 const CardInner = styled.div`
 	background: ${(props) => props.color || "#fff"};
@@ -18,44 +19,40 @@ const CardInner = styled.div`
 	margin: 20px;
 `;
 const UIButton = styled.button`
-	color : ${props => props.isPrimary ? "white" : "black"}
-	background-color : ${props => props.isPrimary ? "steelblue" : "ivory"}
+	color : ${(props) => (props.isPrimary ? "white" : "black")}
+	background-color : ${(props) => (props.isPrimary ? "steelblue" : "ivory")}
 `;
 // component
-function MemoUI({memo}){
+function MemoUI({ memo }) {
 	const dispatch = useDispatch();
-	const onClick = ()=>{
-		dispatch(createMemo({
-			...memo,
-			listId : nanoid()
-		}));
+	const onClick = () => {
+		dispatch(
+			createMemo({
+				...memo,
+				listId: nanoid(),
+			})
+		);
 	};
-	return(
+	return (
 		<>
-			<UIButton 
-				type="button" 
-				isPrimary={false}
-				onClick={onClick}
-			>카드 삭제
+			<UIButton type="button" isPrimary={false} onClick={onClick}>
+				카드 삭제
 			</UIButton>
-			<UIButton 
-				type="button" 
-				isPrimary={true}
-				onClick={onClick}
-			>사본 만들기
+			<UIButton type="button" isPrimary={true} onClick={onClick}>
+				사본 만들기
 			</UIButton>
 		</>
-	)
+	);
 }
-function MemoCard({singleMemoData}){
-	const {contents, listId, bgColor, isFixed, useCheckbox} = singleMemoData;
+function MemoCard({ singleMemoData }) {
+	const { contents, listId, bgColor, isFixed, useCheckbox } = singleMemoData;
 	const dispatch = useDispatch();
 	// state update function
 	// update memo bg color
 	const onChoiceColor = (color) => {
-		const payload = { 
+		const payload = {
 			listId,
-			bgColor: color 
+			bgColor: color,
 		};
 		const action = updateMemo(payload);
 		dispatch(action);
@@ -73,7 +70,7 @@ function MemoCard({singleMemoData}){
 		if (_input === "") return false;
 		const payload = {
 			listId,
-			text : _input 
+			text: _input,
 		};
 		const action = createMemo(payload);
 		dispatch(action);
@@ -82,25 +79,17 @@ function MemoCard({singleMemoData}){
 	};
 	return (
 		<CardInner color={bgColor}>
-			<Heading 
-				level={"h2"} 
-				headcopy={"Memo"} />
-			<BackgroundColorPicker 
-				dispatchColor={onChoiceColor} />
-			<FixedButton 
-				onToggleFixed={onToggleFixed} 
-				isFixed={isFixed} />
-			<MemoInput 
-				memoMaker={memoMaker} />
-			{contents.map( content => (
-				<ContentItem 
-					key={content.id}
-					content={content} 
-					useCheckbox={useCheckbox} />
+			<Heading level={"h2"} headcopy={"Memo"} />
+			<BackgroundColorPicker dispatchColor={onChoiceColor} />
+			<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
+			<MemoInput memoMaker={memoMaker} />
+			{contents.map((content) => (
+				<ContentItem key={content.id} content={content} useCheckbox={useCheckbox} />
 			))}
 			<MemoUI memo={singleMemoData} />
+			<AddLabelForm listId={listId} />
 		</CardInner>
 	);
-};
+}
 
 export default MemoCard;

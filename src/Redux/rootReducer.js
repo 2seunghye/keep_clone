@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
-import memoReducer from "../module/memo";
-import labelReducer from "../module/label";
-const rootReducer = combineReducers({
-	memos : memoReducer,
-	labelState : labelReducer,
+import memoReducer, { memoSlice } from "../module/memo";
+import labelReducer, { labelSlice } from "../module/label";
+
+export const rootReducer = combineReducers({
+	memos: memoSlice.reducer,
+	labels: labelSlice.reducer,
 });
 
 export default rootReducer;
