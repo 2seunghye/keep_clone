@@ -13,3 +13,28 @@ const name ()=>{}------
 memo의 status 변화는 memo 계층의 컴포넌트에서
 contents는 header와 본문, 
 제공되는 옵션은 ui에서 다루거나 위임을 받는 것으로 정함.
+
+
+- folder tree
+component
+	controller
+	view
+		styled		
+ui
+	feature
+		memo
+		label
+		support
+data
+
+
+feature
+	[feature name...] ex. navigation, memo, memoContents, label...
+		index.js <controller component>
+		reducer.js <reducer>
+		view
+			*.js <presentation component>
+			styled <styled-component>
+		support
+			ui.js <event logic>
+data

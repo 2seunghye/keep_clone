@@ -2,6 +2,7 @@ export const memoState = [
 	{
 		id: "memo-1",
 		bgColor: "#fff",
+		isActive: false,
 		isFixed: true,
 		useCheckbox : true,
 		labels: [
@@ -11,6 +12,7 @@ export const memoState = [
 	{
 		id: "memo-2",
 		bgColor: "#fff",
+		isActive: false,
 		isFixed: false,
 		useCheckbox : false,
 		labels: [
