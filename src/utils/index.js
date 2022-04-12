@@ -1,7 +1,8 @@
+import { current } from "@reduxjs/toolkit";
+
 // utility function
 export const updateData = {
 	byArrayType: (data, action) => {
-		console.log(123);
 		const { payload } = action;
 		const newData = data.map((dataset) => {
 			if (dataset.id !== payload.id) return dataset;
@@ -9,16 +10,24 @@ export const updateData = {
 			// default
 			return payload;
 		});
-		console.group("dsa");
-		console.log("data :", data);
+		console.group("array:update");
+		console.log("data :", current(data));
 		console.log("newData :", newData);
 		console.log("payload :", payload);
-		console.groupEnd("dsa");
+		console.groupEnd("array");
 		return newData;
 	},
 	byObjectType: (data, action) => {
-		const { payload } = action;
-		const newData = Object.assign({}, data, payload);
+		const { payload, id } = action;
+		const newData = {
+			...data,
+			[id] : payload
+		};
+		console.group("object:object");
+		console.log("data :", current(data));
+		console.log("newData :", newData);
+		console.log("payload :", payload);
+		console.groupEnd("object");
 		return newData;
 	},
 };
@@ -39,7 +48,7 @@ export const removeData = {
 	byObjectType: (data, action) => {
 		const { payload } = action;
 		const newData = { ...data };
-		delete newData[payload.id];
+		delete newData[payload.keyName];
 		return newData;
 	},
 };

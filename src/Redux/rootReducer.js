@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import memoReducer, { memoSlice } from "../module/memo";
-import labelReducer, { labelSlice } from "../module/label";
+import { memoSlice } from "../module/memo";
+import { labelSlice } from "../module/label";
+import { contentsSlice } from "../module/memoContents";
 
 export const rootReducer = combineReducers({
 	memos: memoSlice.reducer,
+	memoContents : contentsSlice.reducer,
 	labels: labelSlice.reducer,
 });
 
