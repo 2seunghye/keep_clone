@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { selectLabel } from "../../module/label";
+import { selectMemo } from "../../module/memo";
 import MemoClassfier from "../MemoList/MemoClassfier";
 
 // styled component
@@ -11,10 +13,12 @@ const StyledDiv = styled.div`
 	margin: 20px;
 `;
 
-function ShowMemoWithLabel(){
-	const {memos, labelState} = useSelector((state) => state);
+function ShowMemoWithLabel() {
+	const labels = useSelector(selectLabel);
+	const memos = useSelector(selectMemo);
+
 	const labelText = useParams().labelText;
-	const selectedLabel = labelState.filter((label) => label.text === labelText)[0];
+	const selectedLabel = labels.filter((label) => label.text === labelText)[0];
 	const filteredMemos = selectedLabel.memoGroup.reduce((newList, memoId) => {
 		const pick = memos.filter((memo) => memo.listId === memoId)[0];
 		newList.push(pick);

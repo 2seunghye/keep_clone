@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import label, { deleteLabel, selectLabel } from "../../module/label";
 import { delete_label } from "../../module/label/action";
 import { delete_label_in_all_card } from "../../module/memo/action";
 
@@ -21,21 +22,24 @@ const useConfirm = (message, onConfirm, onCancel) => {
 };
 
 const ReadBox = ({ text, setIsActive }) => {
-	const labelState = useSelector((state) => state.labelFetch);
+	const labelState = useSelector(selectLabel);
 	const dispatch = useDispatch();
 
+	let labelId = null;
+
+	labelState.forEach((item) => {
+		if (item.text == text) {
+			labelId = item.id;
+			return;
+		}
+	});
+
 	const deleteConfirm = () => {
-		let searchId;
-		labelState.forEach((item) => {
-			if (item.text == text) {
-				searchId = item.id;
-			}
-		});
+		const payload = { id: labelId };
+		const action = deleteLabel(payload);
+		dispatch(action);
 
 		setIsActive(false);
-
-		dispatch(delete_label(searchId));
-		dispatch(delete_label_in_all_card(searchId));
 
 		console.log("삭제완료");
 	};

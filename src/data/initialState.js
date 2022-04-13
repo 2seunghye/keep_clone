@@ -4,27 +4,25 @@ export const memoState = [
 		bgColor: "#fff",
 		isActive: false,
 		isFixed: true,
-		useCheckbox : true,
-		labels: [
-
-		],
+		useCheckbox: true,
+		labels: [],
 	},
 	{
 		id: "memo-2",
 		bgColor: "#fff",
 		isActive: false,
 		isFixed: false,
-		useCheckbox : false,
+		useCheckbox: false,
 		labels: [
 			{
-				id : "",
-				text : ""
-			}
+				id: "",
+				text: "",
+			},
 		],
 	},
 ];
 export const contentsState = {
-	"memo-1" : [
+	"memo-1": [
 		{
 			id: "contents-1",
 			text: "Donec porta augue purus",
@@ -36,23 +34,44 @@ export const contentsState = {
 			isChecked: true,
 		},
 		{
-			id: "contents-3", 
+			id: "contents-3",
 			text: "mi vehicula tortor",
 			isChecked: false,
 		},
 	],
-	"memo-2" : [
+	"memo-2": [
 		{
 			id: "contents-01",
 			text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 		},
-	]
+	],
 };
+
 export const labelState = [
 	// data format
-	// {
-	// 	"id" : "",
-	// 	"text" : "",
-	// 	"memoGroup" : [],
-	// }
+	{
+		id: "12312423",
+		text: "test1",
+		memoGroup: ["memo-1"],
+	},
+	{
+		id: "123",
+		text: "test2",
+		memoGroup: ["memo-1", "memo-2"],
+	},
+	{
+		id: "345",
+		text: "test3",
+		memoGroup: ["memo-1"],
+	},
+	{
+		id: "1231245423",
+		text: "test4",
+		memoGroup: ["memo-1"],
+	},
+	{
+		id: "1231456345342423",
+		text: "test5",
+		memoGroup: ["memo-1", "memo-2"],
+	},
 ];

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CreateBox from "./CreateBox";
 import ReadBox from "./ReadBox";
 import UpdateBox from "./UpdateBox";
 import styled from "styled-components";
+import { getAllLabels, selectLabel } from "../../module/label";
 
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
@@ -16,7 +17,7 @@ const LabelItem = ({ text }) => {
 };
 
 const EditLabel = () => {
-	const labelState = useSelector((state) => state.labelFetch);
+	const labelState = useSelector(selectLabel);
 
 	const labelList = labelState.map((item, index) => {
 		return <LabelItem key={index} text={item.text} />;

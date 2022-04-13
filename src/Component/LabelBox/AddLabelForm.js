@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { create_label_in_card } from "../../module/memo/action";
-import { create_label } from "../../module/label/action";
-import { createMemo } from "../../module/memo";
-import { createLabel } from "../../module/label";
+import { createLabel, selectLabel, updateLabel } from "../../module/label";
+import { nanoid } from "@reduxjs/toolkit";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
@@ -30,99 +28,82 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const AddLabelForm = ({ listId }) => {
+const AddLabelForm = ({ id, memoLabels, setMemoLabels }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
-	const { memoState, labelState } = useSelector((state) => state);
+	const labelState = useSelector(selectLabel);
 
 	const hasLabelInLabelList = (_text) => {
-		let result = null;
 		for (let i = 0; i < labelState.length; ++i) {
-			if (labelState[i].text === _text) {
-				result = true;
-				break;
-			}
-			result = false;
+			if (labelState[i].text === _text) return true;
 		}
-		return result;
+		return false;
 	};
 
 	const hasLabelInCard = (_text) => {
-		let result = null;
-		let listLabels;
-
-		memoState.forEach((item) => {
-			console.log(item.listId == listId, item.listId, listId);
-			if (item.listId == listId) {
-				listLabels = item.labels;
+		let bool = false;
+		labelState.forEach((label) => {
+			if (label.text == _text) {
+				label.memoGroup.forEach((item) => {
+					if (item == id) {
+						bool = true;
+						return;
+					}
+				});
 			}
 		});
-
-		if (listLabels.length !== undefined) {
-			for (let i = 0; i < listLabels.length; ++i) {
-				if (listLabels[i].text === _text) {
-					result = true;
-					break;
-				}
-				result = false;
-			}
-		} else {
-			result = false;
-		}
-
-		return result;
+		return bool;
 	};
 
-	const addLabelInCard = (listId, _text, _labelId) => {
+	const addLabelInCard = (_text) => {
 		if (hasLabelInCard(_text)) {
 			// 메모 카드에 이미 등록된 라벨
 			alert("해당 메모에 이미 등록된 라벨입니다!");
 		} else {
-			// 메모 카드에 라벨을 등록
-			dispatch(create_label_in_card(listId, _text, _labelId));
-			setInput("");
+			setMemoLabels([...memoLabels, _text]);
 		}
 	};
 
-	const addLabel = (listId, _text) => {
-		console.log(!hasLabelInLabelList(_text));
+	const addLabel = (id, _text) => {
 		if (!hasLabelInLabelList(_text)) {
-			// 라벨 리스트에 존재하지 않음
-			let labelId = parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join(""));
-			// Todo :: 순차적으로 바꾸기
-			dispatch(create_label(_text, labelId));
-			dispatch(create_label_in_card(listId, _text, labelId));
+			console.log("라벨 리스트에 존재하지 않음");
+			const payload = {
+				id: nanoid(),
+				text: input,
+				memoGroup: [id],
+			};
+			const action = createLabel(payload);
+			dispatch(action);
 			setInput("");
 		} else {
-			// 라벨 리스트에 존재 함
-			let labelId = null;
+			console.log("라벨 리스트에 존재함");
 			labelState.forEach((item) => {
 				if (item.text === _text) {
-					labelId = item.id;
+					const payload = {
+						id: item.id,
+						text: item.text,
+						memoGroup: Array.from(new Set([...item.memoGroup, id])),
+					};
+					const action = updateLabel(payload);
+					dispatch(action);
 				}
 			});
-			addLabelInCard(listId, _text, labelId);
+			setInput("");
 		}
+
+		addLabelInCard(_text);
 	};
 
 	const onEnterKeyPress = (e) => {
 		if (e.key === "Enter") {
-			addLabel(listId, input);
+			addLabel(id, input);
 		}
 	};
 
 	return (
 		<StyledAddLabelForm>
 			<StyledInput value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={onEnterKeyPress} placeholder={"라벨 작성..."} />
-			<StyledButton
-				onClick={() => {
-					console.log("추가!");
-					dispatch(createLabel({ listId: listId, text: input }));
-					// addLabel(listId, input);
-				}}
-			>
-				추가2
-			</StyledButton>
+			<StyledButton onClick={() => addLabel(id, input)}>추가</StyledButton>
 		</StyledAddLabelForm>
 	);
 };
