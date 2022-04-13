@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useRef, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useLayoutEffect, useRef, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
@@ -12,7 +12,7 @@ import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
 import AddLabelForm from "../LabelBox/AddLabelForm";
 import LabelList from "../LabelBox/LabelList";
-import { getMemoGroup, selectLabel } from "../../module/label";
+import { selectLabel } from "../../module/label";
 // component:styled
 const CardInner = styled.div`
 	color: ${(props) => (props.darkmode ? "#fff" : "#333")};
@@ -24,20 +24,13 @@ const CardInner = styled.div`
 `;
 // component
 function MemoCard({ memo }) {
-	const { id, useCheckbox, bgColor, isFixed, isActive } = memo;
+	const { id, useCheckbox, bgColor, isFixed, isActive, labels } = memo;
 	const dispatch = useDispatch();
-	const [memoLabels, setMemoLabels] = useState([]);
 
 	useEffect(() => {
-		getMemoLabels();
+		// getMemoLabels();
+		console.log(`${id}'s labels`, labels);
 	}, []);
-
-	// get memo labels
-	const getMemoLabels = () => {
-		const payload = { id: id, setMemoLabels: setMemoLabels };
-		const action = getMemoGroup(payload);
-		dispatch(action);
-	};
 
 	// update memo status:hang on top
 	const onToggleFixed = () => {

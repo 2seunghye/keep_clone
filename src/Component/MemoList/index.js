@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 // module
-import { selectMemo } from "../../module/memo";
+import { selectMemos } from "../../module/memo";
 // component:called 
 import Heading from "../common/Heading";
 import MemoClassfier from "./MemoClassfier";
@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
 `;
 // component
 function MemoList(){
-	const memos = useSelector(selectMemo);
+	const memos = useSelector(selectMemos);
 	return (
 		<StyledDiv>
 			<Heading level={"h1"} headcopy="Memo List" />
