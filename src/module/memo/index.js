@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { memoState } from "../../data/initialState";
 import { addData, updateData, removeData } from "../../utils";
+import * as types from "./types";
+
 export const memoSlice = createSlice({
 	name: "memos",
 	initialState: memoState,
@@ -13,7 +15,6 @@ export const memoSlice = createSlice({
 });
 export const { createMemo, updateMemo, deleteMemo, copyMemo } = memoSlice.actions;
 export const selectMemo = (state) => state.memos;
-<<<<<<< HEAD
 export default memoSlice.reducer;
 console.log("memoSlice :", memoSlice.getInitialState());
 console.log(selectMemo);
@@ -171,6 +172,3 @@ console.log(selectMemo);
 // 	}
 // };
 // export default memoReducer;
-=======
-export default memoSlice.reducer;
->>>>>>> 59458c44ca198fe9f7c8dace6de219ed931c4ba1
