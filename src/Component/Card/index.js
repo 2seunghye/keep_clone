@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
@@ -10,6 +10,9 @@ import Heading from "../common/Heading";
 import FixedButton from "./FixedButton";
 import ContentItem from "../CardContents";
 import MemoUI from "./MemoUI";
+import AddLabelForm from "../LabelBox/AddLabelForm";
+import LabelList from "../LabelBox/LabelList";
+import { getMemoGroup, selectLabel } from "../../module/label";
 // component:styled
 const CardInner = styled.div`
 	background: ${(props) => props.color || "#fff"};
@@ -19,12 +22,26 @@ const CardInner = styled.div`
 `;
 // component
 function MemoCard({ singleMemoData }) {
-	const { contents, listId, bgColor, isFixed, useCheckbox } = singleMemoData;
+	const { contents, id, bgColor, isFixed, useCheckbox } = singleMemoData;
+	const labelState = useSelector(selectLabel);
+
 	const dispatch = useDispatch();
-	// state update function
+	const [memoLabels, setMemoLabels] = useState([]);
+
+	useEffect(() => {
+		getMemoLabels();
+	}, []);
+
+	// get memo labels
+	const getMemoLabels = () => {
+		const payload = { id: id, setMemoLabels: setMemoLabels };
+		const action = getMemoGroup(payload);
+		dispatch(action);
+	};
+
 	// update memo status:hang on top
 	const onToggleFixed = () => {
-		const payload = listId;
+		const payload = id;
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
@@ -34,7 +51,7 @@ function MemoCard({ singleMemoData }) {
 		if (!event.key === "Enter") return false;
 		if (_input === "") return false;
 		const payload = {
-			listId,
+			id,
 			text: _input,
 		};
 		const action = createMemo(payload);
@@ -55,6 +72,8 @@ function MemoCard({ singleMemoData }) {
 				))}
 				<div className="latest-modified-time">{`수정된 시간: ${new Date().getMonth() + 1}월 ${new Date().getDate()}일`}</div>
 			</div>
+			<AddLabelForm id={id} memoLabels={memoLabels} setMemoLabels={setMemoLabels} />
+			<LabelList id={id} memoLabels={memoLabels} />
 			<div className="bottom ui-group">
 				<MemoUI memo={singleMemoData} />
 			</div>
