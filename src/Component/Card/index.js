@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useLayoutEffect, useRef, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
@@ -8,23 +8,23 @@ import { createMemo, updateMemo, deleteMemo } from "../../module/memo";
 // component:called
 import Heading from "../common/Heading";
 import FixedButton from "./FixedButton";
-import ContentItem from "../CardContents";
+import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
 import AddLabelForm from "../LabelBox/AddLabelForm";
 import LabelList from "../LabelBox/LabelList";
 import { getMemoGroup, selectLabel } from "../../module/label";
 // component:styled
 const CardInner = styled.div`
-	background: ${(props) => props.color || "#fff"};
-	border: 1px solid #000;
-	max-width: 500px;
+	color: ${(props) => (props.darkmode ? "#fff" : "#333")};
+	background: ${(props) => (props.darkmode ? "#333" : "#fff")};
 	margin: 20px;
+	overflow: hidden;
+	transition: width 300ms ease;
+	width: ${(props) => (props.isActive ? "auto" : "250px")};
 `;
 // component
-function MemoCard({ singleMemoData }) {
-	const { contents, id, bgColor, isFixed, useCheckbox } = singleMemoData;
-	const labelState = useSelector(selectLabel);
-
+function MemoCard({ memo }) {
+	const { id, useCheckbox, bgColor, isFixed, isActive } = memo;
 	const dispatch = useDispatch();
 	const [memoLabels, setMemoLabels] = useState([]);
 
@@ -41,7 +41,26 @@ function MemoCard({ singleMemoData }) {
 
 	// update memo status:hang on top
 	const onToggleFixed = () => {
-		const payload = id;
+		const payload = {
+			...memo,
+			isFixed: !memo.isFixed,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onInactive = () => {
+		const payload = {
+			...memo,
+			isActive: false,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onActive = () => {
+		const payload = {
+			...memo,
+			isActive: true,
+		};
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
@@ -51,7 +70,7 @@ function MemoCard({ singleMemoData }) {
 		if (!event.key === "Enter") return false;
 		if (_input === "") return false;
 		const payload = {
-			id,
+			id: nanoid(),
 			text: _input,
 		};
 		const action = createMemo(payload);
@@ -59,24 +78,47 @@ function MemoCard({ singleMemoData }) {
 		// reset input value
 		_setInput("");
 	};
+	// Registry DOM event
+	const inner = useRef(); // target is CardInner component
+	const contents_classname = "memo-contents";
+	const focusable_elements = ["a", "button", "textarea", 'input:not([type="hidden"])', '[tabindex="0"]'].join(",");
+	const keyFilter = useCallback(
+		function (native_event) {
+			const is_pressed_tab = native_event.key.toUpperCase() === "TAB";
+			const is_pressed_shift = native_event.shiftKey;
+			// escape:not press tab key
+			if (!is_pressed_tab) return false;
+			//
+			const all_elements = native_event.currentTarget.querySelectorAll(focusable_elements);
+			const last_element = all_elements[all_elements.length - 1];
+			const first_element = all_elements[0];
+			const isLast = last_element === native_event.target;
+			const isFirst = first_element === native_event.target;
+			// escape:not press shift key
+			if (!is_pressed_shift) {
+				isLast && console.log("straight");
+				return false;
+			}
+			// press tab + shift key
+			isFirst && console.log("reverse");
+		},
+		[focusable_elements]
+	);
+	useLayoutEffect(() => {
+		inner.current.addEventListener("keydown", keyFilter, false);
+	}, [keyFilter]);
 	return (
-		<CardInner color={bgColor}>
+		<CardInner darkmode ref={inner} color={bgColor} isActive={isActive} tabIndex={0}>
+			{/* <span className="focus-start"></span> */}
 			<div className="header">
 				<Heading level={"h2"} headcopy={"Memo"} />
 				<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
 			</div>
-			<div className="memo-contents">
-				{0 >= contents.length && <div>{"메모 작성..."}</div>}
-				{contents.map((content) => (
-					<ContentItem key={content.id} content={content} useCheckbox={useCheckbox} />
-				))}
-				<div className="latest-modified-time">{`수정된 시간: ${new Date().getMonth() + 1}월 ${new Date().getDate()}일`}</div>
-			</div>
-			<AddLabelForm id={id} memoLabels={memoLabels} setMemoLabels={setMemoLabels} />
-			<LabelList id={id} memoLabels={memoLabels} />
+			<CardContents memoId={id} useCheckbox={useCheckbox} className={contents_classname} />
 			<div className="bottom ui-group">
-				<MemoUI memo={singleMemoData} />
+				<MemoUI memo={memo} />
 			</div>
+			{/* <span className="focus-end"></span> */}
 		</CardInner>
 	);
 }

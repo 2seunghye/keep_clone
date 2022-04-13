@@ -47,6 +47,22 @@ function MemoUI({ memo }) {
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
+	const onUnuseCheckbox = () => {
+		const payload = {
+			...memo,
+			useCheckbox: false,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onInactive = () => {
+		const payload = {
+			...memo,
+			isActive: false,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
 	const onChoiceColor = (event) => {
 		const payload = {
 			...memo,
@@ -78,6 +94,10 @@ function MemoUI({ memo }) {
 			interaction: onUseCheckbox,
 		},
 		{
+			name: "체크박스 숨기기",
+			interaction: onUnuseCheckbox,
+		},
+		{
 			name: "Google Docs로 복사",
 			interaction: () => {},
 		},
@@ -88,16 +108,20 @@ function MemoUI({ memo }) {
 			<div
 				style={{
 					display: "flex",
-					"flex-direction": "column",
+					flexDirection: "column",
 				}}
 			>
 				{memo_ui_list.map(({ name, interaction }) => (
-					<UIButton type="button" darkmode onClick={interaction}>
+					<UIButton key={name} type="button" darkmode onClick={interaction}>
 						{name}
 					</UIButton>
 				))}
 			</div>
-			<UIButton darkmode>닫기</UIButton>
+			{memo.isActive && (
+				<UIButton onClick={onInactive} darkmode>
+					닫기
+				</UIButton>
+			)}
 		</>
 	);
 }

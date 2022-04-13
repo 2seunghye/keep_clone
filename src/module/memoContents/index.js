@@ -1,34 +1,27 @@
-import {memoState, contentsState} from "../../data/initialState";
+import { createSlice, current } from "@reduxjs/toolkit";
+import { contentsState } from "../../data/initialState";
 import {addData, updateData, removeData} from "../../utils";
-const CREATE = "memo/contents/create";
-const READ = "memo/contents/read";
-const UPDATE = "memo/contents/update";
-const DELETE = "memo/contents/delete";
-// reducer
-function memoReducer(prevState = memoState, action){
-	const {type, payload} = action;
-	switch(type){
-		case CREATE :
-			return addData.byArrayType(prevState, payload);
-		case UPDATE :
-			return updateData.byArrayType(prevState, payload);
-		case DELETE :
-			return removeData.byArrayType(prevState, payload);
-		case READ :
-		default :
-			return prevState;
-	}
-}
-
-function memoContentsReducer(prevState = contentsState , action){
-	const {type, payload} = action;
-	switch(type){
-		case "memo/contents/update" :
-			payload.action = "update";
-			return memoReducer(prevState, payload);
-		default :
-			return prevState;
-	}
-}
-
-export default memoContentsReducer;
+export const contentsSlice = createSlice({
+	name :"memoContents",
+	initialState : contentsState,
+	reducers : {
+		createContents: addData.byObjectType,
+		updateContents: updateData.byObjectType,
+		removeContents: removeData.byObjectType,
+		updateSingleContent : (_prev, _action)=>{
+			const {memoId : id, type} = _action;
+			const target_content = _prev[id];
+			const new_content = updateData.byArrayType(target_content, {..._action, id});
+			const repackage_action = {
+				id,
+				type, 
+				payload : new_content
+			};
+			return updateData.byObjectType(_prev, repackage_action);
+		}
+	},
+});
+export const {createContents, updateContents, removeContents, updateSingleContent} = contentsSlice.actions;
+export const selectContents = (state) => state.memoContents;
+export const selectContentsById = (keyName) => (state) => (state.memoContents[keyName]);
+export default contentsSlice.reducer;
