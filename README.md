@@ -42,6 +42,7 @@ data
 
 #### 2022.04.13
 3월 말부터 4월 13일까지 적용한 내용 정리
+- react18로 버전업/마이그레이션
 - redux toolkit 적용
 	- creatStore, createSlice만 우선 적용.
 	- 데이터 수신을 로컬에서 api로 수정할 때 createAsyncChuck, extraReducer 추가할 예정.
