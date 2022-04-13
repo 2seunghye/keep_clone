@@ -105,7 +105,7 @@ function MemoCard({ memo }) {
 			{/* <span className="focus-start"></span> */}
 			<div className="header">
 				<Heading level={"h2"} headcopy={"Memo"} />
-				<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
+				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} className={contents_classname} />
 			<div className="bottom ui-group">
