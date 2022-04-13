@@ -3,27 +3,27 @@ import { current } from "@reduxjs/toolkit";
 // utility function
 export const updateData = {
 	byArrayType: (data, action) => {
+		console.group("array:update");
+		console.log("data :", current(data));
 		const { payload } = action;
+		console.log("payload :", payload);
 		const newData = data.map((dataset) => {
 			if (dataset.id !== payload.id) return dataset;
-			if (payload?.sliceCallback) return payload.sliceCallback(dataset);
+			if (action?.sliceCallback) return action.sliceCallback(dataset);
 			// default
 			return payload;
 		});
-		console.group("array:update");
-		console.log("data :", current(data));
 		console.log("newData :", newData);
-		console.log("payload :", payload);
 		console.groupEnd("array");
 		return newData;
 	},
 	byObjectType: (data, action) => {
-		const { payload, id } = action;
+		const { payload, id : keyName } = action;
 		const newData = {
 			...data,
-			[id] : payload
+			[keyName] : payload
 		};
-		console.group("object:object");
+		console.group("object:update");
 		console.log("data :", current(data));
 		console.log("newData :", newData);
 		console.log("payload :", payload);
@@ -46,9 +46,9 @@ export const removeData = {
 		return newData;
 	},
 	byObjectType: (data, action) => {
-		const { payload } = action;
+		const {id : keyName} = action;
 		const newData = { ...data };
-		delete newData[payload.keyName];
+		delete newData[keyName];
 		return newData;
 	},
 };
