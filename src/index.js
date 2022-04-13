@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { hydrateRoot } from 'react-dom/client';
 import reportWebVitals from "./reportWebVitals";
 // redux
 import { Provider } from "react-redux";
@@ -26,7 +26,8 @@ store.subscribe(() => {
 });
 
 // DOM render
-ReactDOM.render(
+const container = document.getElementById("root"); 
+const root = hydrateRoot(container, 
 	<React.StrictMode>
 		<BrowserRouter>
 			<Provider store={store}>
@@ -43,8 +44,7 @@ ReactDOM.render(
 				</Routes>
 			</Provider>
 		</BrowserRouter>
-	</React.StrictMode>,
-	document.getElementById("root")
+	</React.StrictMode>
 );
 
 reportWebVitals();

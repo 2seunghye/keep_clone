@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { selectLabel } from "../../module/label";
-import { selectMemo } from "../../module/memo";
+import { selectMemos } from "../../module/memo";
 import MemoClassfier from "../MemoList/MemoClassfier";
 
 // styled component
@@ -15,7 +15,7 @@ const StyledDiv = styled.div`
 
 function ShowMemoWithLabel() {
 	const labels = useSelector(selectLabel);
-	const memos = useSelector(selectMemo);
+	const memos = useSelector(selectMemos);
 
 	const labelText = useParams().labelText;
 	const selectedLabel = labels.filter((label) => label.text === labelText)[0];
