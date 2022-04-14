@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { create_label } from "../../module/label/action";
+import { nanoid } from "@reduxjs/toolkit";
+import { createLabel, selectLabel } from "../../module/label";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
@@ -30,29 +32,28 @@ const StyledButton = styled.button`
 const CreateBox = () => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
-	const labelState = useSelector((state) => state.labelFetch);
+	const labelState = useSelector(selectLabel);
 
 	const hasLabelInLabelList = (_text) => {
-		let result = null;
 		for (let i = 0; i < labelState.length; ++i) {
-			if (labelState[i].text === _text) {
-				result = true;
-				break;
-			}
-			result = false;
+			if (labelState[i].text === _text) return true;
 		}
-		return result;
+		return false;
 	};
 
 	const addLabel = (_text) => {
 		if (!hasLabelInLabelList(_text)) {
-			let labelId = parseInt([0, 0, 0, 0].map((v) => Math.floor(Math.random() * 10)).join(""));
-			dispatch(create_label(_text, labelId));
-			setInput("");
+			const payload = {
+				id: nanoid(),
+				text: input,
+				memoGroup: [],
+			};
+			const action = createLabel(payload);
+			dispatch(action);
 		} else {
 			alert("이미 존재하는 Label 입니다.");
-			setInput("");
 		}
+		setInput("");
 	};
 
 	const onEnterKeyPress = (e) => {

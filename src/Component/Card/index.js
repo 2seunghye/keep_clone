@@ -13,13 +13,13 @@ import MemoUI from "./MemoUI";
 import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
 // component:styled
-const getValueFromTheme = ({theme})=> {
-	if(theme.darkmode) return "#333";
-	if(!theme.darkmode) return "#fff"
+const getValueFromTheme = ({ theme }) => {
+	if (theme.darkmode) return "#333";
+	if (!theme.darkmode) return "#fff";
 	return theme.color;
 };
 const CardInner = styled.div`
-	background-color : ${getValueFromTheme};
+	background-color: ${getValueFromTheme};
 	margin: 20px;
 	overflow: hidden;
 	transition: width 300ms ease;
@@ -37,6 +37,16 @@ function MemoCard({ memo }) {
 		const payload = {
 			...memo,
 			labels: [...labels, { text: _newLabel, id: _labelId }],
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+
+	const deleteLabelInMemo = (_newLabel) => {
+		const newLabels = labels.filter((item) => item.text != _newLabel);
+		const payload = {
+			...memo,
+			labels: newLabels,
 		};
 		const action = updateMemo(payload);
 		dispatch(action);
@@ -96,24 +106,17 @@ function MemoCard({ memo }) {
 	}, [keyFilter]);
 	// styled theme
 	const inner_theme = {
-		color : bgColor
+		color: bgColor,
 	};
 	return (
 		<CardInner ref={inner} theme={inner_theme} tabIndex={0}>
 			{/* <span className="focus-start"></span> */}
 			<div className="header">
-				<Heading 
-					level={"h2"} 
-					headcopy={title} 
-				/>
-				{
-					isFixed != null && 
-					<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
-				}
+				<Heading level={"h2"} headcopy={title} />
+				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} />
 			<LabelTag memoId={id} labelGroup={labels} />
-			
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
 				<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />

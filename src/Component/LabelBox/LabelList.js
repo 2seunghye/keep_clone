@@ -55,17 +55,21 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const ListItem = ({ text }) => {
+const ListItem = ({ text, deleteLabelInMemo }) => {
+	const onClick = () => {
+		deleteLabelInMemo(text);
+	};
+
 	return (
 		<StyledListItem>
 			<ReadBox text={text} />
-			<StyledRemoveButton aria-label="Remove"></StyledRemoveButton>
+			<StyledRemoveButton aria-label="Remove" onClick={onClick}></StyledRemoveButton>
 		</StyledListItem>
 	);
 };
 
-const LabelList = ({ labels }) => {
-	const labelList = labels.map((item) => <ListItem text={item.text} id={item.id} />);
+const LabelList = ({ labels, deleteLabelInMemo }) => {
+	const labelList = labels.map((item) => <ListItem text={item.text} id={item.id} deleteLabelInMemo={deleteLabelInMemo} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };
