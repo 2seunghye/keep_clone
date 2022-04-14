@@ -1,10 +1,10 @@
 import React from "react";
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { hydrateRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 // redux
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./Redux/rootReducer";
+import rootReducer from "./redux/rootReducer";
 
 // router
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -26,9 +26,9 @@ store.subscribe(() => {
 });
 
 // DOM render
-const container = document.getElementById("root"); 
-const root = createRoot(container); 
-root.render(
+const container = document.getElementById("root");
+const root = hydrateRoot(
+	container,
 	<React.StrictMode>
 		<BrowserRouter>
 			<Provider store={store}>

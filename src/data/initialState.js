@@ -49,29 +49,4 @@ export const contentsState = {
 
 export const labelState = [
 	// data format
-	{
-		id: "12312423",
-		text: "test1",
-		memoGroup: ["memo-1"],
-	},
-	{
-		id: "123",
-		text: "test2",
-		memoGroup: ["memo-1", "memo-2"],
-	},
-	{
-		id: "345",
-		text: "test3",
-		memoGroup: ["memo-1"],
-	},
-	{
-		id: "1231245423",
-		text: "test4",
-		memoGroup: ["memo-1"],
-	},
-	{
-		id: "1231456345342423",
-		text: "test5",
-		memoGroup: ["memo-1", "memo-2"],
-	},
 ];

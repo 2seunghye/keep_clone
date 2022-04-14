@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { createLabel, selectLabel, updateLabel } from "../../module/label";
 import { nanoid } from "@reduxjs/toolkit";
+import { selectMemos } from "../../module/memo";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
@@ -28,7 +29,7 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const AddLabelForm = ({ id, memoLabels, setMemoLabels }) => {
+const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
 	const labelState = useSelector(selectLabel);
@@ -41,27 +42,19 @@ const AddLabelForm = ({ id, memoLabels, setMemoLabels }) => {
 	};
 
 	const hasLabelInCard = (_text) => {
-		let bool = false;
-		labelState.forEach((label) => {
-			if (label.text == _text) {
-				label.memoGroup.forEach((item) => {
-					if (item == id) {
-						bool = true;
-						return;
-					}
-				});
-			}
-		});
-		return bool;
+		for (let i = 0; i < labels.length; ++i) {
+			const item = labels[i];
+			if (item.text == _text) return true;
+		}
+		return false;
 	};
 
-	const addLabelInCard = (_text) => {
+	const addLabelInCard = (_text, _id) => {
 		if (hasLabelInCard(_text)) {
-			// 메모 카드에 이미 등록된 라벨
 			alert("해당 메모에 이미 등록된 라벨입니다!");
-		} else {
-			setMemoLabels([...memoLabels, _text]);
+			return;
 		}
+		updateLabelInMemo(_text, _id);
 	};
 
 	const addLabel = (id, _text) => {
@@ -74,7 +67,7 @@ const AddLabelForm = ({ id, memoLabels, setMemoLabels }) => {
 			};
 			const action = createLabel(payload);
 			dispatch(action);
-			setInput("");
+			addLabelInCard(payload.text, payload.id);
 		} else {
 			console.log("라벨 리스트에 존재함");
 			labelState.forEach((item) => {
@@ -86,12 +79,11 @@ const AddLabelForm = ({ id, memoLabels, setMemoLabels }) => {
 					};
 					const action = updateLabel(payload);
 					dispatch(action);
+					addLabelInCard(payload.text, payload.id);
 				}
 			});
-			setInput("");
 		}
-
-		addLabelInCard(_text);
+		setInput("");
 	};
 
 	const onEnterKeyPress = (e) => {
