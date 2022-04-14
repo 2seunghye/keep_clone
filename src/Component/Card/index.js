@@ -15,8 +15,7 @@ import LabelList from "../LabelBox/LabelList";
 import { selectLabel } from "../../module/label";
 // component:styled
 const CardInner = styled.div`
-	color: ${(props) => (props.darkmode ? "#fff" : "#333")};
-	background: ${(props) => (props.darkmode ? "#333" : "#fff")};
+	background-color : ${(props)=> props.color}
 	margin: 20px;
 	overflow: hidden;
 	transition: width 300ms ease;
@@ -101,7 +100,7 @@ function MemoCard({ memo }) {
 		inner.current.addEventListener("keydown", keyFilter, false);
 	}, [keyFilter]);
 	return (
-		<CardInner darkmode ref={inner} color={bgColor} isActive={isActive} tabIndex={0}>
+		<CardInner ref={inner} color={bgColor} isActive={isActive} tabIndex={0}>
 			{/* <span className="focus-start"></span> */}
 			<div className="header">
 				<Heading level={"h2"} headcopy={"Memo"} />

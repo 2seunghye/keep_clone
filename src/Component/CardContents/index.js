@@ -17,8 +17,8 @@ function TextEditor({memoId, contents}){
 		</div>
 	);
 }
-function Placeholder({placeholderText}){
-	return <div>{placeholderText}</div>;
+function Placeholder({placeholderText, style}){
+	return <div style={style}>{placeholderText}</div>;
 }
 function IndicatorLatestTime({date}){
 	return 	<div>{`수정된 시간: ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
@@ -26,12 +26,12 @@ function IndicatorLatestTime({date}){
 function CardContents({className, memoId, useCheckbox}){
 	console.log("rendering check : card contents");
 	const contents = useSelector(selectContentsById(memoId)) || [];
+	const style = {"display" : 0 >= contents.length ? null : "none"};
 	return(
 		<div className={className}>
-			{0 >= contents.length && 
-				<Placeholder 
-					placeholderText={"메모 작성..."} />
-			}
+			<Placeholder 
+				placeholderText={"메모 작성..."} 
+				style={style} />
 			{
 				useCheckbox 
 				?
