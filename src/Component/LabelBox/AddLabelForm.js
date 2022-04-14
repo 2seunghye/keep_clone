@@ -34,11 +34,17 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	const [input, setInput] = useState("");
 	const labelState = useSelector(selectLabel);
 
-	const hasLabelInLabelList = (_text) => {
-		for (let i = 0; i < labelState.length; ++i) {
-			if (labelState[i].text === _text) return true;
+	const hasLabelInLabelList = (_text, _array = labelState) => {
+		let flag = false;
+		const max = _array.length;
+		for (let i = 0; i < max; ++i) {
+			if (labelState[i].text === _text){
+				flag = true;
+				i = max;
+			};
+			console.log(i);
 		}
-		return false;
+		return flag;
 	};
 
 	const hasLabelInCard = (_text) => {
