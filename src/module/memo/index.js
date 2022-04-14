@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { memoState } from "../../data/initialState";
 import { addData, updateData, removeData } from "../../utils";
+import * as types from "./types";
+
 export const memoSlice = createSlice({
 	name: "memos",
 	initialState: memoState,
