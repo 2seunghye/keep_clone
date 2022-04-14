@@ -14,16 +14,20 @@ import AddLabelForm from "../LabelBox/AddLabelForm";
 import LabelList from "../LabelBox/LabelList";
 import { selectLabel } from "../../module/label";
 // component:styled
+const getValueFromTheme = ({theme})=> {
+	if(theme.darkmode) return "#333";
+	if(!theme.darkmode) return "#fff"
+	return theme.color;
+};
 const CardInner = styled.div`
-	background-color : ${(props)=> props.color}
+	background-color : ${getValueFromTheme};
 	margin: 20px;
 	overflow: hidden;
 	transition: width 300ms ease;
-	width: ${(props) => (props.isActive ? "auto" : "250px")};
 `;
 // component
 function MemoCard({ memo }) {
-	const { id, useCheckbox, bgColor, isFixed, isActive, labels } = memo;
+	const { id, title, useCheckbox, bgColor, isFixed, labels } = memo;
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -36,22 +40,6 @@ function MemoCard({ memo }) {
 		const payload = {
 			...memo,
 			isFixed: !memo.isFixed,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onInactive = () => {
-		const payload = {
-			...memo,
-			isActive: false,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onActive = () => {
-		const payload = {
-			...memo,
-			isActive: true,
 		};
 		const action = updateMemo(payload);
 		dispatch(action);
@@ -72,7 +60,7 @@ function MemoCard({ memo }) {
 	};
 	// Registry DOM event
 	const inner = useRef(); // target is CardInner component
-	const contents_classname = "memo-contents";
+	// const contents_classname = "memo-contents";
 	const focusable_elements = ["a", "button", "textarea", 'input:not([type="hidden"])', '[tabindex="0"]'].join(",");
 	const keyFilter = useCallback(
 		function (native_event) {
@@ -99,14 +87,28 @@ function MemoCard({ memo }) {
 	useLayoutEffect(() => {
 		inner.current.addEventListener("keydown", keyFilter, false);
 	}, [keyFilter]);
+	// styled theme
+	const inner_theme = {
+		color : bgColor
+	};
 	return (
-		<CardInner ref={inner} color={bgColor} isActive={isActive} tabIndex={0}>
+		<CardInner ref={inner} theme={inner_theme} tabIndex={0}>
 			{/* <span className="focus-start"></span> */}
 			<div className="header">
-				<Heading level={"h2"} headcopy={"Memo"} />
-				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
+				<Heading 
+					level={"h2"} 
+					headcopy={title} 
+				/>
+				{
+					isFixed != null && 
+					<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
+				}
 			</div>
-			<CardContents memoId={id} useCheckbox={useCheckbox} className={contents_classname} />
+			<CardContents
+				memoId={id}
+				useCheckbox={useCheckbox}
+				// className={contents_classname} 
+			/>
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
 			</div>
@@ -116,3 +118,8 @@ function MemoCard({ memo }) {
 }
 
 export default MemoCard;
+// issue
+/*
+	각각의 메모마다 url을 가짐. active 개념이 아님.
+	route 구성을 고민해야 함.
+*/
