@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { memoState } from "../../data/initialState";
 import { addData, updateData, removeData } from "../../utils";
-import * as types from "./types";
 
 export const memoSlice = createSlice({
 	name: "memos",
@@ -15,4 +14,5 @@ export const memoSlice = createSlice({
 });
 export const { createMemo, updateMemo, deleteMemo, copyMemo } = memoSlice.actions;
 export const selectMemos = (state) => state.memos;
+export const selectMemoById = (id) => (state) => state.memos.filter(memo => memo.id === id)[0];
 export default memoSlice.reducer;
