@@ -64,7 +64,8 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	};
 
 	const addLabel = (id, _text) => {
-		if (!hasLabelInLabelList(_text)) {
+		const flag = hasLabelInLabelList(_text);
+		if (!flag) {
 			console.log("라벨 리스트에 존재하지 않음");
 			const payload = {
 				id: nanoid(),
