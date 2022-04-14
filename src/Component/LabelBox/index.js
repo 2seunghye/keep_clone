@@ -11,12 +11,12 @@ const StyledDiv = styled.div`
 
 // Todo :: 라벨 자동 search 기능 추가
 
-const LabelBox = ({ id, updateLabelInMemo, labels }) => {
+const LabelBox = ({ id, updateLabelInMemo, deleteLabelInMemo, labels }) => {
 	return (
 		<StyledDiv>
 			<h5>Label Box</h5>
 			<AddLabelForm id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
-			<LabelList labels={labels} />
+			<LabelList labels={labels} deleteLabelInMemo={deleteLabelInMemo} />
 		</StyledDiv>
 	);
 };

@@ -41,6 +41,16 @@ function MemoCard({ memo }) {
 		dispatch(action);
 	};
 
+	const deleteLabelInMemo = (_newLabel) => {
+		const newLabels = labels.filter((item) => item.text != _newLabel);
+		const payload = {
+			...memo,
+			labels: newLabels,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+
 	// update memo status:hang on top
 	const onToggleFixed = () => {
 		const payload = {
@@ -117,7 +127,7 @@ function MemoCard({ memo }) {
 				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} className={contents_classname} />
-			<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
+			<LabelBox id={id} deleteLabelInMemo={deleteLabelInMemo} updateLabelInMemo={updateLabelInMemo} labels={labels} />
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
 			</div>
