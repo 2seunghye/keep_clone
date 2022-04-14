@@ -1,5 +1,5 @@
 import React from "react";
-import { hydrateRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import reportWebVitals from "./reportWebVitals";
 // redux
 import { Provider } from "react-redux";
@@ -27,7 +27,8 @@ store.subscribe(() => {
 
 // DOM render
 const container = document.getElementById("root"); 
-const root = hydrateRoot(container, 
+const root = createRoot(container); 
+root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<Provider store={store}>
