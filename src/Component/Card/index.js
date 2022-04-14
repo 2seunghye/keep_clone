@@ -13,6 +13,7 @@ import MemoUI from "./MemoUI";
 import AddLabelForm from "../LabelBox/AddLabelForm";
 import LabelList from "../LabelBox/LabelList";
 import Label, { selectLabel } from "../../module/label";
+import LabelBox from "../LabelBox";
 // component:styled
 const CardInner = styled.div`
 	background-color : ${(props) => props.color}
@@ -116,8 +117,7 @@ function MemoCard({ memo }) {
 				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} className={contents_classname} />
-			<AddLabelForm id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
-			<LabelList labels={labels} />
+			<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
 			</div>
