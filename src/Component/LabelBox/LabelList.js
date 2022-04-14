@@ -55,20 +55,17 @@ const StyledRemoveButton = styled.button`
 	}
 `;
 
-const ListItem = ({ id, text }) => {
-	const dispatch = useDispatch();
-
+const ListItem = ({ text }) => {
 	return (
 		<StyledListItem>
 			<ReadBox text={text} />
-			{/* 삭제 이벤트 추가 */}
 			<StyledRemoveButton aria-label="Remove"></StyledRemoveButton>
 		</StyledListItem>
 	);
 };
 
-const LabelList = ({ memoLabels, id }) => {
-	const labelList = memoLabels.map((item) => <ListItem text={item} id={id} />);
+const LabelList = ({ labels }) => {
+	const labelList = labels.map((item) => <ListItem text={item.text} id={item.id} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

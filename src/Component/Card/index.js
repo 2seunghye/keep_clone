@@ -4,7 +4,7 @@ import styled from "styled-components";
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
 // module
-import { createMemo, updateMemo, deleteMemo } from "../../module/memo";
+import { createMemo, updateMemo, deleteMemo, selectMemos } from "../../module/memo";
 // component:called
 import Heading from "../common/Heading";
 import FixedButton from "./FixedButton";
@@ -12,7 +12,8 @@ import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
 import AddLabelForm from "../LabelBox/AddLabelForm";
 import LabelList from "../LabelBox/LabelList";
-import { selectLabel } from "../../module/label";
+import Label, { selectLabel } from "../../module/label";
+import LabelBox from "../LabelBox";
 // component:styled
 const getValueFromTheme = ({theme})=> {
 	if(theme.darkmode) return "#333";
@@ -29,11 +30,19 @@ const CardInner = styled.div`
 function MemoCard({ memo }) {
 	const { id, title, useCheckbox, bgColor, isFixed, labels } = memo;
 	const dispatch = useDispatch();
-
 	useEffect(() => {
-		// getMemoLabels();
+		// getMemoLabels(id);
 		console.log(`${id}'s labels`, labels);
-	}, []);
+	}, [labels]);
+
+	const updateLabelInMemo = (_newLabel, _labelId) => {
+		const payload = {
+			...memo,
+			labels: [...labels, { text: _newLabel, id: _labelId }],
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
 
 	// update memo status:hang on top
 	const onToggleFixed = () => {
@@ -104,11 +113,8 @@ function MemoCard({ memo }) {
 					<FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />
 				}
 			</div>
-			<CardContents
-				memoId={id}
-				useCheckbox={useCheckbox}
-				// className={contents_classname} 
-			/>
+			<CardContents memoId={id} useCheckbox={useCheckbox} />
+			<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
 			</div>
