@@ -6,7 +6,7 @@ import { contentsSlice } from "../module/memoContents";
 export const rootReducer = combineReducers({
 	memos: memoSlice.reducer,
 	memoContents: contentsSlice.reducer,
-	labels: labelSlice.reducer,
+	label: labelSlice.reducer,
 });
 
 export default rootReducer;

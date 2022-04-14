@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { contentsState } from "../../data/initialState";
 import {addData, updateData, removeData} from "../../utils";
 export const contentsSlice = createSlice({
@@ -28,7 +28,6 @@ export const contentsSlice = createSlice({
 			const {memoId : id, type} = _action;
 			// find single content
 			const target_content = _prev[id];
-			console.log(current(_prev)[id]);
 			// update single content
 			const new_content = removeData.byArrayType(target_content, _action);
 			// re-pack
