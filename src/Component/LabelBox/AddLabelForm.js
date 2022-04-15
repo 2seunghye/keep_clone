@@ -36,6 +36,8 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 
 	const hasLabelInLabelList = (_text) => {
 		for (let i = 0; i < labelState.length; ++i) {
+			console.log(i);
+
 			if (labelState[i].text === _text) return true;
 		}
 		return false;
