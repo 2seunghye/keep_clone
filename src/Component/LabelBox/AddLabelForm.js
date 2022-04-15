@@ -34,13 +34,25 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	const [input, setInput] = useState("");
 	const labelState = useSelector(selectLabel);
 
+<<<<<<< HEAD
 	const hasLabelInLabelList = (_text) => {
 		for (let i = 0; i < labelState.length; ++i) {
 			console.log(i);
 
 			if (labelState[i].text === _text) return true;
+=======
+	const hasLabelInLabelList = (_text, _array = labelState) => {
+		let flag = false;
+		const max = _array.length;
+		for (let i = 0; i < max; ++i) {
+			if (labelState[i].text === _text){
+				flag = true;
+				i = max;
+			};
+			console.log(i);
+>>>>>>> 9507febe02e4dea4c5db82e163edfededd3a9698
 		}
-		return false;
+		return flag;
 	};
 
 	const hasLabelInCard = (_text) => {
@@ -60,7 +72,8 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	};
 
 	const addLabel = (id, _text) => {
-		if (!hasLabelInLabelList(_text)) {
+		const flag = hasLabelInLabelList(_text);
+		if (!flag) {
 			console.log("라벨 리스트에 존재하지 않음");
 			const payload = {
 				id: nanoid(),

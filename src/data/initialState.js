@@ -14,10 +14,8 @@ export const memoState = [
 		isFixed: false,
 		useCheckbox: false,
 		labels: [
-			{
-				id: "",
-				text: "",
-			},
+			"label-1",
+			"label-2",
 		],
 	},
 ];

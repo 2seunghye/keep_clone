@@ -4,7 +4,7 @@ import { addData, updateData, removeData } from "../../utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const labelSlice = createSlice({
-	name: "labels",
+	name: "label",
 	initialState: labelState,
 	reducers: {
 		createLabel: addData.byArrayType,
@@ -13,6 +13,6 @@ export const labelSlice = createSlice({
 	},
 });
 export const { getMemoGroup, createLabel, updateLabel, deleteLabel } = labelSlice.actions;
-export const selectLabel = (state) => state.labels;
+export const selectLabel = (state) => state.label;
 export default labelSlice.reducer;
 console.log("labelSlice :", labelSlice.getInitialState());

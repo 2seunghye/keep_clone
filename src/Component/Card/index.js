@@ -10,9 +10,7 @@ import Heading from "../common/Heading";
 import FixedButton from "./FixedButton";
 import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
-import AddLabelForm from "../LabelBox/AddLabelForm";
-import LabelList from "../LabelBox/LabelList";
-import Label, { selectLabel } from "../../module/label";
+import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
 // component:styled
 const getValueFromTheme = ({ theme }) => {
@@ -118,9 +116,10 @@ function MemoCard({ memo }) {
 				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} />
-			<LabelBox id={id} deleteLabelInMemo={deleteLabelInMemo} updateLabelInMemo={updateLabelInMemo} labels={labels} />
+			<LabelTag memoId={id} labelGroup={labels} />
 			<div className="bottom ui-group">
 				<MemoUI memo={memo} />
+				<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
 			</div>
 			{/* <span className="focus-end"></span> */}
 		</CardInner>
