@@ -34,13 +34,6 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 	const [input, setInput] = useState("");
 	const labelState = useSelector(selectLabel);
 
-<<<<<<< HEAD
-	const hasLabelInLabelList = (_text) => {
-		for (let i = 0; i < labelState.length; ++i) {
-			console.log(i);
-
-			if (labelState[i].text === _text) return true;
-=======
 	const hasLabelInLabelList = (_text, _array = labelState) => {
 		let flag = false;
 		const max = _array.length;
@@ -50,8 +43,6 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 				i = max;
 			};
 			console.log(i);
->>>>>>> 9507febe02e4dea4c5db82e163edfededd3a9698
-		}
 		return flag;
 	};
 
