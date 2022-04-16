@@ -29,7 +29,7 @@ const StyledButton = styled.button`
 	border-radius: 6px;
 `;
 
-const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
+function AddLabelForm({ id, labels, updateLabelInMemo }){
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
 	const labelState = useSelector(selectLabel);
@@ -43,6 +43,7 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 				i = max;
 			};
 			console.log(i);
+		}
 		return flag;
 	};
 
