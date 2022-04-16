@@ -43,7 +43,6 @@ const AddLabelForm = ({ id, labels, updateLabelInMemo }) => {
 				i = max;
 			};
 			console.log(i);
-		}
 		return flag;
 	};
 
