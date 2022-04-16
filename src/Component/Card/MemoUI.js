@@ -1,128 +1,43 @@
-import React from "react";
-import styled from "styled-components";
-// toolkit
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
-// module
-import { updateMemo, deleteMemo, copyMemo } from "../../module/memo";
+import React, { Fragment, useRef } from "react";
+// data
+import { color_palette } from "../../data/color";
 // component:called
 import BackgroundColorPicker from "./BackgroundColorPicker";
-// component:styled
-const UIButton = styled.button`
-	cursor: pointer;
-	border: none;
-	padding: 7px 13px;
-	text-align: left;
-	font-size: 14px;
-	color: ${(props) => (props.darkmode ? "#fff" : "#333")};
-	background-color: ${(props) => (props.darkmode ? "#333" : "#fff")};
-	&:hover {
-		background-color: #888;
-	}
-`;
+import UIButton from "../common/UIButton";
 // component
-function MemoUI({ memo }) {
-	const dispatch = useDispatch();
-	const onCopy = () => {
-		const payload = {
-			...memo,
-			id: nanoid(),
-			isFixed: false,
-		};
-		const action = copyMemo(payload);
-		dispatch(action);
-	};
-	const onRemove = () => {
-		const payload = {
-			id: memo.id,
-		};
-		const action = deleteMemo(payload);
-		dispatch(action);
-	};
-	const onUseCheckbox = () => {
-		const payload = {
-			...memo,
-			useCheckbox: true,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onUnuseCheckbox = () => {
-		const payload = {
-			...memo,
-			useCheckbox: false,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onInactive = () => {
-		const payload = {
-			...memo,
-			isActive: false,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onChoiceColor = (event) => {
-		const payload = {
-			...memo,
-			bgColor: event.target.dataset.color,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-
-	const memo_ui_list = [
-		{
-			name: "메모 삭제",
-			interaction: onRemove,
-		},
-		{
-			name: "라벨 추가",
-			interaction: () => {},
-		},
-		{
-			name: "그림 추가",
-			interaction: () => {},
-		},
-		{
-			name: "사본 만들기",
-			interaction: onCopy,
-		},
-		{
-			name: "체크박스 표시",
-			interaction: onUseCheckbox,
-		},
-		{
-			name: "체크박스 숨기기",
-			interaction: onUnuseCheckbox,
-		},
-		{
-			name: "Google Docs로 복사",
-			interaction: () => {},
-		},
-	];
+function MemoUI({ floorList, moreList }) {
 	return (
-		<>
-			<BackgroundColorPicker dispatchColor={onChoiceColor} />
+		<Fragment>
+			{/* floor list */}
+			<div
+				style={{
+					display: "flex",
+				}}
+			>
+				{floorList.map(({ name, interaction }) => {
+					if(name === "배경 옵션") return(
+						<Fragment key={name}>
+							<BackgroundColorPicker colorPalette={color_palette} dispatchColor={interaction}/>
+							<UIButton name={name} interaction={interaction} />
+						</Fragment>
+					);
+					return <UIButton key={name} name={name} interaction={interaction} />
+				})}
+			</div>
+			<UIButton name={"더보기"} interaction={null}/>
 			<div
 				style={{
 					display: "flex",
 					flexDirection: "column",
 				}}
 			>
-				{memo_ui_list.map(({ name, interaction }) => (
-					<UIButton key={name} type="button" darkmode onClick={interaction}>
-						{name}
-					</UIButton>
+				{/* more list */}
+				{moreList.map(({ name, interaction }) => (
+					<UIButton key={name} name={name} interaction={interaction} />
 				))}
 			</div>
-			{memo.isActive && (
-				<UIButton onClick={onInactive} darkmode>
-					닫기
-				</UIButton>
-			)}
-		</>
+			<UIButton name={"닫기"}/>
+		</Fragment>
 	);
 }
 

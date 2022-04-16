@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
 // module
-import { createMemo, updateMemo, deleteMemo, selectMemos } from "../../module/memo";
+import { createMemo, updateMemo, deleteMemo, copyMemo, selectMemos } from "../../module/memo";
 // component:called
 import Heading from "../common/Heading";
 import FixedButton from "./FixedButton";
@@ -12,10 +13,11 @@ import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
 import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
+import { splitList } from "../../utils";
 // component:styled
 const getValueFromTheme = ({ theme }) => {
-	if (theme.darkmode) return "#333";
-	if (!theme.darkmode) return "#fff";
+	if (theme.darkmode === true) return "#333";
+	if (theme.darkmode === false) return "#fff";
 	return theme.color;
 };
 const CardInner = styled.div`
@@ -28,11 +30,6 @@ const CardInner = styled.div`
 function MemoCard({ memo }) {
 	const { id, title, useCheckbox, bgColor, isFixed, labels } = memo;
 	const dispatch = useDispatch();
-	useEffect(() => {
-		// getMemoLabels(id);
-		console.log(`${id}'s labels`, labels);
-	}, [labels]);
-
 	const updateLabelInMemo = (_newLabel, _labelId) => {
 		const payload = {
 			...memo,
@@ -41,7 +38,6 @@ function MemoCard({ memo }) {
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
-
 	const deleteLabelInMemo = (_newLabel) => {
 		const newLabels = labels.filter((item) => item.text != _newLabel);
 		const payload = {
@@ -51,12 +47,51 @@ function MemoCard({ memo }) {
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
-
 	// update memo status:hang on top
 	const onToggleFixed = () => {
 		const payload = {
 			...memo,
 			isFixed: !memo.isFixed,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onCopy = () => {
+		const payload = {
+			...memo,
+			id: nanoid(),
+			isFixed: false,
+		};
+		const action = copyMemo(payload);
+		dispatch(action);
+	};
+	const onRemove = () => {
+		const payload = {
+			id: memo.id,
+		};
+		const action = deleteMemo(payload);
+		dispatch(action);
+	};
+	const onUseCheckbox = () => {
+		const payload = {
+			...memo,
+			useCheckbox: true,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onUnuseCheckbox = () => {
+		const payload = {
+			...memo,
+			useCheckbox: false,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
+	const onChoiceColor = (event) => {
+		const payload = {
+			...memo,
+			bgColor: event.target.dataset.color,
 		};
 		const action = updateMemo(payload);
 		dispatch(action);
@@ -75,6 +110,59 @@ function MemoCard({ memo }) {
 		// reset input value
 		_setInput("");
 	};
+	// memoui 
+	const ui_list = [
+		{
+			name: "나에게 알림",
+			interaction: () => {},
+		},
+		{
+			name: "공동 작업자",
+			interaction: () => {},
+		},
+		{
+			name: "배경 옵션",
+			interaction: onChoiceColor,
+		},
+		{
+			name: "이미지 추가",
+			interaction: () => {},
+		},
+		{
+			name: "보관 처리",
+			interaction: () => {},
+		},
+		{
+			name: "메모 삭제",
+			interaction: onRemove,
+		},
+		{
+			name: "라벨 추가",
+			interaction: () => {},
+		},
+		{
+			name: "그림 추가",
+			interaction: () => {},
+		},
+		{
+			name: "사본 만들기",
+			interaction: onCopy,
+		},
+		{
+			name: "체크박스 표시",
+			interaction: onUseCheckbox,
+		},
+		{
+			name: "체크박스 숨기기",
+			interaction: onUnuseCheckbox,
+		},
+		{
+			name: "Google Docs로 복사",
+			interaction: () => {},
+		},
+	];
+	const floor_option_length = 5;
+	const [floor, more] = splitList(ui_list, floor_option_length);
 	// Registry DOM event
 	const inner = useRef(); // target is CardInner component
 	// const contents_classname = "memo-contents";
@@ -118,7 +206,7 @@ function MemoCard({ memo }) {
 			<CardContents memoId={id} useCheckbox={useCheckbox} />
 			<LabelTag memoId={id} labelGroup={labels} />
 			<div className="bottom ui-group">
-				<MemoUI memo={memo} />
+				<MemoUI floorList={floor} moreList={more} />
 				<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
 			</div>
 			{/* <span className="focus-end"></span> */}
