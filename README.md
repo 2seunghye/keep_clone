@@ -16,29 +16,32 @@ contents는 header와 본문,
 제공되는 옵션은 ui에서 다루거나 위임을 받는 것으로 정함.
 
 -   folder tree
-    /AS-IS/
-    component
-    controller
-    view
-    styled
-    ui
-    feature
-    memo
-    label
-    support
-    data
+/AS-IS/
+component
+controller
+view
+styled
+ui
+feature
+memo
+label
+support
+data
 
 /TO-BE/
+base
+ㄴvariable
+ㄴutility(or library)
 feature
 [feature name...] ex. navigation, memo, memoContents, label...
-index.js <controller component>
-reducer.js <reducer>
-view
-\*.js <presentation component>
-styled <styled-component>
-support
-ui.js <event logic>
-data
+ㄴindex.js <controller component>
+ㄴreducer.js <reducer>
+ㄴview
+ㄴㄴ\*.js <presentation component>
+ㄴstyled <styled-component>
+ㄴsupport
+ㄴㄴui.js <event logic>
+ㄴdata
 
 #### 2022.04.13
 
@@ -64,6 +67,62 @@ CardContents> CheckboxTypeItem or DefaultTypeItem
 -=-=- Message -=-=-
 앞으로는 일 혹은 주 혹은 일정 주기 별로 계속 일지를 남겨주세요.
 혹은 notion등을 이용한 일지 작성 아이디어 바래요.
+
+#### 2022.04.14
+label ui의 의존성 이슈.
+
+label에 대한 데이터가 2가지로 나뉨.
+a. label 목록 자체
+b. 메모에서 선택한 label 집합
+
+a는 labelState로 b는 memoState의 종속 데이터로 관리. 
+
+라벨 추가/변경 ui의 목록은 단순 스프레드에 불과해 a만 사용하면 되지만, 
+메모 안의 label 집합은 check에 의해 변경이 요구되고, 또한 label text가 업데이트 되면 이 역시 반영되어야 함.
+
+그래서 데이터를 다음의 형태로 만듬.
+
+memoState = [
+    <!-- one set memo -->
+    {
+        ...,
+        labels : [
+            ...label_id
+        ]
+    }
+]
+
+labelState = [
+    <!-- one set label -->
+    {
+        ...,
+        memoGroup : [
+            ...memo_id
+        ]
+    }
+]
+
+메모 안의 label을 렌더링하는 컴포넌트 - LabelTag - 를 생성.
+
+LabelTag의 의존성은 memoState의 id.
+다만 판본 - 렌더링 데이터 - 은 labelState.
+
+memoState.labels의 id 집합에 변경이 생기면 - add or remove - 리렌더링
+labelState의 label text를 판본으로 바라보고 있으므로 변경이 생기면 - update - 리렌더링
+
+로직도 여기에 귀속시켜,
+1. 메모에 라벨을 추가/삭제
+Flow : 
+check/click가 발생한 memoId를 획득 => 
+labelState.memoGroup을 업데이트 => 
+memoState의 memo를 labelState.memoGroup로 조회 =>
+해당 memo의 labels를 업데이트
+2. 라벨 이름 업데이트
+Flow :
+labelState를 memoState.labels의 id로 조회 => 
+매칭되는 label만 가져와 text를 렌더링
+
+navigation은 이와 같은 로직을 state만 서로 반대로 바라보고 변경하도록.
 
 #### 2022.04.15
 
