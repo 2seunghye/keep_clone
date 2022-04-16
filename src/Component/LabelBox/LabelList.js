@@ -69,7 +69,7 @@ const ListItem = ({ text, deleteLabelInMemo }) => {
 };
 
 const LabelList = ({ labels, deleteLabelInMemo }) => {
-	const labelList = labels.map((item) => <ListItem text={item.text} id={item.id} deleteLabelInMemo={deleteLabelInMemo} />);
+	const labelList = labels.map((item, index) => <ListItem key={index} text={item.text} id={item.id} deleteLabelInMemo={deleteLabelInMemo} />);
 
 	return <StyledListBox>{labelList}</StyledListBox>;
 };

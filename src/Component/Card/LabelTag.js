@@ -7,7 +7,8 @@ function LabelTag({ memoId, labelGroup }){
 	const labelState = useSelector(selectLabel);
 	const dispatch = useDispatch();
 	const onRemove = (_id)=>()=>{
-		const payload = labelGroup.filter(labelId => labelId !== _id);
+		const new_array_by_id = labelGroup.filter(labelId => labelId !== _id);
+		const payload = new_array_by_id;
 		const action = Object.assign(
 			removeMemoLabel(payload),
 			{memoId}
