@@ -1,5 +1,4 @@
 import { labelState } from "../../data/initialState";
-import * as types from "./types";
 import { addData, updateData, removeData } from "../../utils";
 import { createSlice } from "@reduxjs/toolkit";
 
