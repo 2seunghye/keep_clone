@@ -13,7 +13,6 @@ import HomeView from "./View/HomeView";
 import EditLabelView from "./View/EditLabelView";
 import LabelView from "./View/LabelView";
 import ShowMemoWithLabel from "./Component/ShowMemoWithLabel";
-import { memoState, labelState } from "./data/initialState";
 // setting store
 const envelopmentMode = process.env.NODE_ENV;
 const store = configureStore({

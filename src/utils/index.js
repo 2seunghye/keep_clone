@@ -84,9 +84,30 @@ export function splitList(_parameter, _break_index){
 export class eventModule{
 	constructor(obj){
 		this.name = obj.name;
-		this.interaction = (_payload, _dispatch = this.dispatch)=>{
-			const action = obj.pipe(_payload);
+		this.interaction = (_payload, useId, _dispatch = this.dispatch)=>{
+			const action = Object.assign(
+				{},
+				obj.pipe(_payload),
+				useId ? 
+					{ id : useId } : 
+					{}
+			) 
 			_dispatch(action);
 		};
+	}
+	setDispatch(_dispatch_callback){
+		this.dispatch = _dispatch_callback;
+		return this;
+	}
+}
+export class UIList{
+	constructor(){
+		this.list = {};
+	}
+	registry(..._module){
+		_module.reduce((list, one) => {
+			list[one.name] = new eventModule(one);
+			return list;
+		}, this.list);
 	}
 }

@@ -4,6 +4,7 @@ export const memoState = [
 		bgColor: "#fff",
 		isActive: false,
 		isFixed: true,
+		isKeep: false,
 		useCheckbox: true,
 		labels: [],
 	},
@@ -12,6 +13,7 @@ export const memoState = [
 		bgColor: "#fff",
 		isActive: false,
 		isFixed: false,
+		isKeep: false,
 		useCheckbox: false,
 		labels: [
 			"label-1",
@@ -44,7 +46,6 @@ export const contentsState = {
 		},
 	],
 };
-
 export const labelState = [
 	// data format
 ];

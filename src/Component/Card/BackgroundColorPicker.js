@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+// data
+import { color_palette } from "../../data/color";
 
 // styled component
 const ColorPickerContainer = styled.div`
@@ -22,7 +24,7 @@ const ColorPickerButton = styled.button`
 `;
 
 // component
-function BackgroundColorPicker({ colorPalette, dispatchColor }){
+function BackgroundColorPicker({ colorPalette = color_palette, dispatchColor }){
 	return(
 		<ColorPickerContainer>
 			{colorPalette.map(color => 
