@@ -38,13 +38,16 @@ function MemoClassfier({ memos }){
 		return _format;
 	};
 	const memos__classfied = memos.reduce(callback, format);
+	const flag = 0 < memos.filter(memo => memo.isFixed).length;
 	return memos__classfied.map(
-		({ name, list, presentationText }) => 
-			<MemoContainer 
+		({ name, list, presentationText }, index, array) => {
+			if(0 >= list.length) return;
+			return <MemoContainer 
 				key={name}
 				memos={list} 
-				text={presentationText} 
+				text={flag ? presentationText : null} 
 			/>
+		}
 	);
 };
 
