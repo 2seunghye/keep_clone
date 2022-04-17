@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
 // module
@@ -13,7 +12,8 @@ import CardContents from "../CardContents";
 import MemoUI from "./MemoUI";
 import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
-import { splitList } from "../../utils";
+import Popup, {PopupCaller} from "../common/Popup";
+
 // component:styled
 const getValueFromTheme = ({ theme }) => {
 	if (theme.darkmode === true) return "#333";
@@ -56,46 +56,7 @@ function MemoCard({ memo }) {
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
-	const onCopy = () => {
-		const payload = {
-			...memo,
-			id: nanoid(),
-			isFixed: false,
-		};
-		const action = copyMemo(payload);
-		dispatch(action);
-	};
-	const onRemove = () => {
-		const payload = {
-			id: memo.id,
-		};
-		const action = deleteMemo(payload);
-		dispatch(action);
-	};
-	const onUseCheckbox = () => {
-		const payload = {
-			...memo,
-			useCheckbox: true,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onUnuseCheckbox = () => {
-		const payload = {
-			...memo,
-			useCheckbox: false,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
-	const onChoiceColor = (event) => {
-		const payload = {
-			...memo,
-			bgColor: event.target.dataset.color,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
+	
 	// add new memo
 	const memoMaker = (_input, _setInput) => (event) => {
 		// escape
@@ -110,59 +71,50 @@ function MemoCard({ memo }) {
 		// reset input value
 		_setInput("");
 	};
-	// memoui 
+	// memoui
 	const ui_list = [
 		{
 			name: "나에게 알림",
-			interaction: () => {},
+			interaction: ()=>{},
 		},
 		{
 			name: "공동 작업자",
-			interaction: () => {},
+			interaction: ()=>{},
 		},
 		{
 			name: "배경 옵션",
-			interaction: onChoiceColor,
+			interaction: ()=>{},
 		},
 		{
 			name: "이미지 추가",
-			interaction: () => {},
+			interaction: () => {
+				// input file과 동일
+				// 확장자 필터 필요
+			},
 		},
 		{
 			name: "보관 처리",
-			interaction: () => {},
+			interaction: (_memo) => {
+				const payload = {
+					..._memo,
+					isKeep: true,
+				};
+				const action = updateMemo(payload);
+				dispatch(action);
+			},
 		},
 		{
-			name: "메모 삭제",
-			interaction: onRemove,
-		},
-		{
-			name: "라벨 추가",
-			interaction: () => {},
-		},
-		{
-			name: "그림 추가",
-			interaction: () => {},
-		},
-		{
-			name: "사본 만들기",
-			interaction: onCopy,
-		},
-		{
-			name: "체크박스 표시",
-			interaction: onUseCheckbox,
-		},
-		{
-			name: "체크박스 숨기기",
-			interaction: onUnuseCheckbox,
-		},
-		{
-			name: "Google Docs로 복사",
-			interaction: () => {},
+			name: "보관 취소",
+			interaction: (_memo) => {
+				const payload = {
+					..._memo,
+					isKeep: false,
+				};
+				const action = updateMemo(payload);
+				dispatch(action);
+			},
 		},
 	];
-	const floor_option_length = 5;
-	const [floor, more] = splitList(ui_list, floor_option_length);
 	// Registry DOM event
 	const inner = useRef(); // target is CardInner component
 	// const contents_classname = "memo-contents";
@@ -205,10 +157,17 @@ function MemoCard({ memo }) {
 			</div>
 			<CardContents memoId={id} useCheckbox={useCheckbox} />
 			<LabelTag memoId={id} labelGroup={labels} />
-			<div className="bottom ui-group">
-				<MemoUI floorList={floor} moreList={more} />
-				<LabelBox id={id} updateLabelInMemo={updateLabelInMemo} labels={labels} />
+			<div
+				className="bottom ui-group"
+				style={{
+					"display" : "flex",
+					"flexDirection" : "row",
+				}}
+			>
+				<MemoUI uiList={ui_list} />
+				<PopupCaller name={"더보기"}/>
 			</div>
+			<Popup keyname={"라벨"} contents={<LabelBox id={id} keyname={"라벨"} updateLabelInMemo={updateLabelInMemo} labels={labels} />}/>
 			{/* <span className="focus-end"></span> */}
 		</CardInner>
 	);

@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import { memoSlice } from "../module/memo";
-import { labelSlice } from "../module/label";
-import { contentsSlice } from "../module/memoContents";
+import memoReducer from "../module/memo";
+import labelReducer from "../module/label";
+import memoContentsReducer from "../module/memoContents";
+import popupReducer from "../module/popup";
 
 export const rootReducer = combineReducers({
-	memos: memoSlice.reducer,
-	memoContents: contentsSlice.reducer,
-	label: labelSlice.reducer,
+	memos: memoReducer,
+	memoContents: memoContentsReducer,
+	label: labelReducer,
+	popup : popupReducer
 });
 
 export default rootReducer;
