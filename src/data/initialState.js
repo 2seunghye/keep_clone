@@ -49,3 +49,10 @@ export const contentsState = {
 export const labelState = [
 	// data format
 ];
+export const appState = {
+	popup : {
+		activeId : null,
+		calleeId : null,
+		memoId : null
+	}
+}

@@ -1,7 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 // data
 import { color_palette } from "../../data/color";
+// module
+import { selectMemoById, updateMemo } from "../../module/memo";
 
 // styled component
 const ColorPickerContainer = styled.div`
@@ -22,9 +25,20 @@ const ColorPickerButton = styled.button`
 		border: 1px solid #333;
 	}
 `;
-
 // component
-function BackgroundColorPicker({ colorPalette = color_palette, dispatchColor }){
+function BackgroundColorPicker({ colorPalette = color_palette}){
+	const memoId = useSelector(state => state.app.popup.memoId);
+	console.log("callee memoId : ", memoId);
+	const memo = useSelector(selectMemoById(memoId));
+	const dispatch = useDispatch();
+	const onChoiceColor = (_memo)=>(event) => {
+		const payload = {
+			..._memo,
+			bgColor: event.target.dataset.color,
+		};
+		const action = updateMemo(payload);
+		dispatch(action);
+	};
 	return(
 		<ColorPickerContainer>
 			{colorPalette.map(color => 
@@ -32,7 +46,7 @@ function BackgroundColorPicker({ colorPalette = color_palette, dispatchColor }){
 					key={color}
 					theme={{color}}
 					data-color={color}
-					onClick={dispatchColor} />
+					onClick={onChoiceColor(memo)} />
 			)}
 		</ColorPickerContainer>
 	);

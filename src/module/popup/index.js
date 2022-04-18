@@ -7,21 +7,27 @@ const {actions, reducer : popupReducer} = createSlice({
 		// Format
 		// [keyname] : {
 		// 	isCalled : false,
+		// 	calleeId : null,
 		// },
 		"나에게 알림" : {
-			isCalled : false
+			isCalled : false,			
+			calleeId : null
 		},
 		"공동 작업자" : {
-			isCalled : false
+			isCalled : false,
+			calleeId : null
 		},
 		"배경 옵션" : {
 			isCalled : false,
+			calleeId : null
 		},
 		"더보기" : {
-			isCalled : false
+			isCalled : false,
+			calleeId : null
 		},
 		"라벨" : {
-			isCalled : false
+			isCalled : false,
+			calleeId : null
 		},
 	},
 	reducers : {

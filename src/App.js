@@ -1,11 +1,15 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
-import NavBar from "./route/NavBar";
-import Popup from "./Component/common/Popup";
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
 import { createMemo, updateMemo, deleteMemo, copyMemo, selectMemos } from "./module/memo";
+// component:called
+import NavBar from "./route/NavBar";
+import Popup from "./Component/common/Popup";
+import BackgroundColorPicker from "./Component/Card/BackgroundColorPicker";
 import MemoUI from "./Component/Card/MemoUI";
+// component
 function App() {
 	const dispatch = useDispatch();
 	const onCopy = (memo) => {
@@ -40,14 +44,7 @@ function App() {
 		const action = updateMemo(payload);
 		dispatch(action);
 	};
-	const onChoiceColor = (memo)=>(event) => {
-		const payload = {
-			...memo,
-			bgColor: event.target.dataset.color,
-		};
-		const action = updateMemo(payload);
-		dispatch(action);
-	};
+	
 	const ui_list_on_tooltip = [
 		{
 			name: "메모 삭제",
@@ -89,6 +86,7 @@ function App() {
 			<NavBar />
 			<Outlet />
 			<Popup keyname={"더보기"} contents={<MemoUI keyname={"더보기"} uiList={ui_list_on_tooltip} />}/>
+			<Popup keyname={"배경 옵션"} contents={<BackgroundColorPicker />}/>
 		</div>
 	);
 }

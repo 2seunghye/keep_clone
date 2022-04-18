@@ -5,7 +5,7 @@ import { selectPopupByKeyname } from "../../module/popup";
 import usePopup from "../../customHooks/usePopup";
 import UIButton from "./UIButton";
 // component:styled
-const Tooltip = styled.div`
+const FloatingLayer = styled.div`
 	position:absolute;
 	top:0;
 	left:0;
@@ -15,14 +15,15 @@ const Tooltip = styled.div`
 function Popup({keyname, contents}){
 	const selectedPopup = useSelector(selectPopupByKeyname(keyname));
 	return(
-		<Tooltip active={selectedPopup.isCalled}>
+		<FloatingLayer active={selectedPopup.isCalled}>
 			{contents}		
-		</Tooltip>
+		</FloatingLayer>
 	);
 };
-export function PopupCaller({name}){
-	const [isCalled, setCall, setClose] = usePopup(name);
-	const onToggleMorePopup = ()=>{
+export function PopupCaller({name, callerId}){
+	console.log("PopupCaller :", callerId);
+	const [isCalled, setCall, setClose] = usePopup(name, callerId);
+	const onTogglePopup = ()=>{
 		isCalled ? 
 		setClose() :
 		setCall();
@@ -30,7 +31,7 @@ export function PopupCaller({name}){
 	return (
 		<UIButton 
 			name={name} 
-			interaction={onToggleMorePopup}
+			interaction={onTogglePopup}
 		/>
 	);
 };

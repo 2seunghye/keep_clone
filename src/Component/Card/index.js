@@ -13,7 +13,7 @@ import MemoUI from "./MemoUI";
 import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
 import Popup, {PopupCaller} from "../common/Popup";
-
+import UIButton from "../common/UIButton";
 // component:styled
 const getValueFromTheme = ({ theme }) => {
 	if (theme.darkmode === true) return "#333";
@@ -75,18 +75,22 @@ function MemoCard({ memo }) {
 	const ui_list = [
 		{
 			name: "나에게 알림",
+			hasMenu : false,
 			interaction: ()=>{},
 		},
 		{
 			name: "공동 작업자",
+			hasMenu : false,
 			interaction: ()=>{},
 		},
 		{
 			name: "배경 옵션",
+			hasMenu : true,
 			interaction: ()=>{},
 		},
 		{
 			name: "이미지 추가",
+			hasMenu : false,
 			interaction: () => {
 				// input file과 동일
 				// 확장자 필터 필요
@@ -94,6 +98,7 @@ function MemoCard({ memo }) {
 		},
 		{
 			name: "보관 처리",
+			hasMenu : false,
 			interaction: (_memo) => {
 				const payload = {
 					..._memo,
@@ -105,6 +110,7 @@ function MemoCard({ memo }) {
 		},
 		{
 			name: "보관 취소",
+			hasMenu : false,
 			interaction: (_memo) => {
 				const payload = {
 					..._memo,
@@ -164,8 +170,11 @@ function MemoCard({ memo }) {
 					"flexDirection" : "row",
 				}}
 			>
-				<MemoUI uiList={ui_list} />
-				<PopupCaller name={"더보기"}/>
+				{ui_list.map(({ name, interaction, hasMenu }) => {
+					if(hasMenu) return <PopupCaller key={name} name={name} callerId={id} />
+					return <UIButton key={name} name={name} interaction={interaction} />
+				})}
+				<PopupCaller name={"더보기"} callerId={id}/>
 			</div>
 			<Popup keyname={"라벨"} contents={<LabelBox id={id} keyname={"라벨"} updateLabelInMemo={updateLabelInMemo} labels={labels} />}/>
 			{/* <span className="focus-end"></span> */}
