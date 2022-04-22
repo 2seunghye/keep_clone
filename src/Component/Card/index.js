@@ -161,7 +161,9 @@ function MemoCard({ memo }) {
 				<Heading level={"h2"} headcopy={title} />
 				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
-			<CardContents memoId={id} useCheckbox={useCheckbox} />
+			<div className="memo--floor">
+				<CardContents memoId={id} useCheckbox={useCheckbox} />
+			</div>
 			<LabelTag memoId={id} labelGroup={labels} />
 			<div
 				className="bottom ui-group"

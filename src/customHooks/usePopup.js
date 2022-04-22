@@ -1,22 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { floatingPopup } from "../module/app";
+import { deactivatePopup, activatePopup } from "../module/app";
 import { callPopup, closePopup, selectPopupByKeyname } from "../module/popup";
 
 const usePopup = function(_keyname, _memoId){
 	const dispatch = useDispatch();
 	const targetPopup = useSelector(selectPopupByKeyname(_keyname));
-	console.log(targetPopup);
 	const {isCalled} = targetPopup;
-	const createAction = (_pipe, _payload)=>{
-		return Object.assign(
-			_pipe(_payload),
-			{id : _keyname}
-		)
-	};
+	const createAction = (_pipe, _payload) => Object.assign(_pipe(_payload), {id : _keyname});
 	const setCall = ()=>{
 		let next = false;
 		dispatch(
-			createAction(floatingPopup, {
+			createAction(activatePopup, {
 				activeId : _keyname,
 				calleeId : _memoId,
 				memoId : _memoId,
@@ -25,13 +19,16 @@ const usePopup = function(_keyname, _memoId){
 		next = true;
 		if(!next) return;
 		dispatch(
-			createAction(callPopup, {isCalled : true})
+			createAction(callPopup, {
+				isCalled : true,
+				calleeId : _memoId
+			})
 			);
 		};
 	const setClose = ()=>{
 		let next = false;
 		dispatch(
-			createAction(floatingPopup, {
+			createAction(deactivatePopup, {
 				activeId : null,
 				calleeId : null,
 				memoId : null,
@@ -40,7 +37,10 @@ const usePopup = function(_keyname, _memoId){
 		next = true;
 		if(!next) return;
 		dispatch(
-			createAction(closePopup, {isCalled : false})
+			createAction(closePopup, {
+				isCalled : false,
+				calleeId : _memoId 
+			})
 		);
 	};
 	return [

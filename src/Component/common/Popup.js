@@ -21,7 +21,7 @@ function Popup({keyname, contents}){
 	);
 };
 export function PopupCaller({name, callerId}){
-	console.log("PopupCaller :", callerId);
+	// console.log("PopupCaller :", callerId);
 	const [isCalled, setCall, setClose] = usePopup(name, callerId);
 	const onTogglePopup = ()=>{
 		isCalled ? 

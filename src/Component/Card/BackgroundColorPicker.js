@@ -28,7 +28,6 @@ const ColorPickerButton = styled.button`
 // component
 function BackgroundColorPicker({ colorPalette = color_palette}){
 	const memoId = useSelector(state => state.app.popup.memoId);
-	console.log("callee memoId : ", memoId);
 	const memo = useSelector(selectMemoById(memoId));
 	const dispatch = useDispatch();
 	const onChoiceColor = (_memo)=>(event) => {
