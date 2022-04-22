@@ -42,7 +42,7 @@ class Theme {
 		return this;
 	}
 	monitor(){
-		console.log(`theme:${this.name} monitor`,  this);
+		// console.log(`theme:${this.name} monitor`,  this);
 		return this;
 	}
 };

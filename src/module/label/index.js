@@ -14,4 +14,3 @@ export const labelSlice = createSlice({
 export const { getMemoGroup, createLabel, updateLabel, deleteLabel } = labelSlice.actions;
 export const selectLabel = (state) => state.label;
 export default labelSlice.reducer;
-console.log("labelSlice :", labelSlice.getInitialState());

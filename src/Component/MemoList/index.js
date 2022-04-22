@@ -9,8 +9,8 @@ import MemoClassfier from "./MemoClassfier";
 // component:styled
 const StyledDiv = styled.div`
 	border: 2px dotted pink;
-	max-width: 500px;
 	margin: 20px;
+	padding: 20px;
 `;
 // component
 function MemoList(){

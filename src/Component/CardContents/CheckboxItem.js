@@ -28,7 +28,7 @@ const Item = Styled.div`
 `;
 // component
 function CheckboxItem({memoId, content}){
-	console.log("rendering check : content item checkbox");
+	// console.log("rendering check : content item checkbox");
 	const {id, text, isChecked} = content;
 	const dispatch = useDispatch();
 	const removeContent = ()=>{
