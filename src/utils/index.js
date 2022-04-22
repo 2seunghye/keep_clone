@@ -1,4 +1,5 @@
 import { current } from "@reduxjs/toolkit";
+
 // reducer
 export const updateData = {
 	byArrayType: (data, action) => {
@@ -13,7 +14,7 @@ export const updateData = {
 			return payload;
 		});
 		console.log("newData :", newData);
-		console.groupEnd("array");
+		console.groupEnd("array:update");
 		return newData;
 	},
 	byObjectType: (data, action) => {
@@ -26,18 +27,25 @@ export const updateData = {
 		console.log("data :", current(data));
 		console.log("newData :", newData);
 		console.log("payload :", payload);
-		console.groupEnd("object");
+		console.groupEnd("object:update");
 		return newData;
 	},
 };
+
 export const addData = {
 	byArrayType: (data, action) => {
+		console.group("array:add");
+		console.log("data :", current(data));
 		const { payload } = action;
+		console.log("payload :", payload);
 		const newData = [...data, payload];
+		console.log("newData :", newData);
+		console.groupEnd("array:add");
 		return newData;
 	},
 	byObjectType: updateData.byObjectType,
 };
+
 export const removeData = {
 	byArrayType: (data, action) => {
 		const { payload } = action;
@@ -66,6 +74,7 @@ export const setToList = function(_parameter, [_begin, _end]){
 	const result = array.slice(s, e);
 	return result;
 };
+
 export function splitList(_parameter, _break_index){
 	const array = (()=>{
 		return (
@@ -80,6 +89,7 @@ export function splitList(_parameter, _break_index){
 		array.slice(break_index, array.length)
 	]
 };
+
 // abstract
 export class eventModule{
 	constructor(obj){
@@ -100,6 +110,7 @@ export class eventModule{
 		return this;
 	}
 }
+
 export class UIList{
 	constructor(){
 		this.list = {};
@@ -111,3 +122,35 @@ export class UIList{
 		}, this.list);
 	}
 }
+
+// utility
+export const nullish = (v) => (v == null);
+
+export function findParent(_el, _target_selector){
+	const classfier = 0 < _target_selector.match(/^(\.)/g).length ? "classList" : "id";
+	let isMatched = false;
+	switch(classfier){
+		case "classList" :
+			isMatched = 0 <= _el.parentElement[classfier].value.indexOf(_target_selector);
+			break;
+		case "id" :
+			isMatched = 0 <= _el.parentElement[classfier].indexOf(_target_selector);
+			break;
+		default :
+			return false;
+	}
+	// includes method do not working with IE, 
+	// if browser is not ie, use "closest" 
+	// const isMatched = _el.parentElement[classfier].includes(_target_selector);	
+	if(isMatched) return _el.parentElement;
+	return findParent(_el.parentElement);
+};
+
+export function hasText(_nodeList){
+	const toArray = [..._nodeList];
+	const spell_length = toArray.reduce((sum, el, index) =>{
+		sum += el.innerText.length;
+		return sum;
+	}, 0);
+	return !!spell_length;
+};

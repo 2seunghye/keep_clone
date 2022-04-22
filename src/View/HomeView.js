@@ -1,21 +1,15 @@
-import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
-import MemoCard from "../Component/Card";
+// component:called
+import MemoCreator from "../Component/MemoList/MemoCreator";
 import MemoList from "../Component/MemoList";
+import { useSelector } from "react-redux";
+import { selectNewMemo } from "../module/newMemo";
 
 const HomeView = () => {
-	const initial_memo_format = {
-		id : nanoid(),
-		bgColor: "#fff",
-		isActive : true,
-		isFixed : null,
-		useCheckbox: null,
-		labels : []
-	}
 	return (
 		<>
 			{/* new memo creator */}
-			<MemoCard memo={initial_memo_format} />
+			<MemoCreator />
 			{/* memo list */}
 			<MemoList />
 		</>

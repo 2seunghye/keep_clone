@@ -1,60 +1,51 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectContentsById, updateSingleContent, removeSingleContent } from "../../module/memoContents";
+import { useSelector } from "react-redux";
+import { selectContentsById } from "../../module/memoContents";
+import { selectNewMemoContents } from "../../module/newMemo";
+import TextEditor from "../common/TextEditor";
 import CheckboxItem from "./CheckboxItem";
 
-function TextEditor({memoId, contents}){
-	console.log("rendering check : content item default");
-	const to_text = contents.map(content => content.text).join("\n\n");
-	const parse_text = to_text.replaceAll(/(\n)\s/g, "<br/>")
-	return(
-		<div 
-			contentEditable="true" 
-			spellCheck="true"
-			onBlur={()=>{}}
-		>
-			{parse_text}		
-		</div>
-	);
-}
-function Placeholder({placeholderText, style}){
-	return <div style={style}>{placeholderText}</div>;
-}
 function IndicatorLatestTime({date}){
 	return 	<div>{`수정된 시간: ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
 }
 function CardContents({memoId, useCheckbox}){
-	console.log("rendering check : card contents");
-	const contents = useSelector(selectContentsById(memoId)) || [];
-	const style = {"display" : 0 >= contents.length ? null : "none"};
+	// console.log("rendering check : card contents");
+	const selector = memoId === "temporary" ? selectNewMemoContents : selectContentsById(memoId); 
+	const contents = useSelector(selector) || [];
+	const placeholderText = {
+		title : "제목",
+		contents : memoId === "temporary" ? " 작성..." : ""
+	};
 	return(
-		<div>
-			<Placeholder 
-				placeholderText={"메모 작성..."} 
-				style={style} />
+		<>
+			<TextEditor 
+				className={"memo__title"}
+				memoId={memoId} 
+				placeholderText={placeholderText.title}	
+				/>
 			{
-				useCheckbox 
-				?
+				useCheckbox ?
 				// checkbox list
 				contents.map((content) => (
 					<CheckboxItem
-						key={content.id}
-						memoId={memoId}
-						content={content}
+					key={content.id}
+					memoId={memoId}
+					content={content}
 					/>
-				)) 
-				:
+				)) :
 				// note
 				<TextEditor 
-					memoId={memoId}
-					contents={contents}/>
+					className={"memo__contents"}
+					memoId={memoId} 
+					placeholderText={`메모${placeholderText.contents}`}
+				/>
 			}
-			<IndicatorLatestTime 
-				date={new Date()} />
-		</div>
+			{memoId !== "temporary" && <IndicatorLatestTime date={new Date()}/>}
+		</>
 	)
 }
-export default CardContents;
+export const memoContents = {IndicatorLatestTime};
+export default React.memo(CardContents);
 // issue
 /*
 	#keep 원본의 이슈
