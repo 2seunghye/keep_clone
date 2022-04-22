@@ -129,3 +129,20 @@ navigation은 이와 같은 로직을 state만 서로 반대로 바라보고 변
 memo의 이벤트 모듈 만들 예정.
 button 컴포넌트의 추상화 예정.
 icon 사용 시작.
+
+#### 2022.04.19
+useEffect/useLayoutEffect 이슈
+react.strictmode 사용 시, 라이프사이클에서 willmount와 mount 시기에 2번 실행해 스코프 안에서 사용한 변수의 적합성을 판단한다. 
+
+이 때문에 event listening이 2번되는 문제가 생기는데, dev 서버에서 다음과 같이 이벤트의 중복 실행을 방지할 수 있다.  
+
+1. useCallback 사용 
+handler callback을 useEffect 바깥에서 정의하고
+useCallback에 모니터링을 위임
+예제는 다음과 같음.
+<code>
+const handler = useCallback(
+    function(event){...},
+    [def]
+)
+</code>
