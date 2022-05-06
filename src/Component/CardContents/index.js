@@ -5,46 +5,36 @@ import { selectNewMemoContents } from "../../module/newMemo";
 import TextEditor from "../common/TextEditor";
 import CheckboxItem from "./CheckboxItem";
 
-function IndicatorLatestTime({date}){
-	return 	<div>{`수정된 시간: ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
-}
 function CardContents({memoId, useCheckbox}){
 	// console.log("rendering check : card contents");
 	const selector = memoId === "temporary" ? selectNewMemoContents : selectContentsById(memoId); 
-	const contents = useSelector(selector) || [];
+	const selectState = useSelector(selector) || [];
+	const to_text = selectState.map(content => content.text).join("\n\n");
+	const parse_text = to_text.replaceAll(/(\n)\s/g, "<br/>")
+	console.log(memoId, selectState, parse_text);
 	const placeholderText = {
 		title : "제목",
 		contents : memoId === "temporary" ? " 작성..." : ""
 	};
 	return(
-		<>
-			<TextEditor 
-				className={"memo__title"}
-				memoId={memoId} 
-				placeholderText={placeholderText.title}	
-				/>
-			{
-				useCheckbox ?
-				// checkbox list
-				contents.map((content) => (
-					<CheckboxItem
-					key={content.id}
-					memoId={memoId}
-					content={content}
-					/>
-				)) :
-				// note
-				<TextEditor 
-					className={"memo__contents"}
-					memoId={memoId} 
-					placeholderText={`메모${placeholderText.contents}`}
-				/>
-			}
-			{memoId !== "temporary" && <IndicatorLatestTime date={new Date()}/>}
-		</>
+		useCheckbox ?
+		// checkbox list
+		selectState.map((content) => (
+			<CheckboxItem
+				key={content.id}
+				memoId={memoId}
+				content={content}
+			/>
+		)) :
+		// note
+		<TextEditor 
+			memoId={memoId} 
+			pretext={parse_text}
+			className={"memo__contents"}
+			placeholderText={`메모${placeholderText.contents}`}
+		/>
 	)
 }
-export const memoContents = {IndicatorLatestTime};
 export default React.memo(CardContents);
 // issue
 /*

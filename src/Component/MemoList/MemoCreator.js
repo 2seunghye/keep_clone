@@ -14,11 +14,15 @@ import { newMemoSlice, refreshNewMemo, selectNewMemo, updateNewMemo } from "../.
 import { nanoid } from "@reduxjs/toolkit";
 import { createContents } from "../../module/memoContents";
 import CardContents from "../CardContents";
+import Popup, { PopupCaller } from "../common/Popup";
+import LabelBox from "../LabelBox";
+import FixedButton from "../Card/FixedButton";
 
 // component:styled
 const Inner = styled.div.attrs(()=>({tabIndex : 0}))`
 	position:relative;
 	background-color:${(props)=>props.isActive ? "ivory" : "#f1f1f1"};
+	.btn__memo-fix,
 	.memo__title {
 		display: ${(props)=>props.isActive ? "block" : "none"}
 	};
@@ -36,7 +40,7 @@ const Inner = styled.div.attrs(()=>({tabIndex : 0}))`
 function MemoCreator(){
 	const dispatch = useDispatch();
 	const newMemo = useSelector(selectNewMemo);
-	const {id : newMemoId, useCheckbox} = newMemo;
+	const {id : newMemoId, useCheckbox, isFixed, title, contents} = newMemo;
 	const initialMemo = newMemoSlice.getInitialState();
 	// memoui
 	const ui_list = [
@@ -88,6 +92,13 @@ function MemoCreator(){
 			},
 		},
 	];
+	const onToggleFixed = () => {
+		const payload = {
+			isFixed: !newMemo.isFixed,
+		};
+		const action = updateNewMemo(payload);
+		dispatch(action);
+	};
 	// event:activate memo window
 	const rootClassName = ".memo--new";
 	const [active, setActive] = useState(false);
@@ -106,12 +117,13 @@ function MemoCreator(){
 		function(event){
 			if(event.target instanceof HTMLButtonElement) return false;
 			setActive(true);
-		}, [setActive]
+		}, 
+		[setActive]
 	);
 	const focusHandler = useCallback(
 		function(event){
-			console.log("target display :", window.getComputedStyle(event.target).getPropertyValue("display"));
-			console.log(event.relatedTarget);
+			// console.log("target display :", window.getComputedStyle(event.target).getPropertyValue("display"));
+			// console.log(event.relatedTarget);
 			const isStillIn = event.relatedTarget?.closest(rootClassName); 
 			if(event.target.closest(".type-pre-selector")) return false;
 			if(isStillIn) return false;
@@ -157,9 +169,9 @@ function MemoCreator(){
 			// !useCheckbox && (contents_editor.innerText = "");
 			// dispatch(refreshNewMemo({}));
 		}, 
-		[]
+		[setActive]
 		// [useCheckbox, initialMemo, dispatch]
-	)
+	);
 	useLayoutEffect(
 		()=> {
 			document.querySelector(rootClassName).addEventListener("click", clickHandler, false);
@@ -167,21 +179,43 @@ function MemoCreator(){
 		}, 
 		[clickHandler, focusHandler]
 	);
+	console.log("re rendering creator!!")
 	return(
 		<Inner className="memo--new" isActive={active}>
-			<CardContents 
-				memoId={newMemoId} 
-				useCheckbox={useCheckbox} 
-			/>
-			<MemoUI 
-				uiList={ui_list}
-			/>
-			{/* preset ui */}
+			{/* <span className="focus-start"></span> */}
+			{/* title */}
+			<div className="memo__contents">
+				<TextEditor 
+					className={"memo__title"}
+					memoId={newMemoId}
+					pretext={title}
+					placeholderText={"제목"}	
+				/>
+				<CardContents memoId={newMemoId} useCheckbox={useCheckbox} />
+				{/* <LabelTag memoId={newMemoId} labelGroup={labels} /> */}
+			</div>
 			<div className="type-selector">
 				<button type="button" onClick={onStart}>새 목록</button>
 				<button type="button" onClick={()=>{}}>그림이 있는 새 메모</button>
 				<button type="button" onClick={()=>{}}>이미지가 있는 새 메모</button>
 			</div>
+			<FixedButton className={"btn__memo-fix"} onToggleFixed={onToggleFixed} isFixed={isFixed} />
+			<div
+				className="bottom ui-group"
+				style={{
+					"display" : "flex",
+					"flexDirection" : "row",
+				}}
+			>
+				<MemoUI 
+					memoId={newMemoId}
+					uiList={ui_list}
+				/>
+				<PopupCaller name={"더보기"} callerId={newMemoId}/>
+			</div>
+			{/* <Popup keyname={"라벨"} contents={<LabelBox id={newMemoId} keyname={"라벨"} updateLabelInMemo={updateLabelInMemo} labels={labels} />}/> */}
+			{/* <span className="focus-end"></span> */}
+			{/* preset ui */}
 		</Inner>
 	);
 };

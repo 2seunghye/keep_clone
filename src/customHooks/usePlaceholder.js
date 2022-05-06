@@ -8,7 +8,6 @@ const usePlaceholder = (_default)=>{
 		const check_element = (element)=>element instanceof HTMLInputElement ? element.value : element.innerText; 
 		let isEmpty = 1 > check_element(event.target);
 		// escape:no change
-		console.log("isEmpty : ", isEmpty);
 		if(appearance === isEmpty ) return false;
 		// if change
 		setAppearance(isEmpty);
@@ -26,6 +25,7 @@ const usePlaceholder = (_default)=>{
 
 	기본 동작은 
 	1.placeholder의 표시 판단 (length > 0)
+	2.store.newMemo.title || store.newMemo.contents의 length으로 판단.
 */
 
 export const usePlaceholder_with_store = (_id, _selector, _action)=>{

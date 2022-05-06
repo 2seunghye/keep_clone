@@ -14,6 +14,7 @@ import LabelTag from "./LabelTag";
 import LabelBox from "../LabelBox";
 import Popup, {PopupCaller} from "../common/Popup";
 import UIButton from "../common/UIButton";
+import TextEditor from "../common/TextEditor";
 // component:styled
 const getValueFromTheme = ({ theme }) => {
 	if (theme.darkmode === true) return "#333";
@@ -27,7 +28,11 @@ const CardInner = styled.div`
 	transition: width 300ms ease;
 `;
 // component
+function IndicatorLatestTime({date}){
+	return 	<div>{`수정된 시간: ${date.getMonth() + 1}월 ${date.getDate()}일`}</div>
+}
 function MemoCard({ memo }) {
+	console.log("memo :", memo);
 	const { id, title, useCheckbox, bgColor, isFixed, labels } = memo;
 	const dispatch = useDispatch();
 	const updateLabelInMemo = (_newLabel, _labelId) => {
@@ -155,16 +160,24 @@ function MemoCard({ memo }) {
 		color: bgColor,
 	};
 	return (
-		<CardInner ref={inner} theme={inner_theme} tabIndex={0}>
+		<CardInner className="memo--floor" ref={inner} theme={inner_theme} tabIndex={0}>
 			{/* <span className="focus-start"></span> */}
 			<div className="header">
-				<Heading level={"h2"} headcopy={title} />
-				{isFixed != null && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
+				{!(isFixed == null) && <FixedButton onToggleFixed={onToggleFixed} isFixed={isFixed} />}
 			</div>
-			<div className="memo--floor">
+			<div className="memo__contents">
+				{/* title */}
+				<TextEditor 
+					className={"memo__title"}
+					memoId={id} 
+					placeholderText={"제목"}	
+					pretext={title}
+				/>
+				{/* contents */}
 				<CardContents memoId={id} useCheckbox={useCheckbox} />
+				<LabelTag memoId={id} labelGroup={labels} />
 			</div>
-			<LabelTag memoId={id} labelGroup={labels} />
+			<IndicatorLatestTime date={new Date()}/>
 			<div
 				className="bottom ui-group"
 				style={{
@@ -172,10 +185,10 @@ function MemoCard({ memo }) {
 					"flexDirection" : "row",
 				}}
 			>
-				{ui_list.map(({ name, interaction, hasMenu }) => {
-					if(hasMenu) return <PopupCaller key={name} name={name} callerId={id} />
-					return <UIButton key={name} name={name} interaction={interaction} />
-				})}
+				<MemoUI 
+					memoId={id}
+					uiList={ui_list}
+				/>
 				<PopupCaller name={"더보기"} callerId={id}/>
 			</div>
 			<Popup keyname={"라벨"} contents={<LabelBox id={id} keyname={"라벨"} updateLabelInMemo={updateLabelInMemo} labels={labels} />}/>

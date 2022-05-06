@@ -3,11 +3,15 @@ import React from "react";
 import styled from "styled-components";
 // custom hook
 import usePlaceholder from "../../customHooks/usePlaceholder";
-import { selectEditorTextStatus, updateEditorStatus } from "../../module/newMemo";
+
 // component:styled
 const Wrapper = styled.div`
 	position:relative;
 	line-height:1.35em;
+	.editor {
+		position:relative;
+		background-color:transparent;
+	}
 `; 
 const Placeholder = styled.div`
 	position:absolute;
@@ -17,27 +21,11 @@ const Placeholder = styled.div`
 	right:0;
 	display: ${(props)=>props.appearance ? "block" : "none"}
 `;
-const EditorElement = styled.div`
-	position:relative;
-	background-color:transparent;
-`;
-function Editor({contents = []}){
-	// console.log("rendering check : content item default");
-	const to_text = contents.map(content => content.text).join("\n\n");
-	const parse_text = to_text.replaceAll(/(\n)\s/g, "<br/>")
-	return(
-		<EditorElement 
-			contentEditable="true" 
-			spellCheck="true"
-			onBlur={()=>{}}
-		>
-			{parse_text}		
-		</EditorElement>
-	);
-}
 // component
-function TextEditor({memoId, placeholderText, className, eventCallback}){
-	const [appearance, onInputTyping] = usePlaceholder(true);
+function TextEditor({memoId, pretext, placeholderText, className, eventCallback}){
+	console.log("pretext :", pretext, typeof pretext, pretext instanceof String);
+	const flag = 1 > pretext.length;
+	const [appearance, onInputTyping] = usePlaceholder(flag);
 	const link_id = nanoid();
 	return(
 		<Wrapper className={className}>
@@ -47,7 +35,7 @@ function TextEditor({memoId, placeholderText, className, eventCallback}){
 			>
 				{placeholderText}
 			</Placeholder>
-			<Editor
+			<div
 				className="editor"
 				contentEditable="true"
 				spellCheck="true"
@@ -55,13 +43,17 @@ function TextEditor({memoId, placeholderText, className, eventCallback}){
 				tabIndex="0"
 				aria-labelledby={link_id}
 				onInput={(event)=>{
-					eventCallback?.onInput(event);
 					onInputTyping(event);
+					eventCallback?.onInput(event);
 				}}
-				onClick={eventCallback?.onClick}
-			/>
+				onClick={(event)=>{
+					eventCallback?.onClick(event);
+				}}
+			>
+				{pretext}		
+			</div>
 		</Wrapper>
 	);
-}
+};
 
 export default TextEditor;
