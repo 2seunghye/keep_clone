@@ -9,10 +9,7 @@ import rootReducer from "./redux/rootReducer";
 // router
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import HomeView from "./View/HomeView";
-import EditLabelView from "./View/EditLabelView";
-import LabelView from "./View/LabelView";
-import ShowMemoWithLabel from "./Component/ShowMemoWithLabel";
+
 // setting store
 const envelopmentMode = process.env.NODE_ENV;
 const store = configureStore({
@@ -29,21 +26,13 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<Provider store={store}>
+		<Provider store={store}>
+			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<App />}>
-						{" "}
-						{/* router.js를 app.js로 이관 */}
-						<Route index element={<HomeView />} />
-						<Route path="/editLabel" element={<EditLabelView />} />
-						<Route path="/label" element={<LabelView />}>
-							<Route path=":labelText" element={<ShowMemoWithLabel />} />
-						</Route>
-					</Route>
+					<Route path="/*" element={<App />}></Route>
 				</Routes>
-			</Provider>
-		</BrowserRouter>
+			</BrowserRouter>
+		</Provider>
 	</React.StrictMode>
 );
 

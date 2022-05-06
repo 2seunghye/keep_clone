@@ -1,6 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
+// 
+import { Route, Routes } from "react-router-dom";
+import HomeView from "./View/HomeView";
+import LabelView from "./View/LabelView";
+import ShowMemoWithLabel from "./Component/ShowMemoWithLabel";
+
 // toolkit
 import { nanoid } from "@reduxjs/toolkit";
 import { createMemo, updateMemo, deleteMemo, copyMemo, selectMemos } from "./module/memo";
@@ -9,6 +15,7 @@ import NavBar from "./route/NavBar";
 import Popup from "./Component/common/Popup";
 import BackgroundColorPicker from "./Component/Card/BackgroundColorPicker";
 import MemoUI from "./Component/Card/MemoUI";
+import EditLabel from "./Component/EditLabel";
 // component
 function App() {
 	const dispatch = useDispatch();
@@ -84,7 +91,23 @@ function App() {
 	return (
 		<div className="App">
 			<NavBar />
-			<Outlet />
+			<Routes>
+				{/* router.js를 app.js로 이관 */}
+				<Route index element={<HomeView />}></Route>
+				<Route path="/reminders" element={<HomeView />}></Route>
+				<Route path="/label" element={<LabelView />}>
+					<Route path=":labelText" element={<ShowMemoWithLabel />} />
+				</Route>
+				<Route path="/archive" element={<>보관 처리</>}></Route>
+				<Route path="/trash" element={<>휴지통</>}></Route>
+			</Routes>
+			{/* Popup */}
+			<Routes>
+				<Route path="note/:memoId" element={
+					<div>메모 팝업</div>
+				}></Route>
+			</Routes>
+			<Popup keyname={"라벨 수정"} contents={<EditLabel/>} />
 			<Popup keyname={"더보기"} contents={<MemoUI keyname={"더보기"} uiList={ui_list_on_tooltip} />}/>
 			<Popup keyname={"배경 옵션"} contents={<BackgroundColorPicker />}/>
 		</div>
