@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { PopupCaller } from "../Component/common/Popup";
 import { selectLabel } from "../module/label";
-
 function ListItem({ text }) {
 	return <NavLink to={`/label/${text}`}>{text}</NavLink>;
 }
@@ -19,7 +19,8 @@ function NavBar() {
 			) : (
 				<></>
 			)}
-			<NavLink to="/editLabel">라벨 수정</NavLink>
+			<PopupCaller name={"라벨 수정"} callerId={"navigation"} />				
+			{/* <NavLink to="/editLabel"></NavLink> */}
 		</div>
 	);
 }
