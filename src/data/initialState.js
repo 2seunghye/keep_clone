@@ -2,6 +2,7 @@ export const memoState = [
 	{
 		id: "memo-1",
 		bgColor: "#fff",
+		title: "상현",
 		isActive: false,
 		isFixed: true,
 		isKeep: false,
@@ -11,6 +12,7 @@ export const memoState = [
 	{
 		id: "memo-2",
 		bgColor: "#fff",
+		title: "상현",
 		isActive: false,
 		isFixed: false,
 		isKeep: false,

@@ -29,6 +29,10 @@ const {actions, reducer : popupReducer} = createSlice({
 			isCalled : false,
 			calleeId : null
 		},
+		"라벨 수정" : {
+			isCalled : false,
+			calleeId : null
+		},
 	},
 	reducers : {
 		callPopup : updateData.byObjectType,
