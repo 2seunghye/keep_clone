@@ -7,12 +7,14 @@ export const memoState = [
 		isFixed: true,
 		isKeep: false,
 		useCheckbox: true,
-		labels: [],
+		labels: [
+			"test"
+		],
 	},
 	{
 		id: "memo-2",
 		bgColor: "#fff",
-		title: "상현",
+		title: "승혜",
 		isActive: false,
 		isFixed: false,
 		isKeep: false,
@@ -50,4 +52,11 @@ export const contentsState = {
 };
 export const labelState = [
 	// data format
+	{
+		id : "default",
+		text : "test",
+		memoGroup : [
+			"memo-1"
+		]
+	}
 ];

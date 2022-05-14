@@ -20,6 +20,7 @@ function MemoContainer({ memos, text }){
 	);
 };
 function MemoClassfier({ memos }){
+	console.log("Classfier", memos);
 	const format = [
 		{
 			name : "fixed memo",
