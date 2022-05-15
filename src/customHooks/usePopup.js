@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deactivatePopup, activatePopup } from "../module/app";
-import { callPopup, closePopup, selectPopupByKeyname } from "../module/popup";
+import { deactivatePopup, activatePopup } from "../features/global/appSlice";
+import { callPopup, closePopup, selectPopupByKeyname } from "../features/popup/popupSlice";
 
 const usePopup = function(_keyname, _memoId){
 	const dispatch = useDispatch();

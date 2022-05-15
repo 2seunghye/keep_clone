@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { create_label } from "../../module/label/action";
 import { nanoid } from "@reduxjs/toolkit";
-import { createLabel, selectLabel } from "../../module/label";
+import { createLabel, selectLabels } from "../../module/label";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
@@ -32,7 +32,7 @@ const StyledButton = styled.button`
 const CreateBox = () => {
 	const dispatch = useDispatch();
 	const [input, setInput] = useState("");
-	const labelState = useSelector(selectLabel);
+	const labelState = useSelector(selectLabels);
 
 	const hasLabelInLabelList = (_text) => {
 		for (let i = 0; i < labelState.length; ++i) {

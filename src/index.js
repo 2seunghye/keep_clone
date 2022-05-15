@@ -1,14 +1,13 @@
 import React from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "reportWebVitals";
 // redux
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./redux/rootReducer";
-
+import rootReducer from "app/rootReducer";
 // router
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
+import App from "app/App";
 
 // setting store
 const envelopmentMode = process.env.NODE_ENV;
@@ -16,9 +15,8 @@ const store = configureStore({
 	reducer: rootReducer,
 	devTools: envelopmentMode === "development",
 });
-// const persistedState = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem("reduxState")) : {};
 store.subscribe(() => {
-	localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+	localStorage.setItem("store", JSON.stringify(store.getState()));
 });
 
 // DOM render

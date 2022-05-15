@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import label, { deleteLabel, selectLabel } from "../../module/label";
+import label, { deleteLabel, selectLabels } from "../../module/label";
 import { delete_label } from "../../module/label/action";
 import { delete_label_in_all_card } from "../../module/memo/action";
 
@@ -22,7 +22,7 @@ const useConfirm = (message, onConfirm, onCancel) => {
 };
 
 const ReadBox = ({ text, setIsActive }) => {
-	const labelState = useSelector(selectLabel);
+	const labelState = useSelector(selectLabels);
 	const dispatch = useDispatch();
 
 	let labelId = null;
