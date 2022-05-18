@@ -10,7 +10,7 @@ export const memoState = [
 		isThrowToCan : true,
 		useCheckbox: true,
 		labels: [
-			"test"
+			
 		],
 	},
 	{
@@ -23,7 +23,9 @@ export const memoState = [
 		isKeep: false,
 		isThrowToCan : false,
 		useCheckbox: false,
-		labels: [],
+		labels: [
+			"test"
+		],
 	},
 ];
 export const memoContentsState = {

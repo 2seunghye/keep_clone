@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import styled from "styled-components";
-import ReadBox from "./ReadBox";
 
 const StyledListBox = styled.ul`
 	list-style: none;
@@ -60,7 +58,7 @@ const ListItem = ({ text, deleteLabelInMemo }) => {
 
 	return (
 		<StyledListItem>
-			<ReadBox text={text} />
+			<span>{text}</span>
 			<StyledRemoveButton aria-label="Remove" onClick={onClick}></StyledRemoveButton>
 		</StyledListItem>
 	);

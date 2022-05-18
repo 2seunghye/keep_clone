@@ -11,7 +11,7 @@ import { selectPopupByKeyname } from "features/popup/popupSlice";
 const Dialog = styled.div`
 	position:absolute;
 	top:0;
-	left:0;
+	right:0;
 	display:${(props)=>props.active ? "flex" : "none"};
 	flex-direction:column;
 `;

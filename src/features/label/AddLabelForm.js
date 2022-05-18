@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { createLabel, selectLabels, updateLabel } from "../../module/label";
 import { nanoid } from "@reduxjs/toolkit";
-import { selectMemos } from "../../module/memo";
 
 const StyledAddLabelForm = styled.div`
 	display: flex;
