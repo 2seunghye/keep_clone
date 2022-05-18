@@ -1,18 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // component:called
 import { PopupCaller } from "../popup/Popup";
 import { selectLabels } from "../label/labelSlice";
 // component
 function LabelListItem({ text }) {
-	return <NavLink to={`/label/${text}`}>{text}</NavLink>;
+	return <Link to={`/label/${text}`}>{text}</Link>;
 }
-function NavBar() {
+function Navigation() {
 	const component_id = "navigation";
 	const labelState = useSelector(selectLabels);
 	return (
-		<div className={component_id}>
+		<nav className={component_id}>
 			<NavLink to="/">메모</NavLink>
 			<NavLink to="/reminders">알림</NavLink>
 			{
@@ -24,10 +24,10 @@ function NavBar() {
 			}
 			<NavLink to="/archive">보관 처리</NavLink>
 			<NavLink to="/trash">휴지통</NavLink>
-			<PopupCaller name={"라벨 수정"} callerId={"라벨 수정"} />				
+			<PopupCaller name={"라벨 수정"} callerId={"라벨 수정"} />
 			{/* <NavLink to="/editLabel"></NavLink> */}
-		</div>
+		</nav>
 	);
 }
 
-export default NavBar;
+export default Navigation;

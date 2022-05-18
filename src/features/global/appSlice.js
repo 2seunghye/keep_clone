@@ -8,6 +8,21 @@ export const appSlice = createSlice({
 			calleeId : null,
 			memoId : null
 		},
+		config : {
+			announceTimeDefault : [
+				// 오전
+				8,
+				// 오후
+				13,
+				// 저녁
+				18
+			],
+			useWriteTogether : false,
+			useDarkTheme : false,
+			useOpenGraph : true,
+			oldMemoFirst : false,
+			checkListFirst : false,
+		},
 	},
 	reducers : {
 		activatePopup : (_prev, _action)=>{
